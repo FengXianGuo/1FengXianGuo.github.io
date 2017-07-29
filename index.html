@@ -156,7 +156,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="使用hexo和github搭建博客"><a href="#使用hexo和github搭建博客" class="headerlink" title="使用hexo和github搭建博客"></a>使用hexo和github搭建博客</h1><h3 id="一，准备工作："><a href="#一，准备工作：" class="headerlink" title="一，准备工作："></a>一，准备工作：</h3><p>必要条件：<br>    1，拥有github账号<br>    2，了解nodejs基本操作</p>
+        <h1 id="使用hexo和github快速搭建博客"><a href="#使用hexo和github快速搭建博客" class="headerlink" title="使用hexo和github快速搭建博客"></a>使用hexo和github快速搭建博客</h1><h3 id="一，准备工作："><a href="#一，准备工作：" class="headerlink" title="一，准备工作："></a>一，准备工作：</h3><p>必要条件：<br>    1，拥有github账号<br>    2，了解nodejs基本操作</p>
 <h3 id="二，开始搭建："><a href="#二，开始搭建：" class="headerlink" title="二，开始搭建："></a>二，开始搭建：</h3><blockquote>
 <p>1,安装hexo</p>
 </blockquote>
@@ -173,7 +173,11 @@
 </ul>
 <p>也可以用hexo server -p 3000<br>s是server的缩写，-p可以制定端口<br>可以看到：<br><img src="http://otudpdtxd.bkt.clouddn.com/themeold.png"></p>
 <blockquote>
-<p>3,变更主题</p>
+<p>3,编写博客</p>
+</blockquote>
+<p>只需要修改项目根节点下<br>source文件夹下，_posts文件夹中的内容即可。<br>编辑规范是markdown</p>
+<blockquote>
+<p>4,变更主题</p>
 </blockquote>
 <p>前面的步骤执行完，访问localhost就能否访问博客，现在我想要变换一个主题：<br>在根目录下创建</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo clean</div><div class="line">$ git clone https://github.com/litten/hexo-theme-yilia.git themes/yilia</div></pre></td></tr></table></figure>
@@ -187,11 +191,46 @@
 </blockquote>
 <pre><code>注意：
 仓库名字必须为：github账号名.github.io
-</code></pre><blockquote>
+</code></pre><p><img src="http://otudpdtxd.bkt.clouddn.com/github%E7%99%BB%E9%99%86@2x.png"></p>
+<blockquote>
 <p>2,安装插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
 <p>3,修改根目录_config.yml文件，添加下面的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: https://github.com/FengXianGuo/FengXianGuo.github.io.git</div></pre></td></tr></table></figure></p>
 <p>4,发布<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo deploy</div></pre></td></tr></table></figure></p>
+<p>5,访问</p>
 </blockquote>
+<pre><code>https://fengxianguo.github.io/
+</code></pre><h3 id="四，在文档中插入图片"><a href="#四，在文档中插入图片" class="headerlink" title="四，在文档中插入图片"></a>四，在文档中插入图片</h3><p>经过前面的步骤，我们已经能够创建博客了，但还不能在博客中添加图片。<br>hexo中添加图片的方式有三种：<br>1，添加本地图片：</p>
+<pre><code>优点：书写，引用方便。
+缺点：本地图片丢失，则博客全挂。
+</code></pre><p>2，添加远程图片：</p>
+<pre><code>优点：不容易丢失。
+缺点：图床不好找，操作麻烦。
+</code></pre><p>3，添加base64图片：</p>
+<pre><code>优点：不需要上传，也不需要保存本地。
+缺点：markdown中的内容会激增。
+</code></pre><p>最终，我选择的是第二种方式，引入了七牛图床<br>七牛提供免费10g的存储空间，个人博客基本够用了，虽然操作麻烦了点，但有利于长期维护</p>
+<h3 id="五，使用七牛图床"><a href="#五，使用七牛图床" class="headerlink" title="五，使用七牛图床"></a>五，使用七牛图床</h3><p>七牛是一个家云服务提供商：</p>
+<blockquote>
+<p>1,访问并注册，下面的网址。</p>
+</blockquote>
+<p><a href="https://portal.qiniu.com" target="_blank" rel="external">https://portal.qiniu.com</a></p>
+<blockquote>
+<p>2,选择对象存储，新建存储空间</p>
+</blockquote>
+<p><img src="http://otudpdtxd.bkt.clouddn.com/qiniu1@2x.png"></p>
+<blockquote>
+<p>3,选择内容管理，选择上传图片</p>
+</blockquote>
+<p><img src="http://otudpdtxd.bkt.clouddn.com/%E5%86%85%E5%AE%B9%E5%AD%98%E5%82%A8@2x.png"></p>
+<blockquote>
+<p>4,上传成功之后，选择复制外链地址</p>
+</blockquote>
+<p><img src="http://otudpdtxd.bkt.clouddn.com/%E5%A4%96%E9%93%BE@2x.png"></p>
+<blockquote>
+<p>5,在hexo中引用</p>
+</blockquote>
+<p><img src="http://otudpdtxd.bkt.clouddn.com/%E5%BC%95%E7%94%A8@2x.png"></p>
+<p>好的，一篇简单的博客搭建教程到此结束。</p>
 
       
 
