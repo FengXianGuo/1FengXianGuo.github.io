@@ -123,7 +123,7 @@
 <meta property="og:site_name" content="丰羡的前端笔记">
 <meta property="og:description" content="Es7 decoratorjs飞速发展，博采众长，es7的出现，除了async await以外，另一个最令人瞩目的就是decorator修饰器了。其实decorator修饰器，是很令人迷惑的，因为你会看到类似如下的代码： 12345function test(target)&amp;#123;  target.isTestable = true; &amp;#125;@testclass A&amp;#123;&amp;#125">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-11T03:37:53.000Z">
+<meta property="og:updated_time" content="2017-08-11T03:39:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES7 decorator 修饰器运行环境搭建及实践">
 <meta name="twitter:description" content="Es7 decoratorjs飞速发展，博采众长，es7的出现，除了async await以外，另一个最令人瞩目的就是decorator修饰器了。其实decorator修饰器，是很令人迷惑的，因为你会看到类似如下的代码： 12345function test(target)&amp;#123;  target.isTestable = true; &amp;#125;@testclass A&amp;#123;&amp;#125">
@@ -417,6 +417,7 @@
 <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">(target)</span></span>&#123;</div><div class="line">  target.isTestable = <span class="literal">true</span>; </div><div class="line">&#125;</div><div class="line">@test</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;&#125;</div></pre></td></tr></table></figure>
 <p>上面的代码中有个@test，没有接触过修饰器的同学，很难明白，究竟是在做什么。</p>
 <p>下面我将带领大家，一起探索一下ES7的decortor修饰器。</p>
+<a id="more"></a>
 <h2 id="一，准备工作"><a href="#一，准备工作" class="headerlink" title="一，准备工作"></a>一，准备工作</h2><p>由于decorator是es7提供的方法，在浏览器中是无法直接运行的，所以我们需要提前作准备，对它进行编译。</p>
 <blockquote>
 <p>1 安装基础插件</p>
