@@ -124,7 +124,7 @@
 <meta property="og:site_name" content="丰羡的前端笔记">
 <meta property="og:description" content="一，项目背景老的技术栈： koa2 gulp reguirejs ejs artTemplete 环境： node：4.4.5 npm:2.15.0 背景： 1，使用koa2搭建中间层，负责处理视图层的展示； 2，使用ejs，和arTemplete来处理ssr(服务端渲染)和csr(客户端渲染)； 3，使用gulp打包静态资源。  二，存在问题1，node -v4.4.5，版本过低，部分新api和">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-10T07:26:49.000Z">
+<meta property="og:updated_time" content="2017-08-11T03:38:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用webpack重构koa2多页应用">
 <meta name="twitter:description" content="一，项目背景老的技术栈： koa2 gulp reguirejs ejs artTemplete 环境： node：4.4.5 npm:2.15.0 背景： 1，使用koa2搭建中间层，负责处理视图层的展示； 2，使用ejs，和arTemplete来处理ssr(服务端渲染)和csr(客户端渲染)； 3，使用gulp打包静态资源。  二，存在问题1，node -v4.4.5，版本过低，部分新api和">
@@ -552,7 +552,7 @@ npm:2.15.0
 <p>根据koa2官网，我这边使用的require hook方法，来处理node版本过低的情况，代码如下：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">require(<span class="string">"babel-core/register"</span>)(&#123;</div><div class="line">    <span class="string">"presets"</span>: [__dirname + <span class="string">"/node_modules/babel-preset-latest"</span>]</div><div class="line">&#125;)<span class="comment">;</span></div></pre></td></tr></table></figure></p>
 <p>这样虽然通过babel编译了引用的文件，但babel自动忽略了node_modules。</p>
 <p>当使用插件如：</p>
-<pre><code>koa-webpack-dev-middlewareshi
+<pre><code>koa-webpack-dev-middleware
 koa-webpack-hot-middleware
 </code></pre><p>上面这两个插件本身就是es6的语法，babel忽略了node_modules,一旦引用就会报错，百度了很久没有办法，最后还是科学上网，谷歌找到了解决方案。</p>
 <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">"babel-core/register"</span>)(&#123;</div><div class="line">    <span class="string">"presets"</span>: [__dirname + <span class="string">"/node_modules/babel-preset-latest"</span>],</div><div class="line">    ignore: <span class="regexp">/node_modules\/(?!koa-webpack-dev-middleware|koa-webpack-hot-middleware)/</span></div><div class="line">&#125;);</div><div class="line"><span class="built_in">require</span>(<span class="string">"babel-polyfill"</span>);</div><div class="line"><span class="built_in">require</span>(<span class="string">'./app.js'</span>);</div></pre></td></tr></table></figure>
@@ -629,6 +629,10 @@ koa-webpack-hot-middleware
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/11/ES7-decorator修饰器运行环境搭建及实践/" rel="prev" title="ES7 decorator 修饰器运行环境搭建及实践">
+                ES7 decorator 修饰器运行环境搭建及实践 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -730,7 +734,7 @@ koa-webpack-hot-middleware
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -832,7 +836,7 @@ koa-webpack-hot-middleware
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共3.4k字</span>
+  <span class="post-count">博客全站共6.2k字</span>
 </div>
 
         
