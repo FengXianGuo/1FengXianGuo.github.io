@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="类型检测," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="曾听过：离神越近，越能感觉到自己的渺小 js各种前沿框架学习的越多，接触的知识越多，越能体会到基础的薄弱，所以整理一篇基础，类型检测篇。 一，typeof类型检测最基础的就是typeof 在Javascript高级程序设计(第3版)描述中，typeof会返回6种结果：  校验基本数据类型  1，”undefined”2，”boolean”3，”string”4，”number”  校验复杂数据类型">
+<meta name="keywords" content="类型检测">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js类型检测汇总">
+<meta property="og:url" content="http://yoursite.com/2017/08/18/js类型检测汇总/index.html">
+<meta property="og:site_name" content="丰羡的前端笔记">
+<meta property="og:description" content="曾听过：离神越近，越能感觉到自己的渺小 js各种前沿框架学习的越多，接触的知识越多，越能体会到基础的薄弱，所以整理一篇基础，类型检测篇。 一，typeof类型检测最基础的就是typeof 在Javascript高级程序设计(第3版)描述中，typeof会返回6种结果：  校验基本数据类型  1，”undefined”2，”boolean”3，”string”4，”number”  校验复杂数据类型">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-21T03:16:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js类型检测汇总">
+<meta name="twitter:description" content="曾听过：离神越近，越能感觉到自己的渺小 js各种前沿框架学习的越多，接触的知识越多，越能体会到基础的薄弱，所以整理一篇基础，类型检测篇。 一，typeof类型检测最基础的就是typeof 在Javascript高级程序设计(第3版)描述中，typeof会返回6种结果：  校验基本数据类型  1，”undefined”2，”boolean”3，”string”4，”number”  校验复杂数据类型">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/18/js类型检测汇总/"/>
+
+
+
+
+
+  <title>js类型检测汇总 | 丰羡的前端笔记</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/FengXianGuo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">丰羡的前端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/18/js类型检测汇总/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js类型检测汇总</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-18T10:30:27+08:00">
+                2017-08-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,409
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>曾听过：离神越近，越能感觉到自己的渺小</p>
+<p>js各种前沿框架学习的越多，接触的知识越多，越能体会到基础的薄弱，所以整理一篇基础，类型检测篇。</p>
+<h1 id="一，typeof"><a href="#一，typeof" class="headerlink" title="一，typeof"></a>一，typeof</h1><p>类型检测最基础的就是typeof</p>
+<p>在Javascript高级程序设计(第3版)描述中，typeof会返回6种结果：</p>
+<blockquote>
+<p>校验基本数据类型</p>
+</blockquote>
+<p>1，”undefined”<br>2，”boolean”<br>3，”string”<br>4，”number”</p>
+<blockquote>
+<p>校验复杂数据类型</p>
+</blockquote>
+<p>5，”function”<br>6，”object”</p>
+<a id="more"></a>
+<p>上面：<br>1-4为校验基本数据类型（undefined，boolean，string，number）的结果<br>5-6为校验复杂数据类型（function，object||null）的结果</p>
+<p>通过上面，仔细思考一下，可以得出，typeof主要用来区分：<br>    1，基本数据类型<br>    2，引用数据类型</p>
+<blockquote>
+<p>typeof的缺点：</p>
+</blockquote>
+<p>typeof用于校验基本数据类型没有问题，但是，<br>typeof用于校验引用数据类型时，会出现问题，例：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">typeof</span><span class="params">(&#123;a:<span class="number">1</span>&#125;)</span></span><span class="comment">//"object"</span></div><div class="line"><span class="function"><span class="title">typeof</span><span class="params">([])</span></span><span class="comment">//"object"</span></div><div class="line"><span class="function"><span class="title">typeof</span><span class="params">(new RegExp)</span></span><span class="comment">//"object"</span></div><div class="line"><span class="function"><span class="title">typeof</span><span class="params">(new Date)</span></span><span class="comment">//"object"</span></div></pre></td></tr></table></figure>
+<p>上面的四种类型，通过typeof得到的结果都是“object”,无法分辨究竟是数组，还是对象，很容易造成问题，例如：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">var</span> obj = &#123; <span class="string">"a"</span> : <span class="string">"1"</span> &#125;;</div><div class="line">obj.<span class="built_in">concat</span>()</div></pre></td></tr></table></figure>
+<p>上面的代码会报错：</p>
+<pre><code>VM545:1 Uncaught ReferenceError: obj is not defined at &lt;anonymous&gt;:1:1
+</code></pre><p>因为concat是Array的方法，而不是Object的方法，所以还需要进一步的校验引用类型的数据。</p>
+<p><strong>typeof总结</strong>：</p>
+<blockquote>
+<p>typeof适用于校验undefined，boolean，string，number；<br>typeof不适用于校验引用数据类型，例如：object，array，reg，date类型</p>
+</blockquote>
+<h1 id="二，instanceof"><a href="#二，instanceof" class="headerlink" title="二，instanceof"></a>二，instanceof</h1><p>前面我们发现，typeof无论校验什么对象，都会返回”object”，<br>所以javascript就提供了另一个校验类型的方法<strong>instanceof</strong>。</p>
+<p>与 typeof 方法不同，instanceof 方法要求开发者明确地确认对象为某特定类型。</p>
+<p>例：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var <span class="built_in">str</span> = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"hello"</span>); </div><div class="line">console.<span class="built_in">log</span>(<span class="built_in">str</span> <span class="keyword">instanceof</span> <span class="keyword">String</span>);<span class="comment">//true</span></div></pre></td></tr></table></figure></p>
+<p>通过例子，我们知道：<br>1，str是需要检测类型的变量。<br>2，String是用来校验的类型。<br>3，instanceof返回一个布尔值，通过布尔值来判断，str是否属于String类型</p>
+<blockquote>
+<p>instanceof的缺点：</p>
+</blockquote>
+<p>如果不知道某一个对象的类型，需要判断多次，例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">d <span class="keyword">instanceof</span> <span class="built_in">Array</span><span class="comment">//false;</span></div><div class="line">d <span class="keyword">instanceof</span> <span class="built_in">Date</span><span class="comment">//true</span></div></pre></td></tr></table></figure>
+<p>所以不难看出：<br>typeof 一次校验得到结果<br>instanceof 需要一次次的校验</p>
+<blockquote>
+<p>instanceof 原理</p>
+</blockquote>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">instance_of</span><span class="params">(L, R)</span> </span>&#123;<span class="comment">//L 表示左表达式，R 表示右表达式</span></div><div class="line"> <span class="keyword">var</span> O = R.prototype;<span class="comment">// 取 R 的显示原型</span></div><div class="line"> L = L.__proto__;<span class="comment">// 取 L 的隐式原型</span></div><div class="line"> <span class="keyword">while</span> (<span class="literal">true</span>) &#123; </div><div class="line">   <span class="keyword">if</span> (L === <span class="literal">null</span>) </div><div class="line">     <span class="keyword">return</span> <span class="literal">false</span>; </div><div class="line">   <span class="keyword">if</span> (O === L)<span class="comment">// 这里重点：当 O 严格等于 L 时，返回 true </span></div><div class="line">     <span class="keyword">return</span> <span class="literal">true</span>; </div><div class="line">   L = L.__proto__; </div><div class="line"> &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>拿之前的str instanceof String来说,其过程，就是用str.<strong>proto</strong>属性与String.protoType来对比。</p>
+<p><strong>instanceof总结</strong></p>
+<blockquote>
+<p>instanceof适用于校验变量是否是某一种类型<br>instanceof不适用于校验未知类型的变量，因为需要逐个比对，操作繁琐。</p>
+</blockquote>
+<h1 id="三，constructor"><a href="#三，constructor" class="headerlink" title="三，constructor"></a>三，constructor</h1><p>前面我们知道instanceof的适用不够灵活，当校验未知类型的对象时，比较乏力</p>
+<p>而constructor可以很好的解决这个问题，constructor返回当前对象的构造函数，例：</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(arr.constructor === <span class="built_in">Array</span>)    <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">date</span>.constructor === <span class="built_in">Date</span>)        <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(fn.constructor === <span class="built_in">Function</span>)    <span class="comment">//true</span></div></pre></td></tr></table></figure>
+<p>上面可以看出，constructor很灵活，即便不知道变量的具体类型，只需要调用一次constructor就可以得到它是由哪个类创建而成。</p>
+<blockquote>
+<p>constructor的缺点</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">D</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line">C.prototype = <span class="keyword">new</span> D(); <span class="comment">//C继承自D</span></div><div class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> C();</div><div class="line"><span class="built_in">console</span>.log(c.constructor === C);    <span class="comment">//false;</span></div><div class="line"><span class="built_in">console</span>.log(c.constructor === D);    <span class="comment">//true;</span></div></pre></td></tr></table></figure>
+<p>如果出现原型继承的情况，constructor的结果会出错。<br>当然可以通过重写constructor的形式来恢复判断结果，但却有些得不偿失。</p>
+<h1 id="四，Object-prototype-toString-call"><a href="#四，Object-prototype-toString-call" class="headerlink" title="四，Object.prototype.toString.call"></a>四，Object.prototype.toString.call</h1><p>前面的几种方法，总是有着各种不足，缺少一个通用的方法</p>
+<p>javascript的Object对象的toString方法返回一个表示该对象的字符串，例：</p>
+<figure class="highlight pony"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> obj = <span class="function"><span class="keyword">new</span> <span class="title">Object</span>();</span></div><div class="line"><span class="function"><span class="title">obj</span>.<span class="title">toString</span>();           </span></div><div class="line"><span class="function"><span class="comment">// 返回 [object Object]</span></span></div></pre></td></tr></table></figure>
+<p>返回值中，数组中的Object，就是obj的对象类型。</p>
+<p>既然如此我们可以尝试通过toString来校验每一个变量类型。</p>
+<p>但因为很多对象都重写了toString方法，所以需要以call或apply的形式来使用Object的toString方法</p>
+<p>所以我们经常能够看到</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>.判断基本类型：</div><div class="line"></div><div class="line">Object.prototype.<span class="built_in">toString</span>.<span class="built_in">call</span>(null);<span class="comment">//”[object Null]”</span></div><div class="line">Object.prototype.<span class="built_in">toString</span>.<span class="built_in">call</span>(undefined);<span class="comment">//”[object Undefined]”</span></div><div class="line">Object.prototype.<span class="built_in">toString</span>.<span class="built_in">call</span>(“abc”);<span class="comment">//”[object String]”</span></div><div class="line">Object.prototype.<span class="built_in">toString</span>.<span class="built_in">call</span>(<span class="number">123</span>);<span class="comment">//”[object Number]”</span></div><div class="line">Object.prototype.<span class="built_in">toString</span>.<span class="built_in">call</span>(<span class="literal">true</span>);<span class="comment">//”[object Boolean]”</span></div><div class="line"><span class="number">2</span>.判断原生引用类型：</div><div class="line"></div><div class="line">函数类型</div><div class="line">Function fn()&#123;console.<span class="built_in">log</span>(“test”);&#125;</div><div class="line">Object.prototype.<span class="built_in">toString</span>.<span class="built_in">call</span>(fn);<span class="comment">//”[object Function]”</span></div><div class="line">日期类型</div><div class="line">var <span class="built_in">date</span> = new <span class="built_in">Date</span>();</div><div class="line">Object.prototype.<span class="built_in">toString</span>.<span class="built_in">call</span>(<span class="built_in">date</span>);<span class="comment">//”[object Date]”</span></div><div class="line">数组类型</div><div class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line">Object.prototype.<span class="built_in">toString</span>.<span class="built_in">call</span>(arr);<span class="comment">//”[object Array]”</span></div></pre></td></tr></table></figure>
+<p>可以看出，Object.prototype.toString.call()能够很好的检测基本数据类型和引用数据类型。<br>其实它本身就是行业内，通用的类型检测方案，jquery和requirejs中都是使用该方法进行的类型检测。</p>
+<p>例如：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">jQuery.<span class="keyword">type</span>( <span class="literal">true</span> ) === <span class="string">"boolean"</span></div><div class="line">jQuery.<span class="keyword">type</span>( <span class="keyword">new</span> Boolean() ) === <span class="string">"boolean"</span></div><div class="line">jQuery.<span class="keyword">type</span>( <span class="number">3</span> ) === <span class="string">"number"</span></div><div class="line">jQuery.<span class="keyword">type</span>( <span class="keyword">new</span> Number(<span class="number">3</span>) ) === <span class="string">"number"</span></div><div class="line">jQuery.<span class="keyword">type</span>( <span class="string">"test"</span> ) === <span class="string">"string"</span></div><div class="line">jQuery.<span class="keyword">type</span>( <span class="keyword">new</span> String(<span class="string">"test"</span>) ) === <span class="string">"string"</span></div><div class="line">jQuery.<span class="keyword">type</span>( <span class="keyword">function</span>()&#123;&#125; ) === <span class="string">"function"</span></div><div class="line">jQuery.<span class="keyword">type</span>( [] ) === <span class="string">"array"</span></div><div class="line">jQuery.<span class="keyword">type</span>( <span class="keyword">new</span> <span class="keyword">Array</span>() ) === <span class="string">"array"</span></div><div class="line">jQuery.<span class="keyword">type</span>( <span class="keyword">new</span> Date() ) === <span class="string">"date"</span></div><div class="line">jQuery.<span class="keyword">type</span>( <span class="keyword">new</span> Error() ) === <span class="string">"error"</span> // as <span class="keyword">of</span> jQuery <span class="number">1.9</span></div><div class="line">jQuery.<span class="keyword">type</span>( Symbol() ) === <span class="string">"symbol"</span> // as <span class="keyword">of</span> jQuery <span class="number">1.9</span></div><div class="line">jQuery.<span class="keyword">type</span>( Object(Symbol()) ) === <span class="string">"symbol"</span> // as <span class="keyword">of</span> jQuery <span class="number">1.12</span></div><div class="line">jQuery.<span class="keyword">type</span>( /test/ ) === <span class="string">"regexp"</span></div></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><blockquote>
+<p>typeof</p>
+</blockquote>
+<p>主要用于区分：基本数据类型、引用数据类型；<br>缺点：不能够进一步区分引用类型。</p>
+<blockquote>
+<p>instanceof</p>
+</blockquote>
+<p>主要用于区分：引用类型的具体类型；<br>缺点：不够灵活，需要反复比对。</p>
+<blockquote>
+<p>constructor<br>主要用于区分：实例的构造函数；<br>缺点：原型继承时会出现错误。</p>
+<p>Object.prototype.toString.call()<br>主要用于：获取对象的描述字符串；<br><strong>最合理的解决方案</strong>。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+        
+      
+    </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>欣赏此文？求鼓励，求支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://otudpdtxd.bkt.clouddn.com/wechat.jpeg" alt="丰羡 WeChat Pay"/>
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://otudpdtxd.bkt.clouddn.com/alipay.jpeg" alt="丰羡 Alipay"/>
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/类型检测/" rel="tag"><i class="fa fa-tag"></i> 类型检测</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/14/chrome调试工具实践/" rel="next" title="chrome调试工具实践">
+                <i class="fa fa-chevron-left"></i> chrome调试工具实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg"
+               alt="丰羡" />
+          <p class="site-author-name" itemprop="name">丰羡</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FengXianGuo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一，typeof"><span class="nav-number">1.</span> <span class="nav-text">一，typeof</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，instanceof"><span class="nav-number">2.</span> <span class="nav-text">二，instanceof</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三，constructor"><span class="nav-number">3.</span> <span class="nav-text">三，constructor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四，Object-prototype-toString-call"><span class="nav-number">4.</span> <span class="nav-text">四，Object.prototype.toString.call</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">丰羡</span>
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"><span id="busuanzi_container_site_pv">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+</span>
+</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共10.3k字</span>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140303"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
