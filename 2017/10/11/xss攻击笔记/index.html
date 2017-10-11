@@ -100,7 +100,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="chrome调试工具," />
+  <meta name="keywords" content="xss," />
 
 
 
@@ -116,29 +116,24 @@
 
 
 
-<meta name="description" content="基础篇一,选中目标节点,查看dom结构(Select an element) 上图中： 1：用于选择dom节点，快捷键command+shift+c；2: 为元素的选中状态；3: 为选中元素在dom树中的位置。 二,调试元素 上图中：前面选中元素后，属性栏会列出该元素的所有css属性。 1: 为选中节点的样式列表；2: Filter可以通过输入关键字，筛选想要的属性或class名；3: :hov用">
-<meta name="keywords" content="chrome调试工具">
+<meta name="description" content="一，xss攻击初探今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。 既然如此，就让我们尝试攻击一下平时我们写的页面  1，第一次尝试攻击 例：我们有上图这样一个采集用户名的输入框 &amp;lt;body&amp;gt;   &amp;lt;div class=&amp;quot;lead&amp;quot;&amp;gt;     您输入的用户名为：">
+<meta name="keywords" content="xss">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chrome调试工具实践">
-<meta property="og:url" content="http://yoursite.com/2017/08/14/chrome调试工具实践/index.html">
+<meta property="og:title" content="xss攻击笔记">
+<meta property="og:url" content="http://yoursite.com/2017/10/11/xss攻击笔记/index.html">
 <meta property="og:site_name" content="丰羡的前端笔记">
-<meta property="og:description" content="基础篇一,选中目标节点,查看dom结构(Select an element) 上图中： 1：用于选择dom节点，快捷键command+shift+c；2: 为元素的选中状态；3: 为选中元素在dom树中的位置。 二,调试元素 上图中：前面选中元素后，属性栏会列出该元素的所有css属性。 1: 为选中节点的样式列表；2: Filter可以通过输入关键字，筛选想要的属性或class名；3: :hov用">
+<meta property="og:description" content="一，xss攻击初探今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。 既然如此，就让我们尝试攻击一下平时我们写的页面  1，第一次尝试攻击 例：我们有上图这样一个采集用户名的输入框 &amp;lt;body&amp;gt;   &amp;lt;div class=&amp;quot;lead&amp;quot;&amp;gt;     您输入的用户名为：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fij29jp8hrj31100jigs2.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fij2oyktchj30im0n6jut.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fij3pu85jaj30ik0aowg0.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fij82mg26tj30uu0l2adn.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fij847bvrgj30y20c4tbi.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fij8i86hq0j30iu06wgmg.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fijbbc1uc7j30iq01cglq.jpg">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1firers867bj30ic03sgly.jpg">
-<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1firf1jruxpj30iq04kgm8.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1firf4kvyyej30j204mjs1.jpg">
-<meta property="og:updated_time" content="2017-08-21T08:21:17.000Z">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fkegforr1jj30o80mgq4r.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1fkegiv6yrtj30iw0903yw.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1fkego3hu8fj30io07m0t9.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fkegu5zxh7j30eg03q3yr.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fkeju7bt4tj30ie06s74p.jpg">
+<meta property="og:updated_time" content="2017-10-11T12:34:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="chrome调试工具实践">
-<meta name="twitter:description" content="基础篇一,选中目标节点,查看dom结构(Select an element) 上图中： 1：用于选择dom节点，快捷键command+shift+c；2: 为元素的选中状态；3: 为选中元素在dom树中的位置。 二,调试元素 上图中：前面选中元素后，属性栏会列出该元素的所有css属性。 1: 为选中节点的样式列表；2: Filter可以通过输入关键字，筛选想要的属性或class名；3: :hov用">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1fij29jp8hrj31100jigs2.jpg">
+<meta name="twitter:title" content="xss攻击笔记">
+<meta name="twitter:description" content="一，xss攻击初探今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。 既然如此，就让我们尝试攻击一下平时我们写的页面  1，第一次尝试攻击 例：我们有上图这样一个采集用户名的输入框 &amp;lt;body&amp;gt;   &amp;lt;div class=&amp;quot;lead&amp;quot;&amp;gt;     您输入的用户名为：">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fkegforr1jj30o80mgq4r.jpg">
 
 
 
@@ -167,13 +162,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/14/chrome调试工具实践/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/11/xss攻击笔记/"/>
 
 
 
 
 
-  <title>chrome调试工具实践 | 丰羡的前端笔记</title>
+  <title>xss攻击笔记 | 丰羡的前端笔记</title>
   
 
 
@@ -327,7 +322,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/14/chrome调试工具实践/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/xss攻击笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="丰羡">
@@ -344,7 +339,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">chrome调试工具实践</h1>
+          <h1 class="post-title" itemprop="name headline">xss攻击笔记</h1>
         
 
         <div class="post-meta">
@@ -356,8 +351,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-14T10:21:24+08:00">
-                2017-08-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T20:03:47+08:00">
+                2017-10-11
               </time>
             
 
@@ -388,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  459
+                  674
                 </span>
               
 
@@ -404,7 +399,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
@@ -425,41 +420,75 @@
       
 
       
-        <h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="一-选中目标节点-查看dom结构-Select-an-element"><a href="#一-选中目标节点-查看dom结构-Select-an-element" class="headerlink" title="一,选中目标节点,查看dom结构(Select an element)"></a>一,选中目标节点,查看dom结构(Select an element)</h2><p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fij29jp8hrj31100jigs2.jpg" alt=""></p>
-<p>上图中：</p>
-<p>1：用于选择dom节点，快捷键command+shift+c；<br>2: 为元素的选中状态；<br>3: 为选中元素在dom树中的位置。</p>
-<h2 id="二-调试元素"><a href="#二-调试元素" class="headerlink" title="二,调试元素"></a>二,调试元素</h2><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fij2oyktchj30im0n6jut.jpg" alt=""></p>
-<p>上图中：前面选中元素后，属性栏会列出该元素的所有css属性。</p>
-<p>1: 为选中节点的样式列表；<br>2: Filter可以通过输入关键字，筛选想要的属性或class名；<br>3: :hov用来模拟元素的点击，划过等状态。<br>4: :cls用来模拟给元素添加新的class名。</p>
-<h2 id="三-事件监听-Event-Listeners"><a href="#三-事件监听-Event-Listeners" class="headerlink" title="三,事件监听(Event Listeners)"></a>三,事件监听(Event Listeners)</h2><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fij3pu85jaj30ik0aowg0.jpg" alt=""></p>
-<p>选中节点后，还可以查看Event Listeners属性。</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fij82mg26tj30uu0l2adn.jpg" alt=""></p>
-<p>我们创建一个测试用例</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fij847bvrgj30y20c4tbi.jpg" alt=""></p>
-<p>可以看到当没有绑定事件时，event listenners中没有任何内容：</p>
-<p>现在我们添加如下代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"#test"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"点击节点"</span>)</div><div class="line">&#125;);</div><div class="line">$(<span class="string">"body"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"点击body"</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fij8i86hq0j30iu06wgmg.jpg" alt=""></p>
-<p>现在我们能够发现，event listeners中有了信息：<br>click：表示节点绑定的事件；</p>
+        <h1 id="一，xss攻击初探"><a href="#一，xss攻击初探" class="headerlink" title="一，xss攻击初探"></a>一，xss攻击初探</h1><p>今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。</p>
+<p>既然如此，就让我们尝试攻击一下平时我们写的页面</p>
+<p><br></p>
+<h2 id="1，第一次尝试攻击"><a href="#1，第一次尝试攻击" class="headerlink" title="1，第一次尝试攻击"></a>1，第一次尝试攻击</h2><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fkegforr1jj30o80mgq4r.jpg" alt=""></p>
+<p>例：我们有上图这样一个采集用户名的输入框</p>
+<pre><code>&lt;body&gt;
+  &lt;div class=&quot;lead&quot;&gt;
+    您输入的用户名为：
+    &lt;span id=&quot;name&quot;&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+  &lt;input class=&quot;col-sm-3 form-control&quot; type=&quot;text&quot; id=&quot;text&quot;/&gt;
+  &lt;button class=&quot;btn btn-default&quot; type=&quot;submit&quot;&gt;提交&lt;/button&gt;
+&lt;/body&gt;
+</code></pre><p>html代码如上图：</p>
+<pre><code>let btn = document.querySelector(&quot;button&quot;);
+let input = document.querySelector(&quot;#text&quot;);
+let span = document.querySelector(&quot;#name&quot;);
+
+btn.onclick = ()=&gt;{
+  let value = input.value;
+  span.innerHTML = value;
+}
+</code></pre><p>js代码如上图：</p>
 <ul>
-<li>body是祖先节点绑定的事件，主要用于分析冒泡和捕获</li>
-<li>div#test是节点自身</li>
+<li>demo的功能为：</li>
 </ul>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fijbbc1uc7j30iq01cglq.jpg" alt=""></p>
-<p>这里有两个属性Ancestors和FrameWork Listeners</p>
-<blockquote>
-<p>Ancestors属性：</p>
-</blockquote>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1firers867bj30ic03sgly.jpg" alt=""></p>
-<p>上图中：还是之前的测试用例，将Ancestors选项关闭。<br>会发现click的信息中，只剩下了div#test节点自身的事件。<br>不难看出：<strong>Ancestors主要用于分析祖先元素的事件</strong></p>
-<blockquote>
-<p>FrameWork Listeners属性：</p>
-</blockquote>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1firf1jruxpj30iq04kgm8.jpg" alt=""></p>
-<p>上图中：关闭了FrameWork Listeners，会发现绑定事件的具体代码指向了jquery，<br>其实这没有错，事实上使用jquery绑定事件，就是jquery内部帮我们做了处理，但这样很不利于平时的开发和调试。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1firf4kvyyej30j204mjs1.jpg" alt=""></p>
-<p><strong>Framework listeners 勾上后浏览器会处理主流框架的绑定事件，这样事件绑定显示位置更加准确。</strong></p>
-<h2 id="console"><a href="#console" class="headerlink" title="console"></a>console</h2>
+<p>（1）点击“提交”按钮，采集input输入框输入的内容</p>
+<p>（2）将采集到的信息，展示到上面的span标签中</p>
+<p>现在我们尝试输入内容：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fkegiv6yrtj30iw0903yw.jpg" alt=""></p>
+<pre><code>1，输入内容123，
+2，点击提交
+3，span中也展示了123
+</code></pre><p>可以看到我们输入什么，点击提交之后，就会放到span当中</p>
+<p><br></p>
+<h2 id="2，存在的问题"><a href="#2，存在的问题" class="headerlink" title="2，存在的问题"></a>2，存在的问题</h2><p><strong>注意：</strong> 如果我们输入 <strong>script&gt;alert(1)&lt;/script”</strong> 标签的话,这岂不是就 <strong>出大事了</strong>！</p>
+<p>既然如此，我们测试一下</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fkego3hu8fj30io07m0t9.jpg" alt=""></p>
+<pre><code>1，在input中输入了&lt;script&gt;alert(1);&lt;/script&gt;
+2, 点击提交
+3，然而span中并没内容，而且alert也没有执行
+</code></pre><p>然而，alert并没有如预期一样被执行，那么检查一下我们的html</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fkegu5zxh7j30eg03q3yr.jpg" alt=""></p>
+<p>可以看到script标签已经成功被添加到了span标签内。</p>
+<p><strong>而alert没有执行，是因为w3c规范innerHTML这个api插入的script标签不会被执行</strong></p>
+<p><br></p>
+<h2 id="3，第二次尝试攻击"><a href="#3，第二次尝试攻击" class="headerlink" title="3，第二次尝试攻击"></a>3，第二次尝试攻击</h2><p>想一想，还有没其他途径来攻击呢？</p>
+<p>前面，通过js获取了input输入的内容，那么如果，在js中出现了问题呢？</p>
+<p>例如：输入eval(alert(1))</p>
+<p>当js获取到input的value时候，是否会出现问题？</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fkeju7bt4tj30ie06s74p.jpg" alt=""></p>
+<p>如上图，这当然是不可能成功的，输入的内容，被当做字符串展示在了span标签当中。</p>
+<p>因为，获取input的value值是字符串，自然不能被执行。</p>
+<p>想要让js执行输入的字符串，需要使用eval才可以。</p>
+<pre><code>let btn = document.querySelector(&quot;button&quot;);
+let input = document.querySelector(&quot;#text&quot;);
+let span = document.querySelector(&quot;#name&quot;);
+
+btn.onclick = ()=&gt;{
+  let value = input.value;
+  eval(value);
+  span.innerHTML = value;
+}
+</code></pre><p>修改，在js中添加eval方法。</p>
+<p><br></p>
+<h2 id="4，第一小节总结"><a href="#4，第一小节总结" class="headerlink" title="4，第一小节总结"></a>4，第一小节总结</h2><p>1，通过innerHTML方式注入script的方式，失败<br>2，突破js的方案，失败<br>3，eval方法，成功</p>
+<p>可以看出，不是很系统了解过xss攻击的人，其实很难形成有效的攻击，毕竟w3c和ECMA委员会也不是吃干饭的，常见的基础型漏洞，都已经被修复的很完美。</p>
+
       
     </div>
     
@@ -509,7 +538,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/chrome调试工具/" rel="tag"><i class="fa fa-tag"></i> chrome调试工具</a>
+            <a href="/tags/xss/" rel="tag"><i class="fa fa-tag"></i> xss</a>
           
         </div>
       
@@ -522,8 +551,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/11/Typescript基础篇/" rel="next" title="Typescript基础篇">
-                <i class="fa fa-chevron-left"></i> Typescript基础篇
+              <a href="/2017/08/27/Chrome-DevTools调试工具实践-全/" rel="next" title="Chrome DevTools调试工具实践(全)">
+                <i class="fa fa-chevron-left"></i> Chrome DevTools调试工具实践(全)
               </a>
             
           </div>
@@ -531,10 +560,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/18/js类型检测汇总/" rel="prev" title="js类型检测汇总">
-                js类型检测汇总 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -697,7 +722,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础篇"><span class="nav-number">1.</span> <span class="nav-text">基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-选中目标节点-查看dom结构-Select-an-element"><span class="nav-number">1.1.</span> <span class="nav-text">一,选中目标节点,查看dom结构(Select an element)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-调试元素"><span class="nav-number">1.2.</span> <span class="nav-text">二,调试元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-事件监听-Event-Listeners"><span class="nav-number">1.3.</span> <span class="nav-text">三,事件监听(Event Listeners)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#console"><span class="nav-number">1.4.</span> <span class="nav-text">console</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一，xss攻击初探"><span class="nav-number">1.</span> <span class="nav-text">一，xss攻击初探</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，第一次尝试攻击"><span class="nav-number">1.1.</span> <span class="nav-text">1，第一次尝试攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，存在的问题"><span class="nav-number">1.2.</span> <span class="nav-text">2，存在的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3，第二次尝试攻击"><span class="nav-number">1.3.</span> <span class="nav-text">3，第二次尝试攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4，第一小节总结"><span class="nav-number">1.4.</span> <span class="nav-text">4，第一小节总结</span></a></li></ol></li></ol></div>
             
 
           </div>
