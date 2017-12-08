@@ -116,18 +116,18 @@
 
 
 
-<meta name="description" content="webpack打包存在的问题">
+<meta name="description" content="一，webpack打包存在的问题webpack的打包顺序： var path = require(&amp;apos;path&amp;apos;); module.exports = {     entry: {         one: &amp;quot;./src/one.js&amp;quot;,         two: &amp;quot;./src/two.js&amp;quot;     },     output: {">
 <meta name="keywords" content="增量构建">
 <meta property="og:type" content="article">
-<meta property="og:title" content="webpack增量构建多页应用">
+<meta property="og:title" content="webpack增量发布多页应用">
 <meta property="og:url" content="http://yoursite.com/2017/12/12/webpack增量构建多页应用/index.html">
 <meta property="og:site_name" content="丰羡的前端笔记">
-<meta property="og:description" content="webpack打包存在的问题">
+<meta property="og:description" content="一，webpack打包存在的问题webpack的打包顺序： var path = require(&amp;apos;path&amp;apos;); module.exports = {     entry: {         one: &amp;quot;./src/one.js&amp;quot;,         two: &amp;quot;./src/two.js&amp;quot;     },     output: {">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-08T08:20:52.000Z">
+<meta property="og:updated_time" content="2017-12-08T11:29:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="webpack增量构建多页应用">
-<meta name="twitter:description" content="webpack打包存在的问题">
+<meta name="twitter:title" content="webpack增量发布多页应用">
+<meta name="twitter:description" content="一，webpack打包存在的问题webpack的打包顺序： var path = require(&amp;apos;path&amp;apos;); module.exports = {     entry: {         one: &amp;quot;./src/one.js&amp;quot;,         two: &amp;quot;./src/two.js&amp;quot;     },     output: {">
 
 
 
@@ -162,7 +162,7 @@
 
 
 
-  <title>webpack增量构建多页应用 | 丰羡的前端笔记</title>
+  <title>webpack增量发布多页应用 | 丰羡的前端笔记</title>
   
 
 
@@ -333,7 +333,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">webpack增量构建多页应用</h1>
+          <h1 class="post-title" itemprop="name headline">webpack增量发布多页应用</h1>
         
 
         <div class="post-meta">
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  8
+                  1,037
                 </span>
               
 
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -414,7 +414,81 @@
       
 
       
-        <h1 id="webpack打包存在的问题"><a href="#webpack打包存在的问题" class="headerlink" title="webpack打包存在的问题"></a>webpack打包存在的问题</h1>
+        <h1 id="一，webpack打包存在的问题"><a href="#一，webpack打包存在的问题" class="headerlink" title="一，webpack打包存在的问题"></a>一，webpack打包存在的问题</h1><p>webpack的打包顺序：</p>
+<pre><code>var path = require(&apos;path&apos;);
+module.exports = {
+    entry: {
+        one: &quot;./src/one.js&quot;,
+        two: &quot;./src/two.js&quot;
+    },
+    output: {
+        path: path.resolve(__dirname, &apos;dist&apos;),
+        filename: &quot;[name].js&quot;
+    }
+};
+</code></pre><p>1，找到入口文件</p>
+<p>2，根据入口文件，找出具有依赖关系的文件js/css</p>
+<p>3，最后，把css/js全部打包成一个js包</p>
+<p><strong>好的，打包完成，打包了整个世界，那么问题来了：</strong></p>
+<hr>
+<p>产品说：按钮颜色不对，给我改成#ccc</p>
+<p>技术：好的，这就改。</p>
+<p>然后就有了如下流程：</p>
+<p>1，找到了entry -&gt; js -&gt; componet -&gt; button.less修改了一个色值</p>
+<p>2，执行webpack打包<br><br></p>
+<h3 id="这时就暴露了问题："><a href="#这时就暴露了问题：" class="headerlink" title="这时就暴露了问题："></a>这时就暴露了问题：</h3><p>1，明明只是修改了一个色值，却要从入口开始重新打包</p>
+<p>2，业务代码明明没有变化，却也被牵连了</p>
+<p>3，最后生成的js要全部推到线上，覆盖掉线上原本没问题的业务js，纯粹是增加风险</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2><h1 id="二，思考解决方案"><a href="#二，思考解决方案" class="headerlink" title="二，思考解决方案"></a>二，思考解决方案</h1><p>首先想到的是，既然只修改一个文件，那能不能重新打包一个文件呢？</p>
+<p><br></p>
+<h2 id="1，单独打包更新的文件？"><a href="#1，单独打包更新的文件？" class="headerlink" title="1，单独打包更新的文件？"></a>1，单独打包更新的文件？</h2><p>这种方案，很快就被自我否定了。</p>
+<p>因为：</p>
+<p>1，从入口打包的文件，已经通过依赖关系，把老版本button.less打入了最终输出的js文件</p>
+<p>2，单独打包button.less输出了一个独立的button.js，这个文件需要手动引入到html中，一旦这类文件制造的多了，根本无法维护</p>
+<p>经过反复思考，单独打包每一个文件的想法，不符合webpack的设计初衷，从入口打包的流程是不能够产生变化的</p>
+<p><strong>在这个问题上卡了真的很久…..很久</strong><br><br></p>
+<h2 id="2，能否通过依赖关系，打包某一个入口？"><a href="#2，能否通过依赖关系，打包某一个入口？" class="headerlink" title="2，能否通过依赖关系，打包某一个入口？"></a>2，能否通过依赖关系，打包某一个入口？</h2><p>由于我面临的场景是多页应用，所以存在多个入口，那么既然如此，那么能否通过依赖关系，找到需要更新的入口呢？</p>
+<p>这种方案，也思索了很久，后来也被否定了。</p>
+<p>因为：</p>
+<p>1，webpack没有适合输出模块依赖关系的插件，遍寻无果啊</p>
+<p>2，通过webpack的stats分析指标，能够输出依赖关系，但数据量太大，如果不加过滤，目前项目输出12W行json信息，还需要花力气处理一遍这个信息才能拿到关系</p>
+<p>3，如果一个组件被多个入口引用，那么需要找到每一个引用的入口点，再重新打包每个被波及的入口</p>
+<p>上面尤其是第三点，完全不符合我们想增量发布的目的，如果改了一个button组件，要重新打包二三十个入口，这完全没有增量发布的意义</p>
+<p><strong>在这个问题上又纠结了很久……很久</strong><br><br></p>
+<hr>
+<h1 id="三，合理的解决方案"><a href="#三，合理的解决方案" class="headerlink" title="三，合理的解决方案"></a>三，合理的解决方案</h1><p>经过前面两个问题后，我发现思考的方向完全是错误的，总是妄想改变webpack的打包方式，简直就是跟它的理念对着干。</p>
+<p>既然不能改变webpack的打包方式，那么我能否改变webpack的输出结果呢？</p>
+<p>其实webpack关于缓存方面的功能，提供了很多功能强大的插件，例如：</p>
+<ul>
+<li><p>CommonsChunkPlugin可以用来在打包的时候提取公共js代码</p>
+</li>
+<li><p>ExtractTextPlugin可以用来从js中提出css，将其输出到一个独立的文件</p>
+</li>
+</ul>
+<p>利用这两个，插件，我们能够将我们打包的精度加以划分，将公共引用的部分打包为一个单独的文件</p>
+<p>如果公共引用的部分变为了一个单独的文件，再添加上hash进行缓存，当再次修改的时候只要更新hash，这样我们不就能够确定，究竟改动了哪个文件了吗</p>
+<p><br><br><strong>既然如此，我们一步一步进行探索：</strong><br><br></p>
+<h2 id="1，首先使用CommonsChunkPlugin，提去公共js"><a href="#1，首先使用CommonsChunkPlugin，提去公共js" class="headerlink" title="1，首先使用CommonsChunkPlugin，提去公共js"></a>1，首先使用CommonsChunkPlugin，提去公共js</h2><p>现在我们创建测试入口文件：</p>
+<p>src/one.js:</p>
+<pre><code>import jquery from &apos;jquery&apos;;
+console.log(&apos;one&apos;);
+</code></pre><p>src/two.js:</p>
+<pre><code>import jquery from &apos;jquery&apos;;
+console.log(&apos;two&apos;);
+</code></pre><p>webpack.config.js</p>
+<pre><code>var path = require(&apos;path&apos;);
+module.exports = {
+    entry: {
+        one: &quot;./src/one.js&quot;,
+        two: &quot;./src/two.js&quot;
+    },
+    output: {
+        path: path.resolve(__dirname, &apos;dist&apos;),
+        filename: &quot;[name].js&quot;
+    }
+};
+</code></pre><p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+
       
     </div>
     
@@ -648,7 +722,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#webpack打包存在的问题"><span class="nav-number">1.</span> <span class="nav-text">webpack打包存在的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一，webpack打包存在的问题"><span class="nav-number">1.</span> <span class="nav-text">一，webpack打包存在的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#这时就暴露了问题："><span class="nav-number">1.0.1.</span> <span class="nav-text">这时就暴露了问题：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，思考解决方案"><span class="nav-number">2.</span> <span class="nav-text">二，思考解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，单独打包更新的文件？"><span class="nav-number">2.1.</span> <span class="nav-text">1，单独打包更新的文件？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，能否通过依赖关系，打包某一个入口？"><span class="nav-number">2.2.</span> <span class="nav-text">2，能否通过依赖关系，打包某一个入口？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三，合理的解决方案"><span class="nav-number">3.</span> <span class="nav-text">三，合理的解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，首先使用CommonsChunkPlugin，提去公共js"><span class="nav-number">3.1.</span> <span class="nav-text">1，首先使用CommonsChunkPlugin，提去公共js</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -689,7 +763,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共16.4k字</span>
+  <span class="post-count">博客全站共17.4k字</span>
 </div>
 <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
 
