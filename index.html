@@ -313,6 +313,615 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/20/test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/20/test/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-20T16:52:51+08:00">
+                2018-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  53
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            console.log("1");
+setTimeout(()=>{
+    console.log(2)
+    Promise.resolve().then(()=>{
+        console.log(3);
+        process.nextTick(function foo() {
+            console.log(4);
+        });
+    })
+})
+Promise.resolve().then(()=>{
+    console.log(5);    
+    setTimeout(()=>{
+        console.log(6)
+    })
+    Promise.resolve().then(()=>{
+        console.log(7);
+    })
+})
+
+process.nextTick(function foo() {
+    console.log(8);
+    process.nextTick(function foo() {
+        console.log(9);
+    });
+});
+console.log("10")
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+      
+    </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/并发模型与事件循环/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/19/并发模型与事件循环/" itemprop="url">图解搞懂JavaScript引擎Event Loop</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T14:16:35+08:00">
+                2018-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,803
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee30db2997?w=2044&amp;h=1538&amp;f=jpeg&amp;s=1121386" alt=""></p>
+<h1 id="一，js单线程存在的问题"><a href="#一，js单线程存在的问题" class="headerlink" title="一，js单线程存在的问题"></a>一，js单线程存在的问题</h1><p>js是单线程的，处理任务是一件接着一件处理，所以如果一个任务需要处理很久的话，后面的任务就会被阻塞</p>
+<p>所以js通过Event Loop事件循环的方式解决了这个问题,在了解事件循环前，我们需要了解一些关键词</p>
+<h1 id="二-什么是stack，queue，heap，event-loop"><a href="#二-什么是stack，queue，heap，event-loop" class="headerlink" title="二,什么是stack，queue，heap，event loop"></a>二,什么是stack，queue，heap，event loop</h1><ul>
+<li>stack（栈）：吃多了吐</li>
+<li>queue（队列）：吃多了…释放</li>
+<li>heap(堆)：存储obj对象</li>
+</ul>
+<h2 id="执行栈"><a href="#执行栈" class="headerlink" title="执行栈"></a>执行栈</h2><p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee3088cd86?w=238&amp;h=460&amp;f=jpeg&amp;s=43149" alt=""></p>
+<p>js引擎运行时，当代码开始运行的时候，会将代码，压入执行栈进行执行</p>
+<p>例：<br><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee2e9050a2?w=352&amp;h=428&amp;f=jpeg&amp;s=42111" alt=""></p>
+<p>当代码被解析后，函数会依次被压入到栈中</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee32bc6cfe?w=1954&amp;h=1064&amp;f=jpeg&amp;s=393086" alt=""></p>
+<p>有入栈，就要有出栈，当函数c执行完，开始出栈</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee309510b6?w=1926&amp;h=1200&amp;f=jpeg&amp;s=497342" alt=""></p>
+<h2 id="当执行栈遇到异步"><a href="#当执行栈遇到异步" class="headerlink" title="当执行栈遇到异步"></a>当执行栈遇到异步</h2><p>前面执行栈，先入后出，但其实也是同步的，同步就意味着会阻塞，所以需要异步，那当执行栈中出现异步代码会怎么样</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee354ad411?w=582&amp;h=300&amp;f=jpeg&amp;s=65746" alt=""></p>
+<p>此时在代码中，添加点击事件和setTimeout，现在观察一下执行顺序</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee5d26cc3e?w=1650&amp;h=828&amp;f=jpeg&amp;s=268117" alt=""></p>
+<p>观察此时的执行栈效果，和上面的函数嵌套有显著区别</p>
+<p>1，console.log(“sync”)的语句，不会被压入到执行栈底部，因为console已经执行结束了</p>
+<p>2，click和settimeout都入栈了，但它们内部的console没有入栈的，这说明他们没有执行完</p>
+<p>3，如果click没有执行完，那为什么setTimeout会入栈，不应该被阻塞吗？</p>
+<p>答案是：当浏览器在执行栈执行的时候，发现有异步任务之后，会交给webapi去维护，而执行栈则继续执行后面的任务</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee60328fce?w=1894&amp;h=786&amp;f=jpeg&amp;s=213852" alt=""></p>
+<p>同样，setTimeout同样会被添加到webapi中</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee5e3f8985?w=1854&amp;h=728&amp;f=jpeg&amp;s=185357" alt=""></p>
+<p>webapi是浏览器自己实现的功能，这里专门维护事件。</p>
+<p>上面setTimeout旁边有个进度条，这个进度就是设置的等待时间</p>
+<h2 id="回调队列callback-queue"><a href="#回调队列callback-queue" class="headerlink" title="回调队列callback queue"></a>回调队列callback queue</h2><p>上面的例子，当setTimeout执行结束的时候，是不是就应该回到执行栈，进行执行输出呢？</p>
+<p>答案：并不是！</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee84e4ae06?w=1930&amp;h=1166&amp;f=jpeg&amp;s=253360" alt=""></p>
+<p>此时，倒计时结束后的setTimeout的可执行函数，被放如了回调队列</p>
+<p>最后，setTimeout的可执行函数，被从回调队列中取出，再此放入了执行栈</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee629756d7?w=1770&amp;h=1046&amp;f=jpeg&amp;s=258631" alt=""></p>
+<p>这样的执行过程就叫 event loop事件循环</p>
+<h1 id="Event-Loop的具体流程"><a href="#Event-Loop的具体流程" class="headerlink" title="Event Loop的具体流程"></a>Event Loop的具体流程</h1><h2 id="执行栈任务清空后，才会从回调队列头部取出一个任务"><a href="#执行栈任务清空后，才会从回调队列头部取出一个任务" class="headerlink" title="执行栈任务清空后，才会从回调队列头部取出一个任务"></a>执行栈任务清空后，才会从回调队列头部取出一个任务</h2><p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee6092ba02?w=430&amp;h=216&amp;f=jpeg&amp;s=34590" alt=""></p>
+<p>上面是一个最简单的例子，输出结果是1，3，2</p>
+<p>这是为什么？</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee87d916c3?w=2038&amp;h=898&amp;f=jpeg&amp;s=251043" alt=""></p>
+<p>上图展示了具体的执行顺序：</p>
+<p>1，console.log（1）被压入执行栈</p>
+<p>2，setTimeout在执行栈被识别为异步任务，放入webapis中</p>
+<p>3，console.log（3）被压入执行栈，此时setTimeout的可执行代码还在回调队列里等待</p>
+<p>4，console.log（3)执行完成后，从回调队列头部取出console.log(2)，放入执行栈</p>
+<p>5，console.log(2)执行</p>
+<h2 id="回调队列先进先出"><a href="#回调队列先进先出" class="headerlink" title="回调队列先进先出"></a>回调队列先进先出</h2><p>需要格外注意，回调队列是先进先出的，例：<br><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee8a003842?w=392&amp;h=336&amp;f=jpeg&amp;s=57799" alt=""></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee9363401d?w=1946&amp;h=1142&amp;f=jpeg&amp;s=329869" alt=""></p>
+<p>当console.log(4)执行完成后，从回调队列里取出了console.log(2);</p>
+<p><strong>注意：只有console.log(2)执行完成，执行栈再次清空时，才会从回调队列取出console.log(3)</strong></p>
+<h2 id="测试概念是否正确"><a href="#测试概念是否正确" class="headerlink" title="测试概念是否正确"></a>测试概念是否正确</h2><p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee91ffd725?w=448&amp;h=478&amp;f=jpeg&amp;s=83848" alt=""></p>
+<p>上面的代码最后输出1，5，2，4，3，执行过程：</p>
+<p>1，输出1，将2push进回调队列</p>
+<p>2，将4push进回调队列</p>
+<p>3，输出5</p>
+<p>4，清空了执行栈，读取输出2，发现有3，将3push进回调队列</p>
+<p>5，清空了执行栈，读取输出4</p>
+<p>6，清空了执行栈，读取输出3</p>
+<p><strong>至此，看起来好像没问题了，但是！！！！！！，事情还没有结束</strong></p>
+<h1 id="Macrotask-宏任务-、Microtask（微任务）"><a href="#Macrotask-宏任务-、Microtask（微任务）" class="headerlink" title="Macrotask(宏任务)、Microtask（微任务）"></a>Macrotask(宏任务)、Microtask（微任务）</h1><p>通过上面的例子，想必已经对event loop有了一定的了解，现在继续看一个例子</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</div><div class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">true<span class="built_in">console</span>.log(<span class="number">2</span>)</div><div class="line">&#125;)</div><div class="line">var p = <span class="keyword">new</span> Promise(<span class="function"><span class="params">(resolve,reject)</span>=&gt;</span>&#123;</div><div class="line">true<span class="built_in">console</span>.log(<span class="number">3</span>)</div><div class="line">trueresolve(<span class="string">"成功"</span>)</div><div class="line">&#125;)</div><div class="line">p.<span class="keyword">then</span>(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">true<span class="built_in">console</span>.log(<span class="number">4</span>)</div><div class="line">&#125;)</div><div class="line"><span class="built_in">console</span>.log(<span class="number">5</span>)</div></pre></td></tr></table></figure>
+<p>按照event loop的概念，应该是1，3，5，2，4，因为setTimeout和then会被放到回调队列里，然后又是先进先出，所以应该是2先输出，4后输出</p>
+<p>但事实输出的顺序是1，3，5，4，2！</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112deeb4972f6a?w=628&amp;h=572&amp;f=jpeg&amp;s=66180" alt=""></p>
+<p>这是因为promise的then方法，被认为是在Microtask微任务队列当中</p>
+<h2 id="什么是Macrotask-宏任务"><a href="#什么是Macrotask-宏任务" class="headerlink" title="什么是Macrotask(宏任务)"></a>什么是Macrotask(宏任务)</h2><p>Macrotask(宏任务)很好理解，就是咱们前面介绍过的回调队列callback queue</p>
+<h2 id="什么是Microtask（微任务）"><a href="#什么是Microtask（微任务）" class="headerlink" title="什么是Microtask（微任务）"></a>什么是Microtask（微任务）</h2><p>Microtask(微任务)同样是一个任务队列，<strong>这个队列的执行顺序是在清空执行栈之后</strong></p>
+<p>用图展示就是</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee9df2a709?w=1792&amp;h=710&amp;f=jpeg&amp;s=465709" alt=""></p>
+<p>可以看到Macrotask(宏任务)也就是回调队列上面还有一个Microtask（微任务）</p>
+<p>Microtask（微任务）虽然是队列，<strong>但并不是一个一个放入执行栈</strong>，而是当执行栈请空，会执行全部Microtask（微任务）队列中的任务，最后才是取回调队列的第一个Macrotask(宏任务)</p>
+<p>例：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112deeb63c271f?w=682&amp;h=542&amp;f=jpeg&amp;s=64607" alt=""></p>
+<p>上面的执行过程是：</p>
+<p>1，将setTimeout给push进宏任务</p>
+<p>2，将then(2)push进微任务</p>
+<p>3，将then(4)push进微任务</p>
+<p>4，任务队列为空，取出微任务第一个then(2)压入执行栈</p>
+<p>5，输出2，将then(3)push进微任务</p>
+<p>6，任务队列为空，取出微任务第一个then(4)压入执行栈</p>
+<p>7，输出4</p>
+<p>8，任务队列为空，取出微任务第一个then(3)压入执行栈</p>
+<p>9，输出3</p>
+<p>10，任务队列为空，微任务也为空，取出宏任务中的setTimeout（1）</p>
+<p>11，输出1</p>
+<h2 id="为什么then是微任务"><a href="#为什么then是微任务" class="headerlink" title="为什么then是微任务"></a>为什么then是微任务</h2><p>这和每个浏览器有关，每个浏览器实现的promise不同，有的then是宏任务，有的是微任务，chrome是微任务，普遍都默认为微任务</p>
+<p>除了then以外，还有几个事件也被记为微任务：</p>
+<ul>
+<li>process.nextTick</li>
+<li>promises</li>
+<li>Object.observe</li>
+<li>MutationObserver</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="string">"start"</span>);</div><div class="line">setImmediate(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</div><div class="line">&#125;)</div><div class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</div><div class="line">&#125;)</div><div class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</div><div class="line">&#125;)</div><div class="line">process.nextTick(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</div><div class="line">&#125;);</div><div class="line">process.nextTick(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"end"</span>)</div></pre></td></tr></table></figure>
+<p>上面代码输出start,end,2,3,4,5,1</p>
+<p>process.nextTick的概念和then不太一样，process.nextTick是加入到执行栈底部，所以和其他的表现并不一致</p>
+<h2 id="最后的测试"><a href="#最后的测试" class="headerlink" title="最后的测试"></a>最后的测试</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="string">"1"</span>);</div><div class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</div><div class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="number">3</span>);</div><div class="line">        process.nextTick(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="number">4</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;)</div><div class="line">&#125;)</div><div class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);    </div><div class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="number">6</span>)</div><div class="line">    &#125;)</div><div class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="number">7</span>);</div><div class="line">    &#125;)</div><div class="line">&#125;)</div><div class="line"></div><div class="line">process.nextTick(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">8</span>);</div><div class="line">    process.nextTick(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="number">9</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"10"</span>)</div></pre></td></tr></table></figure>
+<p>执行顺序：</p>
+<p>1，输出1</p>
+<p>2，将setTimeout（2）push进宏任务</p>
+<p>3，将then（5）push进微任务</p>
+<p>4，在执行栈底部添加nextTick（8）</p>
+<p>5，输出10</p>
+<p>6，执行nextTick（8）</p>
+<p>7，输出8</p>
+<p>8，在执行栈底部添加nextTick（9）</p>
+<p>9，输出9</p>
+<p>10，执行微任务then（5）</p>
+<p>11，输出5</p>
+<p>12，将setTimeout（6）push进宏任务</p>
+<p>13，将then（7）push进微任务</p>
+<p>14，执行微任务then（7）</p>
+<p>15，输出7</p>
+<p>16，取出setTimeout（2）</p>
+<p>17，输出2</p>
+<p>18，将then（3）push进微任务</p>
+<p>19，执行微任务then（3）</p>
+<p>20，输出3</p>
+<p>21，在执行栈底部添加nextTick（4）</p>
+<p>22，输出4</p>
+<p>23，取出setTimeout（6）</p>
+<p>24，输出6</p>
+<p>最后结果是：1，10，8，9，5，7，2，3，4，6</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop" target="_blank" rel="external">并发模型与事件循环</a></li>
+<li><a href="https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html" target="_blank" rel="external">youtube视频</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+      
+    </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/18/JavaScript中的JS引擎的执行机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/18/JavaScript中的JS引擎的执行机制/" itemprop="url">JavaScript中的JS引擎的执行机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-18T22:59:39+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  0
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+      
+    </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/18/Promise-A-规范的实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2046,481 +2655,6 @@ Object.defineProperty(obj,&quot;school&quot;,{
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/12/csrf-攻击及防御/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="丰羡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="丰羡的前端笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/12/csrf-攻击及防御/" itemprop="url">csrf 攻击及防御</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-12T20:10:48+08:00">
-                2017-10-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  1,183
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="csrf攻击初探"><a href="#csrf攻击初探" class="headerlink" title="csrf攻击初探"></a>csrf攻击初探</h1><p>前面，了解过xss攻击，xss攻击的行为是：</p>
-<pre><code>1，找到xss漏洞；
-2，制作反射型xss漏洞链接；
-3，诱使用户进行点击；
-4，注入脚本，获取用户cookie；
-5，通过用户cookie，伪造登陆，进行非法操作。
-</code></pre><p>可以看到这是一个完整的xss攻击流程。</p>
-<p>其中有一个最关键的核心问题：<strong>“找到xss漏洞”</strong></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/12/csrf-攻击及防御/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    <div>
-      
-    </div>
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/xss攻击笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="丰羡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="丰羡的前端笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/11/xss攻击笔记/" itemprop="url">xss攻击笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T20:03:47+08:00">
-                2017-10-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  4,757
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  19
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <hr>
-<h1 id="一，xss攻击初探"><a href="#一，xss攻击初探" class="headerlink" title="一，xss攻击初探"></a>一，xss攻击初探</h1><p>今天要分享的是XSS：跨站脚本攻击(Cross Site Scripting)，聊起攻击，首先要明白在前端领域，什么才是有效的攻击。</p>
-<p>既然如此，就让我们尝试攻击一下平时我们写的页面</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/11/xss攻击笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    <div>
-      
-    </div>
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/Chrome-DevTools调试工具实践-全/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="丰羡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="丰羡的前端笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/27/Chrome-DevTools调试工具实践-全/" itemprop="url">Chrome DevTools调试工具实践(全)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T14:31:20+08:00">
-                2017-08-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  4
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="设备模式"><a href="#设备模式" class="headerlink" title="设备模式"></a>设备模式</h1>
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-      
-    </div>
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2571,7 +2705,7 @@ Object.defineProperty(obj,&quot;school&quot;,{
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2657,7 +2791,7 @@ Object.defineProperty(obj,&quot;school&quot;,{
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共31.4k字</span>
+  <span class="post-count">博客全站共33.2k字</span>
 </div>
 <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
 
