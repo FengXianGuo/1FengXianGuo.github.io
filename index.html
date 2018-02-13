@@ -313,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/20/test/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/13/react-router学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="丰羡">
@@ -332,7 +332,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/20/test/" itemprop="url">未命名</a></h1>
+                <a class="post-title-link" href="/2018/02/13/react-router学习笔记/" itemprop="url">react-router v4学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -344,8 +344,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-20T16:52:51+08:00">
-                2018-01-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-13T10:06:35+08:00">
+                2018-02-13
               </time>
             
 
@@ -376,7 +376,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  53
+                  374
                 </span>
               
 
@@ -392,7 +392,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -415,33 +415,364 @@
       
         
           
-            console.log("1");
-setTimeout(()=>{
-    console.log(2)
-    Promise.resolve().then(()=>{
-        console.log(3);
-        process.nextTick(function foo() {
-            console.log(4);
-        });
-    })
-})
-Promise.resolve().then(()=>{
-    console.log(5);    
-    setTimeout(()=>{
-        console.log(6)
-    })
-    Promise.resolve().then(()=>{
-        console.log(7);
-    })
-})
+            <h2 id="初识react-router"><a href="#初识react-router" class="headerlink" title="初识react-router"></a>初识react-router</h2><p>这里要讲的是react-router-dom，它其实是react前端路由在浏览器层的实现，关系就像react和react-dom的关系一样，之所以要有react-router-dom是因为还有其他react-router-native这种在app上的实现</p>
+<hr>
+<h3 id="先跑通最简单的路由"><a href="#先跑通最简单的路由" class="headerlink" title="先跑通最简单的路由"></a>先跑通最简单的路由</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">import React,&#123;Component&#125; from 'react';</div><div class="line">import &#123;render&#125; from 'react-dom';</div><div class="line">import &#123;</div><div class="line">    HashRouter as Router,</div><div class="line">    Route,</div><div class="line">    Link</div><div class="line">  &#125; from 'react-router-dom'</div><div class="line">  let Home = ()=&gt;<span class="tag">&lt;<span class="name">div</span>&gt;</span>home<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  let One = ()=&gt;<span class="tag">&lt;<span class="name">div</span>&gt;</span>one<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  let Two = ()=&gt;<span class="tag">&lt;<span class="name">div</span>&gt;</span>two<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">class App extends Component &#123;</div><div class="line">    constructor()&#123;</div><div class="line">        super();</div><div class="line">    &#125;</div><div class="line">    render()&#123;</div><div class="line">        return (</div><div class="line">            <span class="tag">&lt;<span class="name">Router</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/home"</span>&gt;</span>home<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/one"</span>&gt;</span>one<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/two"</span>&gt;</span>two<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/home"</span> <span class="attr">component</span>=<span class="string">&#123;Home&#125;/</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/one"</span> <span class="attr">component</span>=<span class="string">&#123;One&#125;/</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/two"</span> <span class="attr">component</span>=<span class="string">&#123;Two&#125;/</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">Router</span>&gt;</span></div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">render(<span class="tag">&lt;<span class="name">App</span>/&gt;</span>,document.getElementById("root"));</div></pre></td></tr></table></figure>
+<p>上面是一个简单的路由实现，核心是使用HashRouter</p>
+<p>切换路由的时候通过#hash来实现，既然如此尝试用原生来实现一下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="javascript">         <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></div><div class="line"><span class="javascript">            <span class="keyword">let</span> hash = location.hash.slice(<span class="number">1</span>)</span></div><div class="line"><span class="undefined">            router(hash);</span></div><div class="line"><span class="actionscript">        &#125;, <span class="literal">false</span>);</span></div><div class="line"><span class="javascript">        <span class="keyword">let</span> root = <span class="built_in">document</span>.querySelector(<span class="string">"#root"</span>);</span></div><div class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">router</span><span class="params">(hash)</span></span>&#123;</span></div><div class="line"><span class="actionscript">            <span class="keyword">switch</span>(hash)&#123;</span></div><div class="line"><span class="actionscript">                <span class="keyword">case</span> <span class="string">'index'</span>:</span></div><div class="line"><span class="undefined">                    root.innerHTML = hash;</span></div><div class="line"><span class="actionscript">                    <span class="keyword">break</span>;</span></div><div class="line"><span class="actionscript">                <span class="keyword">case</span> <span class="string">'one'</span>:</span></div><div class="line"><span class="undefined">                    root.innerHTML = hash;                </span></div><div class="line"><span class="actionscript">                    <span class="keyword">break</span>;</span></div><div class="line"><span class="actionscript">                <span class="keyword">case</span> <span class="string">'two'</span>:</span></div><div class="line"><span class="undefined">                    root.innerHTML = hash;                   </span></div><div class="line"><span class="actionscript">                    <span class="keyword">break</span>;</span></div><div class="line"><span class="actionscript">                <span class="keyword">default</span>:</span></div><div class="line"><span class="actionscript">                    <span class="keyword">return</span> root.innerHTML = <span class="string">'未匹配'</span>;</span></div><div class="line"><span class="undefined">            &#125;</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>通过上面我们就简单实现了一个前端路由，但存在问题，刷新的时候无效</p>
+<p>所以可以通过注册load事件来弥补</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> hash = location.hash.slice(<span class="number">1</span>)</div><div class="line">    router(hash);</div><div class="line">&#125;, <span class="literal">false</span>);</div><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> hash = location.hash.slice(<span class="number">1</span>)</div><div class="line">    router(hash);</div><div class="line">&#125;, <span class="literal">false</span>);</div></pre></td></tr></table></figure>
 
-process.nextTick(function foo() {
-    console.log(8);
-    process.nextTick(function foo() {
-        console.log(9);
-    });
-});
-console.log("10")
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+      
+    </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/03/react学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/03/react学习笔记/" itemprop="url">react学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-03T22:07:04+08:00">
+                2018-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  728
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="重头再学react"><a href="#重头再学react" class="headerlink" title="重头再学react"></a>重头再学react</h1><p>接触react两年多了，但从来没有用到极致，也不知道边界在哪里，组件颗粒化的程度一直雾里看花，水中望月，痛定思痛，从头开始学习react。</p>
+<h1 id="一，react解决了什么问题"><a href="#一，react解决了什么问题" class="headerlink" title="一，react解决了什么问题"></a>一，react解决了什么问题</h1><p>最早接触前端，就三个概念，结构、表现、行为，大家都追求分离，分离的越清晰，越容易维护</p>
+<p>但时间长了，分离的多了，维护也越来越麻烦，一个功能组件的html、css、js不在一起，找起来就十分的麻烦</p>
+<h2 id="能否将结构、表现、行为结合为一"><a href="#能否将结构、表现、行为结合为一" class="headerlink" title="能否将结构、表现、行为结合为一"></a>能否将结构、表现、行为结合为一</h2><p>如果能够将html、css、js合并为一个整体，这样的话，对于某一个功能组件岂不是十分友好</p>
+<h2 id="以js为桥梁，注入html和css"><a href="#以js为桥梁，注入html和css" class="headerlink" title="以js为桥梁，注入html和css"></a>以js为桥梁，注入html和css</h2><p>上面预期的是将html、css、js合并为一，但怎么合并？</p>
+<p>前端常见的场景是当用户产生交互的时候，通过js改变html、css</p>
+<p>由此可知，js是与用户交互的第一个环节，而html和css是后置的。</p>
+<p>既然js本身要操作html和css，而且要不停改变，或创建节点，或改变样式，那又何必需要真实的html文档呢，以及style样式呢？</p>
+<p>js的功能原本就包括增删改查dom节点，以及通过js去修改样式</p>
+<p>这样的话，其实只需要一段js就可以包含所有html、css和功能，而且可以通过script标签外部引入，对原本的html文档无侵入性破坏，简直完美。</p>
+<h2 id="通过代码来实现js统一天下"><a href="#通过代码来实现js统一天下" class="headerlink" title="通过代码来实现js统一天下"></a>通过代码来实现js统一天下</h2><p>首先，html可以通过拼接字符串的形式在js中进行书写</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let <span class="keyword">str</span> = `&lt;<span class="keyword">div</span> style=<span class="string">"color:red;"</span>&gt;<span class="number">123</span>&lt;/<span class="keyword">div</span>&gt;`</div></pre></td></tr></table></figure>
+<p>通过js创建dom很简单，但存在一个问题，字符串没有办法绑定事件，所以需要将字符串变成真正的dom，为其绑定事件</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let <span class="keyword">str</span> = `&lt;<span class="keyword">div</span> style=<span class="string">"color:red;"</span>&gt;<span class="number">123</span>&lt;/<span class="keyword">div</span>&gt;`</div><div class="line">let <span class="keyword">div</span> = document.createElement(<span class="string">'div'</span>);</div><div class="line"><span class="keyword">div</span>.innerHtml = <span class="keyword">str</span>;</div></pre></td></tr></table></figure>
+<p>通过上面的方法，即可以在js中获取到dom</p>
+<p>但什么样的组件才是合理的？</p>
+<p>例如，想要复用如下的dom结构</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="keyword">div</span>&gt;<span class="number">123</span>&lt;/<span class="keyword">div</span>&gt;</div></pre></td></tr></table></figure>
+<p>直接在html中进行复制粘贴，当然行得通，通常结果为：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="keyword">div</span>&gt;<span class="number">123</span>&lt;/<span class="keyword">div</span>&gt;</div><div class="line">&lt;<span class="keyword">div</span>&gt;<span class="number">123</span>&lt;/<span class="keyword">div</span>&gt;</div><div class="line">&lt;<span class="keyword">div</span>&gt;<span class="number">123</span>&lt;/<span class="keyword">div</span>&gt;</div><div class="line">&lt;<span class="keyword">div</span>&gt;<span class="number">123</span>&lt;/<span class="keyword">div</span>&gt;</div></pre></td></tr></table></figure>
+<p>这种行为本身没有问题，但需要dom操作的场景，一般是用户产生交互的时候，也就是执行js的时候；</p>
+<p>而js操作dom是很繁琐的，需要查找dom，创建内部节点，添加节点等，很多时候为了创建动态内容的dom节点，会使用模版字符串</p>
+<p>例如：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="keyword">one</span> = document.querySelector(<span class="string">"#one"</span>);</div><div class="line"><span class="keyword">var</span> <span class="keyword">two</span> = document.querySelector(<span class="string">"#two"</span>);</div><div class="line"><span class="keyword">var</span> content = 123;</div><div class="line"><span class="keyword">var</span> dom = `&lt;div&gt;<span class="variable">$&#123;content&#125;</span>&lt;s/div&gt;`</div><div class="line"><span class="keyword">one</span>.innerHTML = dom;</div><div class="line"><span class="keyword">two</span>.innerHTML = dom;</div></pre></td></tr></table></figure>
+<p>通过摸板字符串的方式，注入content变量，添加到不同的节点中，这样模版字符串书写的dom节点</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+      
+    </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/25/字符发展历史/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/25/字符发展历史/" itemprop="url">字符发展历史</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-25T20:24:37+08:00">
+                2018-01-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  482
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一，古代数据怎么传输"><a href="#一，古代数据怎么传输" class="headerlink" title="一，古代数据怎么传输"></a>一，古代数据怎么传输</h1><p>古代打仗，两个烽火台想传递有敌人来犯，只需要点一大束火就行了</p>
+<h2 id="存在的问题，不知道敌人的数量"><a href="#存在的问题，不知道敌人的数量" class="headerlink" title="存在的问题，不知道敌人的数量"></a>存在的问题，不知道敌人的数量</h2><p>或许可以多点几个火把，但如果十万大军来犯，会出现好多问题：</p>
+<p>1，眼看着十万大军，却没有十万个火把</p>
+<p>2，点火的速度也跟不上</p>
+<p>3，好不容易在有限的空间上点了1000个火把，对面烽火台的友军也看晕了，扎堆点的数不明白啊</p>
+<h2 id="需要一种优化的传递数据方式"><a href="#需要一种优化的传递数据方式" class="headerlink" title="需要一种优化的传递数据方式"></a>需要一种优化的传递数据方式</h2><p>仔细分析一下，烽火台上的每个火把具备两种状态：点火和没点火。</p>
+<p>1根火把，2种状态</p>
+<p>2根火把组合在一起，4种状态（[点火，点火]、[没点火、点火]、[点火、没点火]、[没点火、没点火]）</p>
+<p>3根火把2^3=8种状态</p>
+<p>3根火把2^3=8种状态</p>
+<p>4根火把2^4=16种状态</p>
+<p>5根火把2^5=32种状态</p>
+<p>6根火把2^6=64种状态</p>
+<p>7根火把2^7=128种状态</p>
+<p>8根火把2^8=256种状态</p>
+<p>如果每个烽火台都有这样一个对照关系表，只要8个火把钉在一块木条上，举起来，对面一看，哇8盏灯都亮了，256个敌人啊</p>
+<h2 id="如果敌人上万怎么办？"><a href="#如果敌人上万怎么办？" class="headerlink" title="如果敌人上万怎么办？"></a>如果敌人上万怎么办？</h2><p>直接举两块板子，每块板子钉8个火把，这样就有了16个火把，16个火把一共有65536种组合</p>
+<p>所以如果16个火把全部点亮，那就代表来了65536个敌人</p>
+<p>字节(Byte)是计算机存储时的一种计量单位，一个字节等于8位二进制数<br>一个位就代表一个0或1，每8个位（bit）组成一个字节（Byte）<br>字节是通过网络传输信息的单位<br>一个字节最大值十进制数是255 2**8-1;</p>
+
           
         
       
@@ -554,7 +885,7 @@ console.log("10")
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,803
+                  1,849
                 </span>
               
 
@@ -594,8 +925,7 @@ console.log("10")
         
           
             <p><img src="https://user-gold-cdn.xitu.io/2018/1/20/16112dee30db2997?w=2044&amp;h=1538&amp;f=jpeg&amp;s=1121386" alt=""></p>
-<h1 id="一，js单线程存在的问题"><a href="#一，js单线程存在的问题" class="headerlink" title="一，js单线程存在的问题"></a>一，js单线程存在的问题</h1><p>js是单线程的，处理任务是一件接着一件处理，所以如果一个任务需要处理很久的话，后面的任务就会被阻塞</p>
-<p>所以js通过Event Loop事件循环的方式解决了这个问题,在了解事件循环前，我们需要了解一些关键词</p>
+<h1 id="一，js单线程存在的问题"><a href="#一，js单线程存在的问题" class="headerlink" title="一，js单线程存在的问题"></a>一，js单线程存在的问题</h1><p>js是单线程的，处理任务是一件接着一件处理，所以如果一个任务需要处理很久的话，后面的任务就会被阻塞<br>a<br>所以js通过Event Loop事件循环的方式解决了这个问题,在了解事件循环前，我们需要了解一些关键词</p>
 <h1 id="二-什么是stack，queue，heap，event-loop"><a href="#二-什么是stack，queue，heap，event-loop" class="headerlink" title="二,什么是stack，queue，heap，event loop"></a>二,什么是stack，queue，heap，event loop</h1><ul>
 <li>stack（栈）：吃多了吐</li>
 <li>queue（队列）：吃多了…释放</li>
@@ -716,6 +1046,7 @@ console.log("10")
 <p>23，取出setTimeout（6）</p>
 <p>24，输出6</p>
 <p>最后结果是：1，10，8，9，5，7，2，3，4，6</p>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> store = &#123;&#125;, flag = <span class="literal">false</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span> (<span class="params">num, id</span>) </span>&#123;</div><div class="line">  store[ id ] = num;</div><div class="line">  <span class="keyword">if</span>(!flag)&#123;</div><div class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">       <span class="keyword">for</span>( <span class="keyword">var</span> k <span class="keyword">in</span> store )&#123;</div><div class="line">           <span class="keyword">var</span> num = store[k];</div><div class="line">            <span class="keyword">var</span> product  = num  * num;</div><div class="line">            <span class="keyword">var</span> resultEle = <span class="built_in">document</span>.getElementById( k );</div><div class="line">            resultEle.textContent = product;</div><div class="line">       &#125;</div><div class="line">    &#125;);</div><div class="line">    flag = <span class="literal">true</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop" target="_blank" rel="external">并发模型与事件循环</a></li>
 <li><a href="https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html" target="_blank" rel="external">youtube视频</a></li>
@@ -2074,592 +2405,11 @@ Object.defineProperty(obj,&quot;school&quot;,{
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/25/前端学python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="丰羡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="丰羡的前端笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/25/前端学python/" itemprop="url">前端学python</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-25T14:30:26+08:00">
-                2017-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-      
-    </div>
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/12/webpack增量构建多页应用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="丰羡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="丰羡的前端笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/12/webpack增量构建多页应用/" itemprop="url">webpack增量发布多页应用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-12T19:17:35+08:00">
-                2017-12-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  5,560
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  23
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一，webpack打包存在的问题"><a href="#一，webpack打包存在的问题" class="headerlink" title="一，webpack打包存在的问题"></a>一，webpack打包存在的问题</h1><p>webpack的打包顺序：</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var <span class="built_in">path</span> = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line">module.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        two: <span class="string">"./src/two.js"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="built_in">output</span>: &#123;</div><div class="line">        <span class="built_in">path</span>: <span class="built_in">path</span>.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].js"</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>1，找到入口文件</p>
-<p>2，根据入口文件，找出具有依赖关系的文件js/css</p>
-<p>3，最后，把css/js全部打包成一个js包</p>
-<p><strong>好的，打包完成，打包了整个世界，那么问题来了：</strong></p>
-<hr>
-<p>产品说：按钮颜色不对，给我改成#ccc</p>
-<p>技术：好的，这就改。</p>
-<p>然后就有了如下流程：</p>
-<p>1，找到了entry -&gt; js -&gt; componet -&gt; button.less修改了一个色值</p>
-<p>2，执行webpack打包<br><br></p>
-<h3 id="这时就暴露了问题："><a href="#这时就暴露了问题：" class="headerlink" title="这时就暴露了问题："></a>这时就暴露了问题：</h3><p>1，明明只是修改了一个色值，却要从入口开始重新打包</p>
-<p>2，业务代码明明没有变化，却也被牵连了</p>
-<p>3，最后生成的js要全部推到线上，覆盖掉线上原本没问题的业务js，纯粹是增加风险</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2><h1 id="二，思考解决方案"><a href="#二，思考解决方案" class="headerlink" title="二，思考解决方案"></a>二，思考解决方案</h1><p>首先想到的是，既然只修改一个文件，那能不能重新打包一个文件呢？</p>
-<p><br></p>
-<h2 id="1，单独打包更新的文件？"><a href="#1，单独打包更新的文件？" class="headerlink" title="1，单独打包更新的文件？"></a>1，单独打包更新的文件？</h2><p>这种方案，很快就被自我否定了。</p>
-<p>因为：</p>
-<p>1，从入口打包的文件，已经通过依赖关系，把老版本button.less打入了最终输出的js文件</p>
-<p>2，单独打包button.less输出了一个独立的button.js，这个文件需要手动引入到html中，一旦这类文件制造的多了，根本无法维护</p>
-<p>经过反复思考，单独打包每一个文件的想法，不符合webpack的设计初衷，从入口打包的流程是不能够产生变化的</p>
-<p><strong>在这个问题上卡了真的很久…..很久</strong><br><br></p>
-<h2 id="2，能否通过依赖关系，打包某一个入口？"><a href="#2，能否通过依赖关系，打包某一个入口？" class="headerlink" title="2，能否通过依赖关系，打包某一个入口？"></a>2，能否通过依赖关系，打包某一个入口？</h2><p>由于我面临的场景是多页应用，所以存在多个入口，那么既然如此，那么能否通过依赖关系，找到需要更新的入口呢？</p>
-<p>这种方案，也思索了很久，后来也被否定了。</p>
-<p>因为：</p>
-<p>1，webpack没有适合输出模块依赖关系的插件，遍寻无果啊</p>
-<p>2，通过webpack的stats分析指标，能够输出依赖关系，但数据量太大，如果不加过滤，目前项目输出12W行json信息，还需要花力气处理一遍这个信息才能拿到关系</p>
-<p>3，如果一个组件被多个入口引用，那么需要找到每一个引用的入口点，再重新打包每个被波及的入口</p>
-<p>上面尤其是第三点，完全不符合我们想增量发布的目的，如果改了一个button组件，要重新打包二三十个入口，这完全没有增量发布的意义</p>
-<p><strong>在这个问题上又纠结了很久……很久</strong><br><br></p>
-<hr>
-<h1 id="三，合理的解决方案"><a href="#三，合理的解决方案" class="headerlink" title="三，合理的解决方案"></a>三，合理的解决方案</h1><p>经过前面两个问题后，我发现思考的方向完全是错误的，总是妄想改变webpack的打包方式，简直就是跟它的理念对着干。</p>
-<p>既然不能改变webpack的打包方式，那么我能否改变webpack的输出结果呢？</p>
-<p>其实webpack关于缓存方面的功能，提供了很多功能强大的插件，例如：</p>
-<ul>
-<li><p>CommonsChunkPlugin可以用来在打包的时候提取公共js代码</p>
-</li>
-<li><p>ExtractTextPlugin可以用来从js中提出css，将其输出到一个独立的文件</p>
-</li>
-</ul>
-<p>利用这两个插件，我们能够将我们打包的精度加以划分，将公共引用的部分打包为一个单独的文件</p>
-<p>如果公共引用的部分变为了一个单独的文件，再添加上hash进行缓存，当再次修改的时候只要更新hash，这样我们不就能够确定，究竟改动了哪个文件了吗</p>
-<p><br><br><strong>既然如此，我们一步一步进行探索：</strong><br><br></p>
-<h2 id="1，首先使用CommonsChunkPlugin，提取公共js"><a href="#1，首先使用CommonsChunkPlugin，提取公共js" class="headerlink" title="1，首先使用CommonsChunkPlugin，提取公共js"></a>1，首先使用CommonsChunkPlugin，提取公共js</h2><p>现在我们创建测试入口文件：</p>
-<p>src/one.js:</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'one'</span>);</div></pre></td></tr></table></figure>
-<p>src/two.js:</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'two'</span>);</div></pre></td></tr></table></figure>
-<p>webpack.config.js<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var <span class="built_in">path</span> = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line">module.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        two: <span class="string">"./src/two.js"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="built_in">output</span>: &#123;</div><div class="line">        <span class="built_in">path</span>: <span class="built_in">path</span>.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].js"</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>执行webpack</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fm9lr44k1zj30c604qgme.jpg" alt=""></p>
-<p>输出了2个文件，大小都是271kb，这是因为one.js和two.js都引用了jquery，jquery打包了2次，分别打包到了两个文件中</p>
-<p>这样显然不是很友好，像jquery这种文件，显然平时不会改动，还是缓存起来比较好，修改webpack.config.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        two: <span class="string">"./src/two.js"</span></div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].js"</span></div><div class="line">    &#125;,</div><div class="line">    plugins:[</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: <span class="string">"common"</span>,</div><div class="line">        &#125;),</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>现在我们添加了CommonsChunkPlugin插件，它的作用是提取公共js，再次执行webpack</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fm9nf5v7coj30dz04tq3v.jpg" alt=""></p>
-<p>可以看到one.js和two.js的大小已经不到1k了，而common则274k，可以看到jquery已经被打包到了common.js当中</p>
-<h2 id="2，为文件添加hash"><a href="#2，为文件添加hash" class="headerlink" title="2，为文件添加hash"></a>2，为文件添加hash</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        two: <span class="string">"./src/two.js"</span></div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[hash:6].js"</span></div><div class="line">    &#125;,</div><div class="line">    plugins:[</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: <span class="string">"common"</span>,</div><div class="line">        &#125;),</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>上面修改了output的输出内容<code>[name].[hash].js</code></p>
-<p>现在执行webpack：</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fmbpu8hr7mj30iq05vdha.jpg" alt=""></p>
-<p>可以看到打包的三个文件都有了hash，但需要主意，此时每个文件的hash都是一样的</p>
-<p>再次执行一遍webpack：</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fmbpvv2phjj30ik0cytd7.jpg" alt=""></p>
-<p>可以看到，两次构建输出的结果一致，这很好，因为没有修改文件，自然不希望hash发生改变</p>
-<p>那么接下来，修改一下文件：one.js</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'修改one'</span>);</div></pre></td></tr></table></figure>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fmbpylvc4ej30iu06e76b.jpg" alt=""></p>
-<p>悲剧了，所有文件全部修改了hash，查看输出的结果：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fmbpzeuudyj3065063jrt.jpg" alt=""></p>
-<p>可以发现只修改一个文件，却修改了全部文件的hash，这个问题很严重，显然不是我们想要的</p>
-<h2 id="3，使用chunkhash替代hash"><a href="#3，使用chunkhash替代hash" class="headerlink" title="3，使用chunkhash替代hash"></a>3，使用chunkhash替代hash</h2><p>webpack中关于缓存，提供了好几种添加hash的方法，其中就有chunkhash</p>
-<p>chunkhash简单来说，就是根据模块内容来添加hash，既然这样的话，只要文件没有改变，就不会生成新的hash</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        two: <span class="string">"./src/two.js"</span></div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[chunkhash:8].js"</span></div><div class="line">    &#125;,</div><div class="line">    plugins:[</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: <span class="string">"common"</span>,</div><div class="line">        &#125;),</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>如上图，修改<code>filename:[name].[chunkhash:8]/js</code></p>
-<p>执行webpack</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fmbq7ekerwj30ja06fwgo.jpg" alt=""></p>
-<p>可以看到这一次生成的hash是4897….</p>
-<p>但是输出的每个文件的hash却不是4897….</p>
-<p>很好，接下来再执行一次webpack：</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fmbq9mv2icj30jt0ctn1m.jpg" alt=""></p>
-<p>可以看到两次输出之间hash并没有发生变化</p>
-<p>现在，修改one.js,再执行webapck</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'使用chunkhash后修改one'</span>);</div></pre></td></tr></table></figure>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fmbqwrkgrmj30jr0ct0x6.jpg" alt=""></p>
-<p>可以看到two.js的hash没有改变one.js的hash改变了，但common.js的hash竟然也改了…</p>
-<h2 id="4，提取manifest"><a href="#4，提取manifest" class="headerlink" title="4，提取manifest"></a>4，提取manifest</h2><p>前面用CommonsChunkPlugin提取代码后，公共的代码已经被抽离，但是他们之间肯定存在一个映射关系,例如</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fmbrfav1cyj30me0cuwf4.jpg" alt=""></p>
-<p>之所以commonjs的hash会变，是因为修改one.js生成了新的hash，而jquery又与one.js存在映射关系，<code>映射关系会更新</code>，也就是说common.js它要从新的one.js中提取了jquery</p>
-<p>而<code>manifest</code>就可以简单理解为模块映射关系的集合，而这个manifest将随着这些被分离出来的代码共同打包！！！</p>
-<p>所以现在分离manifest<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        two: <span class="string">"./src/two.js"</span></div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[chunkhash:8].js"</span></div><div class="line">    &#125;,</div><div class="line">    plugins:[</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: <span class="string">"common"</span>,</div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: <span class="string">'manifest'</span> <span class="comment">// 用于提取manifest</span></div><div class="line">        &#125;)</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>这里主要是利用CommonsChunkPlugin的一个功能，通过默认的名字，来提取公共代码，因为webpack打包的是有有一个默认模块就是manifest，所以我们可以通过这个来实现</p>
-<p>现在我们执行webpack：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fmcn5bj60mj30l3074ach.jpg" alt=""></p>
-<p>可以看到，多输出了一个manifest.js</p>
-<p>接下来，再修改one.js</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'分离manifest后修改one'</span>);</div></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fmcn7c48toj30jy0dxaf2.jpg" alt=""></p>
-<p>可以看到，现在只有one.js和manifest.js的hash发生了改变，common.js被成功缓存了</p>
-<p>使用代码对比工具，比较两次manifest之间的区别，可以看到确实是映射的chunkid发生了改变</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fmcnj58sg1j30tr06v0ul.jpg" alt=""></p>
-<h2 id="5，使用webpack-md5-hash插件"><a href="#5，使用webpack-md5-hash插件" class="headerlink" title="5，使用webpack-md5-hash插件"></a>5，使用webpack-md5-hash插件</h2><p>前面我们输出了一个manifest.js，但这样还需要单独处理这个manifest.js，所以可以使用webpack的另一个插件webpack-md5-hash</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> WebpackMd5Hash = <span class="built_in">require</span>(<span class="string">'webpack-md5-hash'</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        two: <span class="string">"./src/two.js"</span></div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[chunkhash:8].js"</span></div><div class="line">    &#125;,</div><div class="line">    plugins:[</div><div class="line">        <span class="keyword">new</span> WebpackMd5Hash(),</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: <span class="string">"common"</span>,</div><div class="line">        &#125;),</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>执行一次打包：</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fmcnzbfjanj30k706iq51.jpg" alt=""></p>
-<p>没有manifest输出，修改one.js</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'使用WebpackMd5Hash修改one'</span>);</div></pre></td></tr></table></figure>
-<p>再次打包：</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fmco0hs9dcj30jf0cwgq1.jpg" alt=""></p>
-<p>这一次仅有one.js的hash发生了改变</p>
-<p>虽然webpack-md5-hash解决了我们的问题，但这也让打包的模块关系变成了黑盒，存在一定的未知风险，还需要仔细实践评估是否有问题</p>
-<h2 id="6，打包修改频率超级低的库"><a href="#6，打包修改频率超级低的库" class="headerlink" title="6，打包修改频率超级低的库"></a>6，打包修改频率超级低的库</h2><p>前面已经抽离出来了公共代码，但是还存在问题，假如这时候又需要引入lodash，那common的hash是否会改变？</p>
-<p>修改one.js<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="keyword">import</span> lodash <span class="keyword">from</span> <span class="string">'lodash'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'引入lodash修改one'</span>);</div></pre></td></tr></table></figure></p>
-<p>修改two.js<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="keyword">import</span> lodash <span class="keyword">from</span> <span class="string">'lodash'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'引入lodash修改two'</span>);</div></pre></td></tr></table></figure></p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fmctc0r0zkj30j404qgmu.jpg" alt=""></p>
-<p>这一次，所有文件的hash都发生了改变，不仅如此，而且更显著的是common的体积增大了</p>
-<p>这就意味者lodash也被打进了common当中，但这本身是一个错误的行为，lodash和jquery，平时根本不会对其进行修改，既然如此，那还需要优化，把他们单独打包出去</p>
-<p>现在修改webapack.config.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> WebpackMd5Hash = <span class="built_in">require</span>(<span class="string">'webpack-md5-hash'</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        two: <span class="string">"./src/two.js"</span>,</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        common:[<span class="string">'jquery'</span>,<span class="string">'lodash'</span>]</div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[chunkhash:8].js"</span></div><div class="line">    &#125;,</div><div class="line">    plugins:[</div><div class="line">        <span class="keyword">new</span> WebpackMd5Hash(),</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: <span class="string">"common"</span>,</div><div class="line">        &#125;),</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>这一次在入口处添加了一个common，common单独指向了jquery和lodash，这一次我们执行打包</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fmcu7xqlo6j30ko02eq3k.jpg" alt=""></p>
-<p>此时，输出的内容没有明显变化，同样是3个文件,大小也完全一致，hash也没有问题</p>
-<p>可以看到，common的大小是817k</p>
-<p>如果这时，再应用了其他的包呢？例如引入react</p>
-<p>修改one.js</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="keyword">import</span> lodash <span class="keyword">from</span> <span class="string">'lodash'</span>;</div><div class="line"><span class="keyword">import</span> react <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'引入react修改one'</span>);</div></pre></td></tr></table></figure>
-<p>修改two.js</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="keyword">import</span> lodash <span class="keyword">from</span> <span class="string">'lodash'</span>;</div><div class="line"><span class="keyword">import</span> react <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'引入react修改one'</span>);</div></pre></td></tr></table></figure>
-<p>执行webpack</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fmcuwtxohcj30jc01zmxp.jpg" alt=""></p>
-<p>问题来了，common的大小增加了，很显然react被打包进去了，但如果我们此时，只想永久缓存jquery和lodash呢，这该怎么办？</p>
-<p>修改webpack.config.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> WebpackMd5Hash = <span class="built_in">require</span>(<span class="string">'webpack-md5-hash'</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        two: <span class="string">"./src/two.js"</span>,</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        common:[<span class="string">'jquery'</span>,<span class="string">'lodash'</span>]</div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[chunkhash:8].js"</span></div><div class="line">    &#125;,</div><div class="line">    plugins:[</div><div class="line">        <span class="keyword">new</span> WebpackMd5Hash(),</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: <span class="string">'common'</span>,</div><div class="line">            minChunks:<span class="literal">Infinity</span></div><div class="line">        &#125;)</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>这一次，添加了一句话<code>minChunks:Infinity</code></p>
-<p>minChunks属性的可以设置为2，意思是引用次数为2的模块就抽离出来，而<code>Infinity</code>则表示无限，无限就意味着不会有多余的被打包进来</p>
-<p>现在执行webpack打包</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fmcv6vjogyj30jr02amxr.jpg" alt=""></p>
-<p>可以看到现在common又恢复了816k，当然react也没有抽出来，还在两个文件当中，接下来继续抽离react</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> WebpackMd5Hash = <span class="built_in">require</span>(<span class="string">'webpack-md5-hash'</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        two: <span class="string">"./src/two.js"</span>,</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">        common:[<span class="string">'jquery'</span>,<span class="string">'lodash'</span>],</div><div class="line">        react:[<span class="string">'react'</span>,<span class="string">'react-redux'</span>]</div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[chunkhash:8].js"</span></div><div class="line">    &#125;,</div><div class="line">    plugins:[</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: [<span class="string">'react'</span>,<span class="string">'common'</span>], <span class="comment">// 用于提取manifest</span></div><div class="line">            minChunks:<span class="literal">Infinity</span></div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> WebpackMd5Hash(),</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fmcylc296jj30jm08rn02.jpg" alt=""></p>
-<p>通过上面的构建，我们已经将不会改动的类库，单独打包并维持住了hash。</p>
-<h2 id="7，引入HashedModuleIdsPlugin固定模块id"><a href="#7，引入HashedModuleIdsPlugin固定模块id" class="headerlink" title="7，引入HashedModuleIdsPlugin固定模块id"></a>7，引入HashedModuleIdsPlugin固定模块id</h2><p>前面看似完美，但如果我们现在改变一下入口的顺序</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">entry</span>: &#123;</div><div class="line">    <span class="attribute">react</span>:[<span class="string">'react'</span>,<span class="string">'react-redux'</span>],        </div><div class="line">    <span class="attribute">two</span>: <span class="string">"./src/two.js"</span>,</div><div class="line">    <span class="attribute">one</span>: <span class="string">"./src/one.js"</span>,</div><div class="line">    <span class="attribute">common</span>:[<span class="string">'jquery'</span>,<span class="string">'lodash'</span>],        </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fmcyw1m8e2j30jf0inwku.jpg" alt=""></p>
-<p>可以看到common和react公共库的hash又变了，这是因为，模块id是根据webpack的解析顺序增量的，如果变换解析顺序，那模块id也会随之改变。</p>
-<p>所以就需要HashedModuleIdsPlugin了，它是根据模块相对路径生成模块标识，如果模块没有改变，那模块标识也不会改变</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> WebpackMd5Hash = <span class="built_in">require</span>(<span class="string">'webpack-md5-hash'</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        common:[<span class="string">'jquery'</span>,<span class="string">'lodash'</span>],                </div><div class="line">        react:[<span class="string">'react'</span>,<span class="string">'react-redux'</span>],        </div><div class="line">        two: <span class="string">"./src/two.js"</span>,</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[chunkhash:8].js"</span></div><div class="line">    &#125;,</div><div class="line">    plugins:[</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: [<span class="string">'react'</span>,<span class="string">'common'</span>], <span class="comment">// 用于提取manifest</span></div><div class="line">            minChunks:<span class="literal">Infinity</span></div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> webpack.HashedModuleIdsPlugin(),</div><div class="line">        <span class="keyword">new</span> WebpackMd5Hash(),</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fmcz8l0qv9j30je09d784.jpg" alt=""></p>
-<p>现在打包后，模块的标识不再是id了，而是一个四位的编码了，这样就可以固定住ip地址了。</p>
-<h2 id="8，使用extract-text-webpack-plugin提取css文件"><a href="#8，使用extract-text-webpack-plugin提取css文件" class="headerlink" title="8，使用extract-text-webpack-plugin提取css文件"></a>8，使用extract-text-webpack-plugin提取css文件</h2><p>在src下创建one.css:</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;</div><div class="line">    <span class="attribute">color</span>:blue;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>two.css<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">h1</span>&#123;</div><div class="line">    <span class="attribute">font-size</span>:<span class="number">24px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>修改one.js和two.js引入css<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jquery <span class="keyword">from</span> <span class="string">'jquery'</span>;</div><div class="line"><span class="keyword">import</span> lodash <span class="keyword">from</span> <span class="string">'lodash'</span>;</div><div class="line"><span class="keyword">import</span> react <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> <span class="string">'./one.css'</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">'引入css修改one'</span>);</div></pre></td></tr></table></figure></p>
-<p>修改webpack.config.js</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> WebpackMd5Hash = <span class="built_in">require</span>(<span class="string">'webpack-md5-hash'</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">"extract-text-webpack-plugin"</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        common: [<span class="string">'jquery'</span>, <span class="string">'lodash'</span>],</div><div class="line">        react: [<span class="string">'react'</span>, <span class="string">'react-redux'</span>],</div><div class="line">        two: <span class="string">"./src/two.js"</span>,</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[chunkhash:8].js"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="keyword">module</span>: &#123;</div><div class="line">        rules: [</div><div class="line">            &#123;</div><div class="line">                test: <span class="regexp">/\.css$/</span>,</div><div class="line">                use: ExtractTextPlugin.extract(&#123;</div><div class="line">                    fallback: <span class="string">"style-loader"</span>,</div><div class="line">                    use: <span class="string">"css-loader"</span></div><div class="line">                &#125;)</div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">    &#125;,</div><div class="line">    plugins: [</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: [<span class="string">'react'</span>, <span class="string">'common'</span>], <span class="comment">// 用于提取manifest</span></div><div class="line">            minChunks: <span class="literal">Infinity</span></div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> ExtractTextPlugin(<span class="string">"[name].[chunkhash:8].css"</span>),</div><div class="line">        <span class="keyword">new</span> webpack.HashedModuleIdsPlugin(),</div><div class="line">        <span class="keyword">new</span> WebpackMd5Hash()</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>执行webpack：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fmczx90n12j30k104ftab.jpg" alt=""></p>
-<p>可以看到，成功输出了js和css，但是有点疑问的是，one.css和one.js的hash是一样的，这样的话，如果我们改变one.css呢？</p>
-<p>修改one.css,再次打包：</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fmczzdo8r1j30j6041jsi.jpg" alt=""></p>
-<p>发现css的hash没有任何变化。</p>
-<p>接着再修改one.js,再次打包：</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1fmd00udp8zj30kq04475e.jpg" alt=""></p>
-<p>这一次one.js和one.css的hash同时改变了。</p>
-<h2 id="9，使用contenthash提取固定css的hash"><a href="#9，使用contenthash提取固定css的hash" class="headerlink" title="9，使用contenthash提取固定css的hash"></a>9，使用contenthash提取固定css的hash</h2><ul>
-<li>When using the ExtractTextWebpackPlugin, use [contenthash] to obtain a hash of the extracted file (neither [hash] nor [chunkhash] work).</li>
-</ul>
-<p>webpack output文档种有写，当提取css后，用contenthash添加hash</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</div><div class="line"><span class="keyword">var</span> WebpackMd5Hash = <span class="built_in">require</span>(<span class="string">'webpack-md5-hash'</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">"extract-text-webpack-plugin"</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">        common: [<span class="string">'jquery'</span>, <span class="string">'lodash'</span>],</div><div class="line">        react: [<span class="string">'react'</span>, <span class="string">'react-redux'</span>],</div><div class="line">        two: <span class="string">"./src/two.js"</span>,</div><div class="line">        one: <span class="string">"./src/one.js"</span>,</div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">        filename: <span class="string">"[name].[chunkhash:8].js"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="keyword">module</span>: &#123;</div><div class="line">        rules: [</div><div class="line">            &#123;</div><div class="line">                test: <span class="regexp">/\.css$/</span>,</div><div class="line">                use: ExtractTextPlugin.extract(&#123;</div><div class="line">                    fallback: <span class="string">"style-loader"</span>,</div><div class="line">                    use: <span class="string">"css-loader"</span></div><div class="line">                &#125;)</div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">    &#125;,</div><div class="line">    plugins: [</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">            name: [<span class="string">'react'</span>, <span class="string">'common'</span>], <span class="comment">// 用于提取manifest</span></div><div class="line">            minChunks: <span class="literal">Infinity</span></div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> ExtractTextPlugin(<span class="string">"[name].[contenthash:8].css"</span>),</div><div class="line">        <span class="keyword">new</span> webpack.HashedModuleIdsPlugin(),</div><div class="line">        <span class="keyword">new</span> WebpackMd5Hash()</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>这一次，只是修改了输出的hash，conenthash代表的是文本文件内容的hash值，也就是只有style文件的hash值。</p>
-<p>执行webpack：</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fmd0eddsxcj30jh046gmt.jpg" alt=""></p>
-<p>one.js和one.css的hash变的不一样了</p>
-<p>接下来，修改one.css</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;</div><div class="line">    <span class="attribute">color</span>:white;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>再次执行webpack：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1fmd0fls03xj30l40kkdop.jpg" alt=""></p>
-<p>至此，只有one.css发生了变化，准备工作基本就到这里了</p>
-<h1 id="四，优化多页打包时间，稳定hash"><a href="#四，优化多页打包时间，稳定hash" class="headerlink" title="四，优化多页打包时间，稳定hash"></a>四，优化多页打包时间，稳定hash</h1><h2 id="1-约束入口"><a href="#1-约束入口" class="headerlink" title="1,约束入口"></a>1,约束入口</h2><p>因为是多页应用，是通过扫入口文件来进行的打包，规则为js文件为入口文件，jsx为引用的资源不被识别为入口</p>
-<p>通过BundleAnalyzerPlugin插件分析，发现有部分组件被打包为了入口，梳理一遍后，重新打包，打包时间减少了2/3，当然这是在填以前的坑</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fmexvp2qcmj30qq02b0t2.jpg" alt=""></p>
-<p>生产打包时间是<code>74578ms</code></p>
-<p>此时压缩和不压缩的打包时间也是3倍的关系：</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fmexyge51fj30cz01vdfy.jpg" alt=""></p>
-<p>开发打包时间是<code>24780ms</code></p>
-<p>好的，围绕这两个时间，我们开始优化</p>
-<h2 id="2-使用UglifyjsWebpackPlugin开启多线程打包"><a href="#2-使用UglifyjsWebpackPlugin开启多线程打包" class="headerlink" title="2,使用UglifyjsWebpackPlugin开启多线程打包"></a>2,使用UglifyjsWebpackPlugin开启多线程打包</h2><p>首先要做的其实是稳定hash，但因为生产环境的打包速度太慢，所以我们先优化打包速度，webpack默认提供的打包是单线程的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> UglifyJSPlugin = require(<span class="string">'uglifyjs-webpack-plugin'</span>)</div><div class="line"></div><div class="line"><span class="keyword">module</span>.<span class="keyword">exports</span> = &#123;</div><div class="line">  plugins: [</div><div class="line">    <span class="keyword">new</span> UglifyJSPlugin(&#123;</div><div class="line">        parallel: <span class="keyword">true</span></div><div class="line">    &#125;)</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个插件是webpack3提供的，至于低版本webapck的话，需要谨慎处理，不过效果很明显</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fme39o15ofj30rl046mxr.jpg" alt=""></p>
-<p>现在生产打包时间是<code>51690ms</code>，比之前提速了1/3</p>
-<h2 id="3-使用HappyPack多线程加速loader"><a href="#3-使用HappyPack多线程加速loader" class="headerlink" title="3,使用HappyPack多线程加速loader"></a>3,使用HappyPack多线程加速loader</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> HappyPack = <span class="built_in">require</span>(<span class="string">'happypack'</span>);</div><div class="line"><span class="keyword">var</span> os = <span class="built_in">require</span>(<span class="string">'os'</span>);</div><div class="line"><span class="keyword">var</span> happyThreadPool = HappyPack.ThreadPool(&#123; size: os.cpus().length &#125;);</div><div class="line"></div><div class="line">...</div><div class="line"><span class="keyword">module</span>: &#123;</div><div class="line">        rules: [ &#123;</div><div class="line">            test: <span class="regexp">/\.js[x]?$/</span>,</div><div class="line">            exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</div><div class="line">            loader: <span class="string">'happypack/loader?id=happybabel'</span>,</div><div class="line">            include: path.join(__dirname, <span class="string">'static/assets/js'</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">plugins: [</div><div class="line">        <span class="keyword">new</span> HappyPack(&#123;</div><div class="line">            id: <span class="string">'happybabel'</span>,</div><div class="line">            loaders: [<span class="string">'babel-loader?cacheDirectory=true'</span>],</div><div class="line">            threadPool: happyThreadPool,</div><div class="line">            cache: <span class="literal">true</span>,</div><div class="line">            verbose: <span class="literal">true</span></div><div class="line">          &#125;),</div></pre></td></tr></table></figure>
-<p>上面module的rules属性中loader原本事babel-loader，现在将它变成了一个任务，其中有一个id，id对应的就是plugins中的happyPack实例</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fmeyiy6knxj30sc03gmxq.jpg" alt=""></p>
-<p>此时，我们开启了babel-loader的多线程模式</p>
-<p>现在生产打包时间是<code>43855ms</code>，比之前又提速了1/9，这只是babel-loader，我们还可以为其它的loader开启</p>
-<p>接着处理less,css,style等loader，这些结合可以一口气搞定</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">    module: &#123;</div><div class="line">        rule<span class="variable">s:</span> [&#123;</div><div class="line">            tes<span class="variable">t:</span> require.<span class="built_in">resolve</span>(<span class="string">'zepto'</span>),</div><div class="line">            loader: <span class="string">'exports-loader?window.Zepto!script-loader'</span></div><div class="line">        &#125;, &#123;</div><div class="line">            tes<span class="variable">t:</span> /\.js[<span class="keyword">x</span>]?$/,</div><div class="line">            exclude: /(node_modules|bower_components)/,</div><div class="line">            loader: <span class="string">'happypack/loader?id=happybabel'</span>,</div><div class="line">            include: path.<span class="keyword">join</span>(__dirname, <span class="string">'static/assets/js'</span>)</div><div class="line">        &#125;, &#123;</div><div class="line">            tes<span class="variable">t:</span> /\.less$/,</div><div class="line">            use: extractTextPlugin.extract(&#123;</div><div class="line">                fallback: <span class="string">"style-loader"</span>,</div><div class="line">                // use: [<span class="string">"css-loader"</span> + (ENV ? <span class="string">'?minimize'</span> : <span class="string">''</span>), <span class="string">"less-loader"</span>, <span class="string">"postcss-loader"</span>]</div><div class="line">                use: [<span class="string">"happypack/loader?id=postcss"</span>]</div><div class="line">            &#125;)</div><div class="line">        &#125;]</div><div class="line">    &#125;</div><div class="line">plugin<span class="variable">s:</span> [</div><div class="line">        <span class="keyword">new</span> HappyPack(&#123;</div><div class="line">            id: <span class="string">'happybabel'</span>,</div><div class="line">            loader<span class="variable">s:</span> [<span class="string">'babel-loader?cacheDirectory=true'</span>],</div><div class="line">            threadPoo<span class="variable">l:</span> happyThreadPool,</div><div class="line">            // cache: true,</div><div class="line">            <span class="keyword">verbose</span>: true</div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> HappyPack(&#123;</div><div class="line">            id: <span class="string">'postcss'</span>,</div><div class="line">            loader<span class="variable">s:</span> [<span class="string">"css-loader"</span> + (ENV ? <span class="string">'?minimize'</span> : <span class="string">''</span>), <span class="string">"less-loader"</span>,<span class="string">'postcss-loader'</span>],</div><div class="line">            threadPoo<span class="variable">l:</span> happyThreadPool,</div><div class="line">            // cache: true,</div><div class="line">            <span class="keyword">verbose</span>: true</div><div class="line">        &#125;),</div></pre></td></tr></table></figure>
-<p>这样，我们即处理了babel，同时也搞定了css，less，postcss这些loader</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fmez6ysh12j30ry04c3zd.jpg" alt=""></p>
-<p>上图happy[任务名]，可以看到打包行为全都开启了多线程，效果显著</p>
-<p>现在生产打包时间是<code>35130ms</code>，此时已经比第一此非优化的时候，提升了一倍的速度</p>
-<h2 id="4-使用dll拆分代码"><a href="#4-使用dll拆分代码" class="headerlink" title="4,使用dll拆分代码"></a>4,使用dll拆分代码</h2><p>经过前面的过程，想必已经意识到了纯静态得库和组件都需要与打包环节分离开，这就需要dll技术了</p>
-<p>dll技术，其实就是将修改频率低或基本不修改且引用次数多的内容，单独打包</p>
-<p>因为设计dll后，config文件的数量剧增，所以需要重新整理目录结构</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fmnbcxztiaj30a90esgn5.jpg" alt=""></p>
-<p>例如上图，将每一个webpack拆分出去，把所有配置文件分离开,例webpack.dev.js：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> base = <span class="built_in">require</span>(<span class="string">'./webpack.base.js'</span>);</div><div class="line"><span class="keyword">var</span> config = &#123;</div><div class="line">    entry: <span class="built_in">require</span>(<span class="string">'./dev/entry.js'</span>),</div><div class="line">    output: <span class="built_in">require</span>(<span class="string">'./dev/output.js'</span>),</div><div class="line">    plugins: <span class="built_in">require</span>(<span class="string">'./dev/plugins.js'</span>),</div><div class="line">    devtool: <span class="string">'eval-source-map'</span></div><div class="line">&#125;</div><div class="line"><span class="comment">//把配置文件暴露出去;</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="built_in">Object</span>.assign(base,config);</div></pre></td></tr></table></figure></p>
-<p>ok，基础拆分webpack完成后，我们创建一个webpack.dll.libs.js用于打包类库<br><figure class="highlight sml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">    libs: [</div><div class="line">        <span class="symbol">'react'</span>,</div><div class="line">        <span class="symbol">'react</span>-dom',</div><div class="line">        <span class="symbol">'react</span>-motion',</div><div class="line">        <span class="symbol">'react</span>-redux',</div><div class="line">        <span class="symbol">'redux'</span>,</div><div class="line">        <span class="symbol">'axios'</span>,</div><div class="line">        <span class="symbol">'prop</span>-types',</div><div class="line">        <span class="symbol">'classnames'</span>,</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>修改plugins插件：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">var</span> dirVars = <span class="built_in">require</span>(<span class="string">'../common/dir.js'</span>);</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> UglifyJsPlugin = <span class="built_in">require</span>(<span class="string">'uglifyjs-webpack-plugin'</span>);<span class="comment">//多线程打包</span></div><div class="line"><span class="keyword">var</span> getDefaultPlugins = <span class="built_in">require</span>(<span class="string">'../common/plugins.js'</span>).getDefaultPlugins;</div><div class="line"><span class="keyword">var</span> AssetsPlugin = <span class="built_in">require</span>(<span class="string">'assets-webpack-plugin'</span>);<span class="comment">//输出映射表</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> plugins =[</div><div class="line">    <span class="keyword">new</span> webpack.DllPlugin(&#123;</div><div class="line">        path: dirVars.dllLibsManiFest,</div><div class="line">    &#125;),</div><div class="line">    <span class="keyword">new</span> UglifyJsPlugin(&#123;</div><div class="line">        parallel: <span class="literal">true</span>,</div><div class="line">        cache: <span class="literal">true</span></div><div class="line">    &#125;),</div><div class="line">    <span class="keyword">new</span> AssetsPlugin(&#123;</div><div class="line">        filename: <span class="string">'static/dll/libs-rev-manifest.json'</span></div><div class="line">    &#125;),</div><div class="line">]</div><div class="line"><span class="built_in">module</span>.exports = plugins.concat(getDefaultPlugins())</div></pre></td></tr></table></figure>
-<p>现在执行webpack</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fmnbfo5nn8j30io07iwfy.jpg" alt=""></p>
-<p>可以看到，只需要1s,就打包了所有的类库，接下来，修改webpack.prod.js</p>
-<p>在plugins中添加：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">new</span> <span class="selector-tag">webpack</span><span class="selector-class">.DllReferencePlugin</span>(&#123;</div><div class="line">    <span class="attribute">manifest</span>: <span class="string">'static/dll/libs-rev-manifest.json'</span></div><div class="line">&#125;),</div></pre></td></tr></table></figure></p>
-<p>此时当我们执行webpack.prod.js进行打包，当扫描到libs中的打包的内容时，就不会重复打包</p>
-<h2 id="4-开始继续约束hash"><a href="#4-开始继续约束hash" class="headerlink" title="4,开始继续约束hash"></a>4,开始继续约束hash</h2><p>前面已经彻底搞定了打包，但破坏性很大，所以需要系统的验证hash是否存在问题</p>
-<p><strong>case1:js改变</strong></p>
-<p>修改一个业务代码的js，添加一句注释，再次打包</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fmnby97g0wj30uc02e0tj.jpg" alt=""></p>
-<p>可以看到文件hash发生了改变，但很不幸，vendor也发生了改变</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fmnbzi2ez2j30se02it96.jpg" alt=""></p>
-<p><strong>解决方案：添加webpack-md5-hash插件，使用之后，再次验证，发现vendorjs的hash不再发生变化</strong></p>
-<p><strong>case2:less改变</strong></p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fmncdubz2rj30xi03lq44.jpg" alt=""></p>
-<p>只有一个css的hash发生了变化，没问题</p>
-<p><strong>case3:修改一个入口下自己封装出去的公共方法</strong></p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fmncixwsy7j310s033q4b.jpg" alt=""></p>
-<p>上面修改了一个入口内公共使用的tools插件，最终是入口的hash发生了改变，没问题</p>
-<p><strong>case4:修改公共方法组件js</strong></p>
-<p>主要是多个入口都会引用的组件</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fmncojvwwvj30z7039t9g.jpg" alt=""></p>
-<p>测试，只有单独打包出去的components的hash修改了</p>
-<p><strong>case5:修改公共方法组件less</strong></p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fmnczlghq7j30zk02wdgk.jpg" alt=""></p>
-<p>只有一个hash发生了改变</p>
-<p><strong>case6:添加一个公共组件</strong></p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fmnd4wgxrsj30xo03ydgm.jpg" alt=""></p>
-<p>只有components的hash发生了改变</p>
-<p>未优化前打包时间180-200s</p>
-<p>优化：</p>
-<pre><code>1，约束入口，严格明确入口文件筛选条件后
-    生产打包：74578ms
-    开发打包：24780ms
-2，开启多线程压缩后
-    生产打包：51690ms
-3，开启多线程编译
-    生产打包：35130ms
-    开发打包：15031ms
-4，拆包
-    分解了打包过程，类库4s，组件4s，业务20s，总体30s左右
-</code></pre><h1 id="四，优化webpack打包速度"><a href="#四，优化webpack打包速度" class="headerlink" title="四，优化webpack打包速度"></a>四，优化webpack打包速度</h1><p>前面所做的事情只是稳固了打包的hash，对打包速度没有提升，由于我所做的是多页应用，先记录一下打包信息</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fmdyb5jhbfj30a403hdg3.jpg" alt=""></p>
-<p>打包足足花费了159s，再加上清理文件夹的耗时，时间逼近3分钟，堪称恐怖</p>
-<h2 id="1-约束入口-1"><a href="#1-约束入口-1" class="headerlink" title="1,约束入口"></a>1,约束入口</h2><p>因为是多页应用，是通过扫入口文件来进行的打包，规则为js文件为入口文件，jsx为引用的资源不被识别为入口</p>
-<p>通过BundleAnalyzerPlugin插件分析，发现有部分组件被打包为了入口，梳理一遍后，重新打包，打包时间减少了2/3，当然这是在填以前的坑</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fme2ensqlkj30c703njro.jpg" alt=""></p>
-<p>现在的时间是75s,还是超过一分钟</p>
-<p>此时压缩和不压缩的打包时间也是3倍的关系：</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fme2jeq2h6j30fq01zjrk.jpg" alt=""></p>
-<p>如果不压缩，打包的时间是25s</p>
-<h2 id="2-使用UglifyjsWebpackPlugin开启多线程打包-1"><a href="#2-使用UglifyjsWebpackPlugin开启多线程打包-1" class="headerlink" title="2,使用UglifyjsWebpackPlugin开启多线程打包"></a>2,使用UglifyjsWebpackPlugin开启多线程打包</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> UglifyJSPlugin = require(<span class="string">'uglifyjs-webpack-plugin'</span>)</div><div class="line"></div><div class="line"><span class="keyword">module</span>.<span class="keyword">exports</span> = &#123;</div><div class="line">  plugins: [</div><div class="line">    <span class="keyword">new</span> UglifyJSPlugin(&#123;</div><div class="line">        parallel: <span class="keyword">true</span></div><div class="line">    &#125;)</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个插件是webpack3提供的，至于低版本webapck的话，需要谨慎处理，不过效果很明显</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fme39o15ofj30rl046mxr.jpg" alt=""></p>
-<p>压缩后，现在是50s，比之前提速了1/3</p>
-<h2 id="3-使用webpack-parallel-uglify-plugin开启多线程打包"><a href="#3-使用webpack-parallel-uglify-plugin开启多线程打包" class="headerlink" title="3,使用webpack-parallel-uglify-plugin开启多线程打包"></a>3,使用webpack-parallel-uglify-plugin开启多线程打包</h2><p>还有一个分官方的多线程打包插件webpack-parallel-uglify-plugin</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="string">new</span> <span class="string">ParallelUglifyPlugin(&#123;</span></div><div class="line"><span class="attr">    cacheDir:</span> <span class="string">'.cache/'</span><span class="string">,</span></div><div class="line"><span class="attr">    uglifyJS:</span><span class="string">&#123;</span></div><div class="line"><span class="attr">        output:</span> <span class="string">&#123;</span></div><div class="line"><span class="attr">            comments:</span> <span class="literal">false</span></div><div class="line">        <span class="string">&#125;,</span></div><div class="line"><span class="attr">        compress:</span> <span class="string">&#123;</span></div><div class="line"><span class="attr">            warnings:</span> <span class="literal">false</span></div><div class="line">        <span class="string">&#125;</span></div><div class="line">    <span class="string">&#125;</span></div><div class="line"><span class="string">&#125;)</span></div></pre></td></tr></table></figure>
-<p>这个插件宇上面的UglifyjsWebpackPlugin的首次打包时间基本一致，不过开启缓存功能后，打包时间，还能再减少20s，不过因此也生成了一个cache文件夹</p>
-<p>其实UglifyjsWebpackPlugin也有缓存的功能，具体使用可以查看文档，具体选择哪个插件可以根据webpack的版本来做决定。</p>
-<p>由于我的webpack是3.0以上的，所以直接使用UglifyjsWebpackPlugin</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="string">new</span> <span class="string">UglifyJSPlugin(&#123;</span></div><div class="line"><span class="attr">    cache:</span> <span class="literal">true</span><span class="string">,</span></div><div class="line"><span class="attr">    parallel:</span> <span class="literal">true</span></div><div class="line"><span class="string">&#125;)</span></div></pre></td></tr></table></figure>
-<p>至此，不压缩打包是26s，压缩非首次打包是31s，差距已经不大了，但是开发打包的时间还是很慢</p>
-<h2 id="4-使用HappyPack多线程加速loader"><a href="#4-使用HappyPack多线程加速loader" class="headerlink" title="4,使用HappyPack多线程加速loader"></a>4,使用HappyPack多线程加速loader</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> HappyPack = <span class="built_in">require</span>(<span class="string">'happypack'</span>);</div><div class="line"><span class="keyword">var</span> os = <span class="built_in">require</span>(<span class="string">'os'</span>);</div><div class="line"><span class="keyword">var</span> happyThreadPool = HappyPack.ThreadPool(&#123; size: os.cpus().length &#125;);</div><div class="line"></div><div class="line">...</div><div class="line"><span class="keyword">module</span>: &#123;</div><div class="line">        rules: [ &#123;</div><div class="line">            test: <span class="regexp">/\.js[x]?$/</span>,</div><div class="line">            exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</div><div class="line">            loader: <span class="string">'happypack/loader?id=happybabel'</span>,</div><div class="line">            include: path.join(__dirname, <span class="string">'static/assets/js'</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">plugins: [</div><div class="line">        <span class="keyword">new</span> HappyPack(&#123;</div><div class="line">            id: <span class="string">'happybabel'</span>,</div><div class="line">            loaders: [<span class="string">'babel-loader?cacheDirectory=true'</span>],</div><div class="line">            threadPool: happyThreadPool,</div><div class="line">            cache: <span class="literal">true</span>,</div><div class="line">            verbose: <span class="literal">true</span></div><div class="line">          &#125;),</div></pre></td></tr></table></figure>
-<p>上面module的rules属性中loader原本事babel-loader，现在将它变成了一个任务，其中有一个id，id对应的就是plugins中的happyPack实例</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fme4l8fxy5j30ny03ajry.jpg" alt=""></p>
-<p>可以看到，此时打包的时间已经不到15s了，提升明显，而且HappyPack还可以对css和less的loader进行加速</p>
-<h2 id="5-使用dll"><a href="#5-使用dll" class="headerlink" title="5,使用dll"></a>5,使用dll</h2><p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-      
-    </div>
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2705,7 +2455,7 @@ Object.defineProperty(obj,&quot;school&quot;,{
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2791,7 +2541,7 @@ Object.defineProperty(obj,&quot;school&quot;,{
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共33.2k字</span>
+  <span class="post-count">博客全站共34.2k字</span>
 </div>
 <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
 

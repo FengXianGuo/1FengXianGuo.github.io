@@ -116,17 +116,17 @@
 
 
 
-<meta name="description" content="设备模式">
+<meta name="description" content="初识react-router这里要讲的是react-router-dom，它其实是react前端路由在浏览器层的实现，关系就像react和react-dom的关系一样，之所以要有react-router-dom是因为还有其他react-router-native这种在app上的实现  先跑通最简单的路由123456789101112131415161718192021222324252627282">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Chrome DevTools调试工具实践(全)">
-<meta property="og:url" content="http://yoursite.com/2017/08/27/Chrome-DevTools调试工具实践-全/index.html">
+<meta property="og:title" content="react-router v4学习笔记">
+<meta property="og:url" content="http://yoursite.com/2018/02/13/react-router学习笔记/index.html">
 <meta property="og:site_name" content="丰羡的前端笔记">
-<meta property="og:description" content="设备模式">
+<meta property="og:description" content="初识react-router这里要讲的是react-router-dom，它其实是react前端路由在浏览器层的实现，关系就像react和react-dom的关系一样，之所以要有react-router-dom是因为还有其他react-router-native这种在app上的实现  先跑通最简单的路由123456789101112131415161718192021222324252627282">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-27T06:38:18.000Z">
+<meta property="og:updated_time" content="2018-02-13T02:57:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chrome DevTools调试工具实践(全)">
-<meta name="twitter:description" content="设备模式">
+<meta name="twitter:title" content="react-router v4学习笔记">
+<meta name="twitter:description" content="初识react-router这里要讲的是react-router-dom，它其实是react前端路由在浏览器层的实现，关系就像react和react-dom的关系一样，之所以要有react-router-dom是因为还有其他react-router-native这种在app上的实现  先跑通最简单的路由123456789101112131415161718192021222324252627282">
 
 
 
@@ -155,13 +155,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/27/Chrome-DevTools调试工具实践-全/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/13/react-router学习笔记/"/>
 
 
 
 
 
-  <title>Chrome DevTools调试工具实践(全) | 丰羡的前端笔记</title>
+  <title>react-router v4学习笔记 | 丰羡的前端笔记</title>
   
 
 
@@ -315,7 +315,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/Chrome-DevTools调试工具实践-全/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/13/react-router学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="丰羡">
@@ -332,7 +332,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Chrome DevTools调试工具实践(全)</h1>
+          <h1 class="post-title" itemprop="name headline">react-router v4学习笔记</h1>
         
 
         <div class="post-meta">
@@ -344,8 +344,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T14:31:20+08:00">
-                2017-08-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-13T10:06:35+08:00">
+                2018-02-13
               </time>
             
 
@@ -376,7 +376,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  4
+                  374
                 </span>
               
 
@@ -392,7 +392,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -413,7 +413,16 @@
       
 
       
-        <h1 id="设备模式"><a href="#设备模式" class="headerlink" title="设备模式"></a>设备模式</h1>
+        <h2 id="初识react-router"><a href="#初识react-router" class="headerlink" title="初识react-router"></a>初识react-router</h2><p>这里要讲的是react-router-dom，它其实是react前端路由在浏览器层的实现，关系就像react和react-dom的关系一样，之所以要有react-router-dom是因为还有其他react-router-native这种在app上的实现</p>
+<hr>
+<h3 id="先跑通最简单的路由"><a href="#先跑通最简单的路由" class="headerlink" title="先跑通最简单的路由"></a>先跑通最简单的路由</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">import React,&#123;Component&#125; from 'react';</div><div class="line">import &#123;render&#125; from 'react-dom';</div><div class="line">import &#123;</div><div class="line">    HashRouter as Router,</div><div class="line">    Route,</div><div class="line">    Link</div><div class="line">  &#125; from 'react-router-dom'</div><div class="line">  let Home = ()=&gt;<span class="tag">&lt;<span class="name">div</span>&gt;</span>home<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  let One = ()=&gt;<span class="tag">&lt;<span class="name">div</span>&gt;</span>one<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  let Two = ()=&gt;<span class="tag">&lt;<span class="name">div</span>&gt;</span>two<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">class App extends Component &#123;</div><div class="line">    constructor()&#123;</div><div class="line">        super();</div><div class="line">    &#125;</div><div class="line">    render()&#123;</div><div class="line">        return (</div><div class="line">            <span class="tag">&lt;<span class="name">Router</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/home"</span>&gt;</span>home<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/one"</span>&gt;</span>one<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/two"</span>&gt;</span>two<span class="tag">&lt;/<span class="name">Link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/home"</span> <span class="attr">component</span>=<span class="string">&#123;Home&#125;/</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/one"</span> <span class="attr">component</span>=<span class="string">&#123;One&#125;/</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/two"</span> <span class="attr">component</span>=<span class="string">&#123;Two&#125;/</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">Router</span>&gt;</span></div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">render(<span class="tag">&lt;<span class="name">App</span>/&gt;</span>,document.getElementById("root"));</div></pre></td></tr></table></figure>
+<p>上面是一个简单的路由实现，核心是使用HashRouter</p>
+<p>切换路由的时候通过#hash来实现，既然如此尝试用原生来实现一下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="javascript">         <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></div><div class="line"><span class="javascript">            <span class="keyword">let</span> hash = location.hash.slice(<span class="number">1</span>)</span></div><div class="line"><span class="undefined">            router(hash);</span></div><div class="line"><span class="actionscript">        &#125;, <span class="literal">false</span>);</span></div><div class="line"><span class="javascript">        <span class="keyword">let</span> root = <span class="built_in">document</span>.querySelector(<span class="string">"#root"</span>);</span></div><div class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">router</span><span class="params">(hash)</span></span>&#123;</span></div><div class="line"><span class="actionscript">            <span class="keyword">switch</span>(hash)&#123;</span></div><div class="line"><span class="actionscript">                <span class="keyword">case</span> <span class="string">'index'</span>:</span></div><div class="line"><span class="undefined">                    root.innerHTML = hash;</span></div><div class="line"><span class="actionscript">                    <span class="keyword">break</span>;</span></div><div class="line"><span class="actionscript">                <span class="keyword">case</span> <span class="string">'one'</span>:</span></div><div class="line"><span class="undefined">                    root.innerHTML = hash;                </span></div><div class="line"><span class="actionscript">                    <span class="keyword">break</span>;</span></div><div class="line"><span class="actionscript">                <span class="keyword">case</span> <span class="string">'two'</span>:</span></div><div class="line"><span class="undefined">                    root.innerHTML = hash;                   </span></div><div class="line"><span class="actionscript">                    <span class="keyword">break</span>;</span></div><div class="line"><span class="actionscript">                <span class="keyword">default</span>:</span></div><div class="line"><span class="actionscript">                    <span class="keyword">return</span> root.innerHTML = <span class="string">'未匹配'</span>;</span></div><div class="line"><span class="undefined">            &#125;</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>通过上面我们就简单实现了一个前端路由，但存在问题，刷新的时候无效</p>
+<p>所以可以通过注册load事件来弥补</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> hash = location.hash.slice(<span class="number">1</span>)</div><div class="line">    router(hash);</div><div class="line">&#125;, <span class="literal">false</span>);</div><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> hash = location.hash.slice(<span class="number">1</span>)</div><div class="line">    router(hash);</div><div class="line">&#125;, <span class="literal">false</span>);</div></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -470,8 +479,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/18/js类型检测汇总/" rel="next" title="js类型检测汇总">
-                <i class="fa fa-chevron-left"></i> js类型检测汇总
+              <a href="/2018/02/03/react学习笔记/" rel="next" title="react学习笔记">
+                <i class="fa fa-chevron-left"></i> react学习笔记
               </a>
             
           </div>
@@ -479,10 +488,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/11/xss攻击笔记/" rel="prev" title="xss攻击笔记">
-                xss攻击笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -645,7 +650,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设备模式"><span class="nav-number">1.</span> <span class="nav-text">设备模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初识react-router"><span class="nav-number">1.</span> <span class="nav-text">初识react-router</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先跑通最简单的路由"><span class="nav-number">1.1.</span> <span class="nav-text">先跑通最简单的路由</span></a></li></ol></li></ol></div>
             
 
           </div>
