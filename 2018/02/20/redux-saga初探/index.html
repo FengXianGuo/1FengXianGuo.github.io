@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="一，跑通react创建index.js 123456789101112131415import React, &amp;#123; Component &amp;#125; from &apos;react&apos;import ReactDOM from &apos;react-dom&apos;class App extends Component&amp;#123;    render()&amp;#123;        return(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redux-saga初探">
+<meta property="og:url" content="http://yoursite.com/2018/02/20/redux-saga初探/index.html">
+<meta property="og:site_name" content="丰羡的前端笔记">
+<meta property="og:description" content="一，跑通react创建index.js 123456789101112131415import React, &amp;#123; Component &amp;#125; from &apos;react&apos;import ReactDOM from &apos;react-dom&apos;class App extends Component&amp;#123;    render()&amp;#123;        return(">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-21T06:21:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redux-saga初探">
+<meta name="twitter:description" content="一，跑通react创建index.js 123456789101112131415import React, &amp;#123; Component &amp;#125; from &apos;react&apos;import ReactDOM from &apos;react-dom&apos;class App extends Component&amp;#123;    render()&amp;#123;        return(">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/20/redux-saga初探/"/>
+
+
+
+
+
+  <title>redux-saga初探 | 丰羡的前端笔记</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/FengXianGuo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">丰羡的前端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/20/redux-saga初探/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redux-saga初探</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-20T20:24:38+08:00">
+                2018-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,434
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一，跑通react"><a href="#一，跑通react" class="headerlink" title="一，跑通react"></a>一，跑通react</h1><p>创建index.js</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="type">React</span>, &#123; <span class="type">Component</span> &#125; from <span class="symbol">'reac</span>t'</div><div class="line"><span class="keyword">import</span> <span class="type">ReactDOM</span> from <span class="symbol">'react</span>-dom'</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;<span class="number">123</span>&lt;/div&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="type">ReactDOM</span>.render(</div><div class="line">    &lt;<span class="type">App</span>/&gt;</div><div class="line">    ,</div><div class="line">    document.getElementById(<span class="symbol">'roo</span>t')</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>第一步很简单，就是创建一个App组件，渲染到页面</p>
+<hr>
+<h1 id="二，将App入口组件封装出去，避免index-js中包含业务代码"><a href="#二，将App入口组件封装出去，避免index-js中包含业务代码" class="headerlink" title="二，将App入口组件封装出去，避免index.js中包含业务代码"></a>二，将App入口组件封装出去，避免index.js中包含业务代码</h1><p>index.js:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></div><div class="line">ReactDOM.render(</div><div class="line">    &lt;App/&gt;</div><div class="line">    ,</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>App.js:</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="type">React</span>, &#123; <span class="type">Component</span> &#125; from <span class="symbol">'reac</span>t'</div><div class="line">export <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;<span class="number">123</span>&lt;/div&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="三，引入redux"><a href="#三，引入redux" class="headerlink" title="三，引入redux"></a>三，引入redux</h1><p>改写index.js:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></div><div class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">'./reducer'</span></div><div class="line"><span class="keyword">import</span> &#123;createStore&#125; <span class="keyword">from</span> <span class="string">'redux'</span></div><div class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="keyword">const</span> store = createStore(reducer);</div><div class="line"></div><div class="line">ReactDOM.render(</div><div class="line">    &lt;Provider store=&#123;store&#125;&gt;</div><div class="line">        &lt;App/&gt;</div><div class="line">    &lt;<span class="regexp">/Provider&gt;</span></div><div class="line"><span class="regexp">    ,</span></div><div class="line"><span class="regexp">    document.getElementById('root')</span></div><div class="line"><span class="regexp">)</span></div></pre></td></tr></table></figure>
+<ul>
+<li>createStore创建仓库</li>
+<li>Provider将store传入content</li>
+<li>reducer处理action</li>
+</ul>
+<p>创建reducer.js:</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span>=&#123;count:<span class="number">0</span>&#125;,action)=&gt;&#123;</div><div class="line">    switch(action)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return &#123;</div><div class="line">                ...<span class="keyword">state</span>,</div><div class="line">                count:action.data</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>返回一个state，state中有一个用于计数的count字段</p>
+<p>改写App.js:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="keyword">let</span> &#123;count&#125; = <span class="keyword">this</span>.props; </div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;&#123;count&#125;&lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">        )</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div><div class="line"><span class="regexp">let mapStateToPropsResult = (state)=&gt;(&#123;</span></div><div class="line"><span class="regexp">    count: state.count</span></div><div class="line"><span class="regexp">&#125;)</span></div><div class="line"><span class="regexp">export default connect(mapStateToPropsResult)(App);</span></div></pre></td></tr></table></figure>
+<ul>
+<li>connect用于将store从content中提取出来</li>
+<li>App组件此时用于展示</li>
+</ul>
+<h1 id="四，初步实现计数器"><a href="#四，初步实现计数器" class="headerlink" title="四，初步实现计数器"></a>四，初步实现计数器</h1><p>上面的App组件可以用于展示，现在还缺少，两个button组件</p>
+<p>修改index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></div><div class="line"><span class="keyword">import</span> ButtonGroup <span class="keyword">from</span> <span class="string">'./ButtonGroup'</span></div><div class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">'./reducer'</span></div><div class="line"><span class="keyword">import</span> &#123;createStore&#125; <span class="keyword">from</span> <span class="string">'redux'</span></div><div class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="keyword">const</span> store = createStore(reducer);</div><div class="line"></div><div class="line">ReactDOM.render(</div><div class="line">    &lt;Provider store=&#123;store&#125;&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;App/&gt;</div><div class="line">            &lt;ButtonGroup/&gt;</div><div class="line">        &lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">    &lt;/</span>Provider&gt;</div><div class="line">    ,</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>引入了ButtonGroup组件</p>
+<p>创建ButtonGroup.js：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ButtonGroup</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="keyword">let</span> &#123;</div><div class="line">            onChangeAdd,</div><div class="line">            onChangeSub</div><div class="line">        &#125; = <span class="keyword">this</span>.props;</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;</div><div class="line">                &lt;button onClick=&#123;onChangeAdd&#125;&gt;加一&lt;<span class="regexp">/button&gt;</span></div><div class="line"><span class="regexp">                &lt;button onClick=&#123;onChangeSub&#125;&gt;减一&lt;/</span>button&gt;</div><div class="line">            &lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">        )</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div><div class="line"><span class="regexp">let mapDispatchToProps = (dispatch)=&gt;&#123;</span></div><div class="line"><span class="regexp">        return &#123;</span></div><div class="line"><span class="regexp">            onChangeAdd: () =&gt; &#123;</span></div><div class="line"><span class="regexp">                dispatch(&#123;type: 'ADD', data: 1&#125;);</span></div><div class="line"><span class="regexp">            &#125;,</span></div><div class="line"><span class="regexp">            onChangeSub: () =&gt; &#123;</span></div><div class="line"><span class="regexp">                dispatch(&#123;type: 'SUB', data: -1&#125;);</span></div><div class="line"><span class="regexp">            &#125;</span></div><div class="line"><span class="regexp">        &#125;</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">export default connect('',mapDispatchToProps)(ButtonGroup);</span></div></pre></td></tr></table></figure>
+<p>修改reducer，完成计数器</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span>=&#123;count:<span class="number">0</span>&#125;,action)=&gt;&#123;</div><div class="line">    switch(action.type)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return &#123;</div><div class="line">                ...<span class="keyword">state</span>,</div><div class="line">                count:<span class="keyword">state</span>.count+action.data</div><div class="line">            &#125;</div><div class="line">        case 'SUB':</div><div class="line">            return &#123;</div><div class="line">                ...<span class="keyword">state</span>,</div><div class="line">                count:<span class="keyword">state</span>.count+action.data</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="五，为什么引入saga"><a href="#五，为什么引入saga" class="headerlink" title="五，为什么引入saga"></a>五，为什么引入saga</h1><ul>
+<li>上面的例子，是一个同步的场景</li>
+<li>但开发过程中，不可避免要遇到异步</li>
+</ul>
+<p>例如上面，加和减都需要异步的话，怎么办？</p>
+<p>现在修改ButtonGroup.js;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ButtonGroup</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    addHandler()&#123;</div><div class="line">        setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">            <span class="keyword">this</span>.props.onChangeAdd()</div><div class="line">        &#125;,<span class="number">1000</span>)</div><div class="line">    &#125;</div><div class="line">    subHandler()&#123;</div><div class="line">        setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">            <span class="keyword">this</span>.props.onChangeSub()</div><div class="line">        &#125;,<span class="number">1000</span>)</div><div class="line">    &#125;</div><div class="line">    render()&#123;</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;</div><div class="line">                &lt;button onClick=&#123;<span class="keyword">this</span>.addHandler.bind(<span class="keyword">this</span>)&#125;&gt;加一&lt;<span class="regexp">/button&gt;</span></div><div class="line"><span class="regexp">                &lt;button onClick=&#123;this.subHandler.bind(this)&#125;&gt;减一&lt;/</span>button&gt;</div><div class="line">            &lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">        )</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div><div class="line"><span class="regexp">let mapDispatchToProps = (dispatch)=&gt;&#123;</span></div><div class="line"><span class="regexp">        return &#123;</span></div><div class="line"><span class="regexp">            onChangeAdd: () =&gt; &#123;</span></div><div class="line"><span class="regexp">                dispatch(&#123;type: 'ADD', data: 1&#125;);</span></div><div class="line"><span class="regexp">            &#125;,</span></div><div class="line"><span class="regexp">            onChangeSub: () =&gt; &#123;</span></div><div class="line"><span class="regexp">                dispatch(&#123;type: 'SUB', data: -1&#125;);</span></div><div class="line"><span class="regexp">            &#125;</span></div><div class="line"><span class="regexp">        &#125;</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">export default connect('',mapDispatchToProps)(ButtonGroup);</span></div></pre></td></tr></table></figure>
+<ul>
+<li>ButtonGroup包含了setTimeout</li>
+<li>setTimeout没有任何复用性可言</li>
+<li>一般异步都是ajax，ajax需要三个状态：pending、success、error</li>
+<li>三种状态都需要对应的处理，要在每个组件中重复书写一遍，没有任何复用可言</li>
+<li>既然如此能够将异步的逻辑，从组件提取出去</li>
+<li>这样思考的话，其实在reducer的switch处理异步也可以，但这样，reducer将变得不再纯粹，无法保证纯粹的输入-&gt;输出，因为ajax有可能成功也可能失败，不能保证输出的内容一直不变</li>
+</ul>
+<p>针对上面的场景，就诞生了很多中间件：</p>
+<ul>
+<li>redux-thunk</li>
+<li>redux-promise</li>
+<li>redux-saga</li>
+</ul>
+<p>前两者，基本思路，都是改写dispatch，使其能够支持传递一个function进去，而非action对象，但写起来，还是奇怪</p>
+<ul>
+<li>使用redux-thunk后，disptach有了两种形态</li>
+<li>1，dispatch(actionCreator)</li>
+<li>2, dispatch(function)</li>
+<li>虽然解决了问题，但不符合redux起初的设计规范了</li>
+</ul>
+<p>而saga则类似一个外层的监听器，类似angular、vue或者其他框架中watch效果</p>
+<h1 id="六，使用redux-saga改写原来的代码"><a href="#六，使用redux-saga改写原来的代码" class="headerlink" title="六，使用redux-saga改写原来的代码"></a>六，使用redux-saga改写原来的代码</h1><p>修改index.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></div><div class="line"><span class="keyword">import</span> ButtonGroup <span class="keyword">from</span> <span class="string">'./ButtonGroup'</span></div><div class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">'./reducer'</span></div><div class="line"><span class="keyword">import</span> &#123;createStore,applyMiddleware&#125; <span class="keyword">from</span> <span class="string">'redux'</span></div><div class="line"><span class="keyword">import</span> createSagaMiddleware <span class="keyword">from</span> <span class="string">'redux-saga'</span></div><div class="line"><span class="keyword">import</span> sagas <span class="keyword">from</span> <span class="string">'./sagas'</span></div><div class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="keyword">const</span> sagaMiddleware = createSagaMiddleware();</div><div class="line"><span class="keyword">const</span> store = createStore(reducer,applyMiddleware(sagaMiddleware));</div><div class="line">sagaMiddleware.run(sagas);</div><div class="line">ReactDOM.render(</div><div class="line">    &lt;Provider store=&#123;store&#125;&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;App/&gt;</div><div class="line">            &lt;ButtonGroup/&gt;</div><div class="line">        &lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">    &lt;/</span>Provider&gt;</div><div class="line">    ,</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<ul>
+<li>createSagaMiddleware用于创建sagaMiddleware（中间件）</li>
+<li>applyMiddleware是redux提供的用语添加中间件的方法</li>
+<li>sagas是开发人员自己定义的迭代器</li>
+<li>sagaMiddleware.run(sagas)相当与执行构造器，生成迭代器的过程</li>
+</ul>
+<p>创建saga.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; takeEvery &#125; <span class="keyword">from</span> <span class="string">'redux-saga'</span></div><div class="line"><span class="keyword">import</span> &#123; put,fork &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></div><div class="line"><span class="comment">// 一个工具函数：返回一个 Promise，这个 Promise 将在 1 秒后 resolve</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> delay = <span class="function"><span class="params">ms</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> setTimeout(resolve, ms))</div><div class="line"><span class="comment">// Our worker Saga: 将异步执行 increment 任务</span></div><div class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span>* <span class="title">incrementAsync</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">yield</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</div><div class="line">      setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          resolve()</div><div class="line">      &#125;, <span class="number">1000</span>)</div><div class="line">  &#125;)</div><div class="line">  <span class="keyword">yield</span> put(&#123;<span class="attr">type</span>:<span class="string">'ADD'</span>,<span class="attr">data</span>:<span class="number">1</span>&#125;)</div><div class="line">&#125;</div><div class="line"><span class="comment">// Our watcher Saga: 在每个 INCREMENT_ASYNC action 调用后，派生一个新的 incrementAsync 任务</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>* <span class="title">watchIncrementAsync</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  	<span class="keyword">yield</span>* takeEvery(<span class="string">'ADD ASYNC'</span>, incrementAsync);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>watchIncrementAsync就是暴露出去的sagas</li>
+<li>takeEvery相当于watch，监听ADD ASYNC行为，当这个行为发生的时候，执行incrementAsync</li>
+<li>incrementAsync同样是generator，其可以书写异步逻辑</li>
+<li>当ADD ASYNC行为触发时，执行incrementAsync</li>
+<li>incrementAsync会向co一样，按步骤执行</li>
+<li>incrementAsync中的put的作用就是dispatch</li>
+<li>所以ADD ASYNC行为触发后，隔一秒执行了disptach({type:’ADD’,data:1})</li>
+</ul>
+<p>接着修改ButtonGroup.js:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ButtonGroup</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="keyword">let</span> &#123;</div><div class="line">            onChangeAdd,</div><div class="line">            onChangeSub</div><div class="line">        &#125; = <span class="keyword">this</span>.props;</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;</div><div class="line">                &lt;button onClick=&#123;onChangeAdd&#125;&gt;加一&lt;<span class="regexp">/button&gt;</span></div><div class="line"><span class="regexp">                &lt;button onClick=&#123;onChangeSub&#125;&gt;减一&lt;/</span>button&gt;</div><div class="line">            &lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">        )</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div><div class="line"><span class="regexp">let mapDispatchToProps = (dispatch)=&gt;&#123;</span></div><div class="line"><span class="regexp">        return &#123;</span></div><div class="line"><span class="regexp">            onChangeAdd: () =&gt; &#123;</span></div><div class="line"><span class="regexp">                dispatch(&#123;type: 'ADD ASYNC', data: 1&#125;);</span></div><div class="line"><span class="regexp">            &#125;,</span></div><div class="line"><span class="regexp">            onChangeSub: () =&gt; &#123;</span></div><div class="line"><span class="regexp">                dispatch(&#123;type: 'SUB', data: -1&#125;);</span></div><div class="line"><span class="regexp">            &#125;</span></div><div class="line"><span class="regexp">        &#125;</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">export default connect('',mapDispatchToProps)(ButtonGroup);</span></div></pre></td></tr></table></figure></p>
+<p><strong>注意：上面的onChangeAdd方法dispatch中的type是ADD ASYNC，这是个reducer中没有的type</strong></p>
+<ul>
+<li>ADD ASYNC这个type，并不存在于reducer</li>
+<li>ADD ASYNC其实相当于一个任务</li>
+</ul>
+<p>下面是reducer的代码：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span>=&#123;count:<span class="number">0</span>&#125;,action)=&gt;&#123;</div><div class="line">    console.<span class="keyword">log</span>('reducer')</div><div class="line">    switch(action.type)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return &#123;</div><div class="line">                ...<span class="keyword">state</span>,</div><div class="line">                count:<span class="keyword">state</span>.count+action.data</div><div class="line">            &#125;</div><div class="line">        case 'SUB':</div><div class="line">            return &#123;</div><div class="line">                ...<span class="keyword">state</span>,</div><div class="line">                count:<span class="keyword">state</span>.count+action.data</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上买就是全部的代码</p>
+<h1 id="七，尝试理解saga的概念"><a href="#七，尝试理解saga的概念" class="headerlink" title="七，尝试理解saga的概念"></a>七，尝试理解saga的概念</h1><p>其实saga解决的问题，其实就是异步的业务处理问题，将异步的部分从组件中分离了出来</p>
+<p>这很像webpack插件happyPack的思想，通过一个字符串’ADD ASYNC’ 将原本要执行的任务分离开</p>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+        
+      
+    </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>欣赏此文？求鼓励，求支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://otudpdtxd.bkt.clouddn.com/wechat.jpeg" alt="丰羡 WeChat Pay"/>
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://otudpdtxd.bkt.clouddn.com/alipay.jpeg" alt="丰羡 Alipay"/>
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/19/理解redux中间件的实现/" rel="next" title="理解redux中间件的实现">
+                <i class="fa fa-chevron-left"></i> 理解redux中间件的实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg"
+               alt="丰羡" />
+          <p class="site-author-name" itemprop="name">丰羡</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FengXianGuo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一，跑通react"><span class="nav-number">1.</span> <span class="nav-text">一，跑通react</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，将App入口组件封装出去，避免index-js中包含业务代码"><span class="nav-number">2.</span> <span class="nav-text">二，将App入口组件封装出去，避免index.js中包含业务代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三，引入redux"><span class="nav-number">3.</span> <span class="nav-text">三，引入redux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四，初步实现计数器"><span class="nav-number">4.</span> <span class="nav-text">四，初步实现计数器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五，为什么引入saga"><span class="nav-number">5.</span> <span class="nav-text">五，为什么引入saga</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六，使用redux-saga改写原来的代码"><span class="nav-number">6.</span> <span class="nav-text">六，使用redux-saga改写原来的代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七，尝试理解saga的概念"><span class="nav-number">7.</span> <span class="nav-text">七，尝试理解saga的概念</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">丰羡</span>
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"><span id="busuanzi_container_site_pv">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+</span>
+</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共36.6k字</span>
+</div>
+<span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140303"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

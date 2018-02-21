@@ -116,13 +116,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="丰羡的前端笔记">
-<meta property="og:url" content="http://yoursite.com/archives/page/4/index.html">
+<meta name="description" content="尝试实现洋葱模型koa2和redux都涉及了中间件的思想，总是会提到洋葱模型，所以尝试简单实现一个洋葱模型 第一步中间件从后向前12345678910111213let compose = (...fns)=&amp;gt;&amp;#123;    let last = fns.pop();    fns.reduceRight((oldV,newV)=&amp;gt;&amp;#123;        return newV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解redux中间件的实现">
+<meta property="og:url" content="http://yoursite.com/2018/02/19/理解redux中间件的实现/index.html">
 <meta property="og:site_name" content="丰羡的前端笔记">
+<meta property="og:description" content="尝试实现洋葱模型koa2和redux都涉及了中间件的思想，总是会提到洋葱模型，所以尝试简单实现一个洋葱模型 第一步中间件从后向前12345678910111213let compose = (...fns)=&amp;gt;&amp;#123;    let last = fns.pop();    fns.reduceRight((oldV,newV)=&amp;gt;&amp;#123;        return newV">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-19T08:26:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="丰羡的前端笔记">
+<meta name="twitter:title" content="理解redux中间件的实现">
+<meta name="twitter:description" content="尝试实现洋葱模型koa2和redux都涉及了中间件的思想，总是会提到洋葱模型，所以尝试简单实现一个洋葱模型 第一步中间件从后向前12345678910111213let compose = (...fns)=&amp;gt;&amp;#123;    let last = fns.pop();    fns.reduceRight((oldV,newV)=&amp;gt;&amp;#123;        return newV">
 
 
 
@@ -151,13 +155,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/page/4/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/19/理解redux中间件的实现/"/>
 
 
 
 
 
-  <title>归档 | 丰羡的前端笔记</title>
+  <title>理解redux中间件的实现 | 丰羡的前端笔记</title>
   
 
 
@@ -182,7 +186,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
     <a href="https://github.com/FengXianGuo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
@@ -297,226 +301,234 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/19/理解redux中间件的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">理解redux中间件的实现</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-19T16:15:41+08:00">
+                2018-02-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 23 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/10/11/xss攻击笔记/" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">xss攻击笔记</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  104
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-11T20:03:47+08:00"
-              content="2017-10-11" >
-          10-11
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/27/Chrome-DevTools调试工具实践-全/" itemprop="url">
-              
-                <span itemprop="name">Chrome DevTools调试工具实践(全)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-27T14:31:20+08:00"
-              content="2017-08-27" >
-          08-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/18/js类型检测汇总/" itemprop="url">
-              
-                <span itemprop="name">js类型检测汇总</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-18T10:30:27+08:00"
-              content="2017-08-18" >
-          08-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h1 id="尝试实现洋葱模型"><a href="#尝试实现洋葱模型" class="headerlink" title="尝试实现洋葱模型"></a>尝试实现洋葱模型</h1><p>koa2和redux都涉及了中间件的思想，总是会提到洋葱模型，所以尝试简单实现一个洋葱模型</p>
+<h2 id="第一步中间件从后向前"><a href="#第一步中间件从后向前" class="headerlink" title="第一步中间件从后向前"></a>第一步中间件从后向前</h2><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">let compose = <span class="function"><span class="params">(...fns)</span>=&gt;</span>&#123;</div><div class="line">    let last = fns.pop();</div><div class="line">    fns.reduceRight(<span class="function"><span class="params">(oldV,newV)</span>=&gt;</span>&#123;</div><div class="line">        <span class="keyword">return</span> newV(oldV);</div><div class="line">    &#125;,last())</div><div class="line">&#125;</div><div class="line">let fn1 = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'fn1'</span>)</div><div class="line">&#125;</div><div class="line">let fn2 = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'fn2'</span>)</div><div class="line">&#125;</div><div class="line">compose(fn1,fn2)</div></pre></td></tr></table></figure>
+<p>上面我们创建了一个compose，实现了函数的从右至左执行</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/14/chrome调试工具实践/" itemprop="url">
-              
-                <span itemprop="name">chrome调试工具实践</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-14T10:21:24+08:00"
-              content="2017-08-14" >
-          08-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/11/Typescript基础篇/" itemprop="url">
-              
-                <span itemprop="name">Typescript基础篇</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-11T17:17:35+08:00"
-              content="2017-08-11" >
-          08-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+    <div>
+      
+        
+      
+    </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>欣赏此文？求鼓励，求支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://otudpdtxd.bkt.clouddn.com/wechat.jpeg" alt="丰羡 WeChat Pay"/>
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://otudpdtxd.bkt.clouddn.com/alipay.jpeg" alt="丰羡 Alipay"/>
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/13/react-router学习笔记/" rel="next" title="react-router v4学习笔记">
+                <i class="fa fa-chevron-left"></i> react-router v4学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/20/redux-saga初探/" rel="prev" title="redux-saga初探">
+                redux-saga初探 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/5/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -524,6 +536,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
 
         </div>
         
@@ -544,8 +562,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg"
@@ -611,6 +638,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#尝试实现洋葱模型"><span class="nav-number">1.</span> <span class="nav-text">尝试实现洋葱模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步中间件从后向前"><span class="nav-number">1.1.</span> <span class="nav-text">第一步中间件从后向前</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -726,11 +769,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
 
 
   
@@ -757,6 +798,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140303"></script>
+      <!-- UY END -->
     
   
 
