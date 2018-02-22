@@ -126,7 +126,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fooip2gdc6j306804g3yk.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fop15szly8j304o01a3ye.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fop3r6fvmjj30ra04egma.jpg">
-<meta property="og:updated_time" content="2018-02-22T04:41:20.000Z">
+<meta property="og:updated_time" content="2018-02-22T04:54:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="immutable和react以及redux的结合">
 <meta name="twitter:description" content="react学习成本是真高啊，最近都开始感觉脑细胞不够用了  一，什么是immutable 唉，其实说起这个，都是因为js是弱类型语言的问题 js的数据类型分两种：基本类型、引用类型 引用类型存在相互影响的问题  例如：123456var obj = &amp;#123;    a:1&amp;#125;var cloneObj = obj;cloneObj.a = 2;console.log(obj.a);//">
@@ -550,7 +550,7 @@
 </ul>
 <p>修改mapStateToPropsResult：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.props.count)</div><div class="line">        <span class="keyword">let</span> &#123;count&#125; = <span class="keyword">this</span>.props; </div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;&#123;count&#125;&lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">        )</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div><div class="line"><span class="regexp">let mapStateToPropsResult = (state)=&gt;(&#123;</span></div><div class="line"><span class="regexp">    count: state.get('count')</span></div><div class="line"><span class="regexp">&#125;)</span></div><div class="line"><span class="regexp">export default connect(mapStateToPropsResult)(App);</span></div></pre></td></tr></table></figure></p>
 <p>此时已经能够正常渲染了，但计数器的加减功能报错了</p>
-<h2 id="第三步，修改action"><a href="#第三步，修改action" class="headerlink" title="第三步，修改action"></a>第三步，修改action</h2><figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">import Immutable <span class="keyword">from</span> 'immutable'</div><div class="line">const initialState = Immutable.Map(&#123;count:<span class="number">0</span>&#125;);</div><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span> = initialState,action)=&gt;&#123;</div><div class="line">    switch(action.type)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return <span class="keyword">state</span>.<span class="built_in">set</span>('count',<span class="keyword">state</span>.get('count')+action.data)</div><div class="line">        case 'SUB':</div><div class="line">            return <span class="keyword">state</span>.<span class="built_in">set</span>('count',<span class="keyword">state</span>.get('count')+action.data)</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="第三步，修改action"><a href="#第三步，修改action" class="headerlink" title="第三步，修改action"></a>第三步，修改action</h2><figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">import Immutable <span class="keyword">from</span> 'immutable'</div><div class="line">const initialState = Immutable.Map(&#123;count:<span class="number">0</span>&#125;);</div><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span> = initialState,action)=&gt;&#123;</div><div class="line">    switch(action.type)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return <span class="keyword">state</span>.merge(&#123;'count':<span class="keyword">state</span>.get('count')+action.data&#125;)</div><div class="line">        case 'SUB':</div><div class="line">            return <span class="keyword">state</span>.<span class="built_in">set</span>('count',<span class="keyword">state</span>.get('count')+action.data)</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>使用immutable后，action变的十分简洁</li>
 <li>state的set方法等，直接返回一个新的state，十分舒爽</li>
@@ -626,6 +626,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/22/reselect初探/" rel="prev" title="reselect初探">
+                reselect初探 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -727,7 +731,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -829,7 +833,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共39.0k字</span>
+  <span class="post-count">博客全站共39.8k字</span>
 </div>
 <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
 

