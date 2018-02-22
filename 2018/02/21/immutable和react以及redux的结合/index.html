@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="react学习成本是真高啊，最近都开始感觉脑细胞不够用了  一，什么是immutable 唉，其实说起这个，都是因为js是弱类型语言的问题 js的数据类型分两种：基本类型、引用类型 引用类型存在相互影响的问题  例如：123456var obj = &amp;#123;    a:1&amp;#125;var cloneObj = obj;cloneObj.a = 2;console.log(obj.a);//">
+<meta property="og:type" content="article">
+<meta property="og:title" content="immutable和react以及redux的结合">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/immutable和react以及redux的结合/index.html">
+<meta property="og:site_name" content="丰羡的前端笔记">
+<meta property="og:description" content="react学习成本是真高啊，最近都开始感觉脑细胞不够用了  一，什么是immutable 唉，其实说起这个，都是因为js是弱类型语言的问题 js的数据类型分两种：基本类型、引用类型 引用类型存在相互影响的问题  例如：123456var obj = &amp;#123;    a:1&amp;#125;var cloneObj = obj;cloneObj.a = 2;console.log(obj.a);//">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fooip2gdc6j306804g3yk.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fop15szly8j304o01a3ye.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79ly1fop3r6fvmjj30ra04egma.jpg">
+<meta property="og:updated_time" content="2018-02-22T04:41:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="immutable和react以及redux的结合">
+<meta name="twitter:description" content="react学习成本是真高啊，最近都开始感觉脑细胞不够用了  一，什么是immutable 唉，其实说起这个，都是因为js是弱类型语言的问题 js的数据类型分两种：基本类型、引用类型 引用类型存在相互影响的问题  例如：123456var obj = &amp;#123;    a:1&amp;#125;var cloneObj = obj;cloneObj.a = 2;console.log(obj.a);//">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fooip2gdc6j306804g3yk.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/21/immutable和react以及redux的结合/"/>
+
+
+
+
+
+  <title>immutable和react以及redux的结合 | 丰羡的前端笔记</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+    <a href="https://github.com/FengXianGuo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">丰羡的前端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/21/immutable和react以及redux的结合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="丰羡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="丰羡的前端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">immutable和react以及redux的结合</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T20:51:42+08:00">
+                2018-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,406
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>react学习成本是真高啊，最近都开始感觉脑细胞不够用了</p>
+</blockquote>
+<h1 id="一，什么是immutable"><a href="#一，什么是immutable" class="headerlink" title="一，什么是immutable"></a>一，什么是immutable</h1><ul>
+<li>唉，其实说起这个，都是因为js是弱类型语言的问题</li>
+<li>js的数据类型分两种：基本类型、引用类型</li>
+<li>引用类型存在相互影响的问题</li>
+</ul>
+<p>例如：<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var obj = &#123;</div><div class="line">    a:<span class="number">1</span></div><div class="line">&#125;</div><div class="line">var <span class="keyword">cloneObj </span>= obj<span class="comment">;</span></div><div class="line"><span class="keyword">cloneObj.a </span>= <span class="number">2</span><span class="comment">;</span></div><div class="line">console.log(obj.a)<span class="comment">;//2</span></div></pre></td></tr></table></figure></p>
+<p>上面的例子，cloneObj并不是obj的副本，而只是一个引用</p>
+<p>其实解决这个问题，最常见的就是深浅克隆，一般业务上，深浅克隆足够满足了</p>
+<h2 id="深克隆性能问题"><a href="#深克隆性能问题" class="headerlink" title="深克隆性能问题"></a>深克隆性能问题</h2><p>虽然深克隆能够解决问题，但性能上又存在缺陷，先实现一个深克隆：<br><figure class="highlight qml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">parent,child</span>)</span>&#123;</div><div class="line">  child = child?<span class="attribute">child</span>:&#123;&#125;;</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> <span class="built_in">parent</span>)&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">parent</span>.hasOwnProperty(key))&#123;</div><div class="line">      <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">parent</span>[key] == <span class="string">'object'</span>)&#123;</div><div class="line">        child[key] = <span class="built_in">Object</span>.prototype.toString.call(<span class="built_in">parent</span>[key])==<span class="string">'[object Object]'</span>?&#123;&#125;:[];</div><div class="line">        deepClone(<span class="built_in">parent</span>[key],child[key]);</div><div class="line">      &#125;<span class="title">else</span>&#123;</div><div class="line">        child[key] = <span class="built_in">parent</span>[key];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">   <span class="keyword">return</span> child;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>现在来看深克隆暴露的问题：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">var</span> obj = &#123;</div><div class="line">    a:<span class="string">'test'</span>,</div><div class="line">    <span class="built_in">data</span>:&#123;</div><div class="line">        a:<span class="number">1</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">var</span> cloneObj = deepClone(obj);</div><div class="line">cloneObj.a = <span class="string">'testClone'</span></div><div class="line">console.<span class="keyword">log</span>(obj.a);<span class="comment">//test</span></div><div class="line">console.<span class="keyword">log</span>(obj.<span class="built_in">data</span> === cloneObj.<span class="built_in">data</span>);<span class="comment">//false</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>上面的例子，obj被成功克隆</li>
+<li>但明明只是想改一个属性a，但obj下面的data属性也被克隆了</li>
+<li>这个问题当对象层级不深的时候，问题不大</li>
+<li>但像redux这种数据集合规模庞大的情况，反复克隆无疑会增加大量的性能损耗</li>
+</ul>
+<p>所以immutable就是为了解决这个问题</p>
+<h1 id="二，immutable初探"><a href="#二，immutable初探" class="headerlink" title="二，immutable初探"></a>二，immutable初探</h1><p>immutable库中的各种方法，其实都是用于将数据转成immutable类型</p>
+<h2 id="什么是immutable类型？"><a href="#什么是immutable类型？" class="headerlink" title="什么是immutable类型？"></a>什么是immutable类型？</h2><p>先介绍一个Map方法，例：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123;<span class="built_in">Map</span>&#125; <span class="keyword">from</span> <span class="string">'immutable'</span></div><div class="line"><span class="keyword">var</span> obj = <span class="built_in">Map</span>(&#123;</div><div class="line">    a:<span class="number">1</span></div><div class="line">&#125;)</div><div class="line"><span class="built_in">console</span>.log(obj.get(<span class="string">'a'</span>));<span class="comment">//1</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>上面Map方法用于将对象{a:1}转成immutable对象</li>
+<li>immutable对象可以通过特定的api，来读取值</li>
+<li>这一步很好接受，无非是取值的时候换了种方式</li>
+</ul>
+<h2 id="1，持久化数据结构（数据不可变）"><a href="#1，持久化数据结构（数据不可变）" class="headerlink" title="1，持久化数据结构（数据不可变）"></a>1，持久化数据结构（数据不可变）</h2><p>上面通过get获取数据，当然肯定还有set设置属性啊<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">var</span> obj = <span class="built_in">Map</span>(&#123;</div><div class="line">    a:<span class="number">1</span></div><div class="line">&#125;)</div><div class="line"><span class="built_in">var</span> cloneObj = obj.<span class="built_in">set</span>(<span class="string">'a'</span>,<span class="number">2</span>);</div><div class="line"></div><div class="line">console.<span class="keyword">log</span>(obj.get(<span class="string">'a'</span>));<span class="comment">//1</span></div><div class="line">console.<span class="keyword">log</span>(cloneObj.get(<span class="string">'a'</span>));<span class="comment">//2</span></div><div class="line">console.<span class="keyword">log</span>(obj === cloneObj)<span class="comment">//false</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>immutable严格要求数据不可变性</li>
+<li>所以即便set，也不会修改原来的对象，而是返回一个新的对象</li>
+</ul>
+<h2 id="2，结构共享"><a href="#2，结构共享" class="headerlink" title="2，结构共享"></a>2，结构共享</h2><p>还是上面的例子，我们再修改一下<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">var</span> obj = <span class="built_in">Map</span>(&#123;</div><div class="line">    a:<span class="number">1</span>,</div><div class="line">    <span class="built_in">data</span>:&#123;</div><div class="line">        b:<span class="number">2</span></div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"><span class="built_in">var</span> cloneObj = obj.<span class="built_in">set</span>(<span class="string">'a'</span>,<span class="number">2</span>);</div><div class="line">console.<span class="keyword">log</span>(obj.<span class="built_in">data</span> === cloneObj.<span class="built_in">data</span>)<span class="comment">//false</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>前面已经验证过，cloneObj != obj</li>
+<li>但其中内部的引用对象并没有被克隆</li>
+<li>这就解决了深克隆存在的性能问题</li>
+<li>这里也能看出Map并不是深克隆</li>
+</ul>
+<h2 id="3，惰性操作"><a href="#3，惰性操作" class="headerlink" title="3，惰性操作"></a>3，惰性操作</h2><p>现在介绍一个api：Seq</p>
+<p>Seq是专门做惰性处理的api,例如</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let odd = Seq.of(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>).filter(x=&gt;x%<span class="number">2</span>)</div><div class="line">console.log(odd.get(<span class="number">0</span>));<span class="comment">//1</span></div><div class="line">let oddEs = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>].filter(x=&gt;x%<span class="number">2</span>)</div><div class="line">console.log(oddEs[<span class="number">0</span>]);<span class="comment">//1</span></div></pre></td></tr></table></figure>
+<ul>
+<li>上面odd通过Seq创建的immutable对象，可以进行filter过滤，过滤里面的单数出来</li>
+<li>同样是通过get方法取值</li>
+<li>oddEs则是对数组进行过滤</li>
+<li>通过index取值同样能够得到结果</li>
+</ul>
+<p>上面的操作从结果来看，除了语法不同，看似没什么区别</p>
+<p>现在修改一下代码：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let odd = Seq.of(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>).filter((x)=&gt;&#123;</div><div class="line">    console.log('执行了odd');</div><div class="line">    return x%<span class="number">2</span></div><div class="line">&#125;)</div><div class="line">console.log(odd.get(<span class="number">0</span>));<span class="comment">//1</span></div><div class="line">let oddEs = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>].filter((x)=&gt;&#123;</div><div class="line">    console.log('执行了oddEs');</div><div class="line">    return x%<span class="number">2</span></div><div class="line">&#125;)</div><div class="line">console.log(oddEs[<span class="number">0</span>]);<span class="comment">//1</span></div></pre></td></tr></table></figure></p>
+<p>改动很小，就是在filter过滤器中，添加了一句console,下面是控制台输出：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fooip2gdc6j306804g3yk.jpg" alt=""></p>
+<ul>
+<li>这里就很神奇了，odd的filter只执行了一次</li>
+<li>而oddEs则执行了9次</li>
+</ul>
+<p>再修改一次代码：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let odd = Seq.of(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>).filter((x)=&gt;&#123;</div><div class="line">    console.log('执行了odd');</div><div class="line">    return x%<span class="number">2</span></div><div class="line">&#125;)</div><div class="line">console.log(odd.get(<span class="number">1</span>));<span class="comment">//1</span></div><div class="line">let oddEs = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>].filter((x)=&gt;&#123;</div><div class="line">    console.log('执行了oddEs');</div><div class="line">    return x%<span class="number">2</span></div><div class="line">&#125;)</div><div class="line">console.log(oddEs[<span class="number">0</span>]);<span class="comment">//1</span></div></pre></td></tr></table></figure>
+<ul>
+<li>odd的filter执行了3次</li>
+<li>oddEs的filter执行了9次</li>
+</ul>
+<p>这就是所谓的惰性操作了，其实odd被赋值的时候，它还没有执行，后面的filter函数，而是在get方法的时候，才进行了执行，并执行到需要的结果就停止了</p>
+<p>通过Generator可以快速理解lazy的含义，例如<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">bigArr</span>(<span class="params"></span>) </span>&#123; </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123; </div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`bigArr(<span class="subst">$&#123;i&#125;</span>): <span class="subst">$&#123;i&#125;</span>`</span>) <span class="keyword">yield</span> i; </div><div class="line">    &#125; </div><div class="line">&#125; </div><div class="line"><span class="keyword">const</span> arr = bigArr(); </div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123; </div><div class="line">    <span class="built_in">console</span>.log(arr.next()); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>arr赋值的时候bigArr并没有执行</li>
+<li>每next一次，向下执行一次</li>
+</ul>
+<h1 id="三，pureComponent优化"><a href="#三，pureComponent优化" class="headerlink" title="三，pureComponent优化"></a>三，pureComponent优化</h1><h2 id="1，react渲染存在的问题"><a href="#1，react渲染存在的问题" class="headerlink" title="1，react渲染存在的问题"></a>1，react渲染存在的问题</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    state=&#123;</div><div class="line">        count:<span class="number">0</span></div><div class="line">    &#125;</div><div class="line">    upDateCount()&#123;</div><div class="line">        <span class="keyword">this</span>.setState(&#123;</div><div class="line">            count:<span class="keyword">this</span>.state.count</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">    render()&#123;</div><div class="line">        console.log(<span class="symbol">'rende</span>r')</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div onClick=&#123;<span class="keyword">this</span>.upDateCount.bind(<span class="keyword">this</span>)&#125;&gt;</div><div class="line">                &#123;<span class="keyword">this</span>.state.count&#125;</div><div class="line">            &lt;/div&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>上面就是写了一个div</li>
+<li>点击的时候setState</li>
+<li>只是setState的结果不变</li>
+<li>然后观察console.log(render)的次数</li>
+</ul>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fop15szly8j304o01a3ye.jpg" alt=""></p>
+<p>可以看到即便setState的值不变，但render还是重新执行了</p>
+<h2 id="2-使用shouldComponentUpdate解决问题"><a href="#2-使用shouldComponentUpdate解决问题" class="headerlink" title="2.使用shouldComponentUpdate解决问题"></a>2.使用shouldComponentUpdate解决问题</h2><p>改造刚才的组件<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    state=&#123;</div><div class="line">        count:<span class="number">0</span></div><div class="line">    &#125;</div><div class="line">    shouldComponentUpdate(nextProps,nextState)&#123;</div><div class="line">        <span class="keyword">if</span>(nextState.count != <span class="keyword">this</span>.state.count)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    upDateCount()&#123;</div><div class="line">        <span class="keyword">this</span>.setState(&#123;</div><div class="line">            count:<span class="keyword">this</span>.state.count</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">    render()&#123;</div><div class="line">        console.log(<span class="symbol">'rende</span>r')</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div onClick=&#123;<span class="keyword">this</span>.upDateCount.bind(<span class="keyword">this</span>)&#125;&gt;</div><div class="line">                &#123;<span class="keyword">this</span>.state.count&#125;</div><div class="line">            &lt;/div&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>此时，无论怎么点，都只render一次</p>
+<p>shouldComponentUpdate 是当组件接受新的属性或者状态时的最先触发的生命周期，默认返回true</p>
+<ul>
+<li>true会重新render</li>
+<li>false会阻止render</li>
+</ul>
+<p>shouldComponentUpdate主要用于减少react的重复渲染</p>
+<h2 id="3，使用PureComponent"><a href="#3，使用PureComponent" class="headerlink" title="3，使用PureComponent"></a>3，使用PureComponent</h2><p>PureComponent使用非常简单，就是换一个类继承<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="type">React</span>, &#123; <span class="type">Component</span>,<span class="type">PureComponent</span> &#125; from <span class="symbol">'reac</span>t'</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">PureComponent</span></span>&#123;</div><div class="line">    state=&#123;</div><div class="line">        count:<span class="number">0</span></div><div class="line">    &#125;</div><div class="line">    upDateCount()&#123;</div><div class="line">        <span class="keyword">this</span>.setState(&#123;</div><div class="line">            count:<span class="keyword">this</span>.state.count</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">    render()&#123;</div><div class="line">        console.log(<span class="symbol">'rende</span>r')</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div onClick=&#123;<span class="keyword">this</span>.upDateCount.bind(<span class="keyword">this</span>)&#125;&gt;</div><div class="line">                &#123;<span class="keyword">this</span>.state.count&#125;</div><div class="line">            &lt;/div&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>此时，无论怎么点击都只渲染一次</p>
+<p>不用再人为添加shouldComponentUpdate生命周期</p>
+<p><strong>注意:PureComponent比较的是对象内部的之有没有改变，而不是是否是新对象</strong></p>
+<h2 id="使用redux的高阶组件本身就类似PureComponent"><a href="#使用redux的高阶组件本身就类似PureComponent" class="headerlink" title="使用redux的高阶组件本身就类似PureComponent"></a>使用redux的高阶组件本身就类似PureComponent</h2><p>前几篇文章，用了redux写了一个简单的计数器，现在正好拿来实践一下</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span>=&#123;count:<span class="number">0</span>&#125;,action)=&gt;&#123;</div><div class="line">    switch(action.type)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return &#123;</div><div class="line">                ...<span class="keyword">state</span>,</div><div class="line">                count:<span class="keyword">state</span>.count+action.data</div><div class="line">            &#125;</div><div class="line">        case 'SUB':</div><div class="line">            return &#123;</div><div class="line">                ...<span class="keyword">state</span>,</div><div class="line">                count:<span class="keyword">state</span>.count</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>这是计数器的reducer</li>
+<li>reducer里面奇怪的地方就是’SUB’这个action每次返回的都是同样内容的state</li>
+<li>此时点击减号的时候，观察渲染次数，发现只渲染了一次</li>
+</ul>
+<p>用Redux官方API函数connect生成的容器型组件，默认会提供一个shouldComponentUpdate函数，其中对props和state进行了浅层比较，至于是否是PureComponent还有待探索</p>
+<h2 id="4-PureComponent缺陷（深层不变问题）"><a href="#4-PureComponent缺陷（深层不变问题）" class="headerlink" title="4,PureComponent缺陷（深层不变问题）"></a>4,PureComponent缺陷（深层不变问题）</h2><p>PureComponent是一个浅层比较，就是它只关心，你外层是否变化了，这就带来一个问题，例：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">PureComponent</span></span>&#123;</div><div class="line">    state=&#123;</div><div class="line">        a:&#123;</div><div class="line">            b:&#123;</div><div class="line">                c:<span class="number">1</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    upDateCount()&#123;</div><div class="line">        let obj = &#123;</div><div class="line">            b:&#123;</div><div class="line">                c:<span class="number">1</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>.setState(&#123;</div><div class="line">            a:obj</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">    render()&#123;</div><div class="line">        console.log(<span class="symbol">'rende</span>r')</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div onClick=&#123;<span class="keyword">this</span>.upDateCount.bind(<span class="keyword">this</span>)&#125;&gt;</div><div class="line">                &#123;<span class="keyword">this</span>.state.a.b.c&#125;</div><div class="line">            &lt;/div&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>还是前面的例子，重复setState了，但数据本身没什么变化，但对象的引用发生了改变</li>
+<li>点击，明明不应该render，但还是render了，这就比较坑了</li>
+</ul>
+<h2 id="5，PureComponent缺陷（引用不变问题）"><a href="#5，PureComponent缺陷（引用不变问题）" class="headerlink" title="5，PureComponent缺陷（引用不变问题）"></a>5，PureComponent缺陷（引用不变问题）</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">PureComponent</span></span>&#123;</div><div class="line">    state=&#123;</div><div class="line">        a:&#123;</div><div class="line">            b:&#123;</div><div class="line">                c:<span class="number">1</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    upDateCount()&#123;</div><div class="line">        let obj = <span class="keyword">this</span>.state.a</div><div class="line">        obj.b = <span class="string">"test"</span>;</div><div class="line">        <span class="keyword">this</span>.setState(&#123;</div><div class="line">            a:obj</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">    render()&#123;</div><div class="line">        console.log(<span class="symbol">'rende</span>r')</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div onClick=&#123;<span class="keyword">this</span>.upDateCount.bind(<span class="keyword">this</span>)&#125;&gt;</div><div class="line">                &#123;<span class="keyword">this</span>.state.a.b.c&#125;</div><div class="line">            &lt;/div&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>还是前面的例子，再改造一下</li>
+<li>这次setState期望的是改变state中对象a中b的值变成一个字符串</li>
+<li>但结果确实不会重复render</li>
+<li>因为引用地址不变，render不会触发，这个问题知道很久，但之前从来没有想过怎么解决，看来还是缺乏思考。</li>
+</ul>
+<p>思考一下：其实当使用Redux的时候PureComponent是不可见的，但又确实存在</p>
+<h1 id="四，immutabel与redux的结合"><a href="#四，immutabel与redux的结合" class="headerlink" title="四，immutabel与redux的结合"></a>四，immutabel与redux的结合</h1><p>唉，写了这么多却发现，才是开始，前面介绍了很多概念，如何将他们融入到一个redux项目中</p>
+<h2 id="第一步，将store转成immutable"><a href="#第一步，将store转成immutable" class="headerlink" title="第一步，将store转成immutable"></a>第一步，将store转成immutable</h2><p>store是全局的，所有组件的数据，其实都是通过store来获取的</p>
+<p>store只要变成immutable，就能解决上面的两个问题（引用不变问题、深层不变问题）</p>
+<ul>
+<li>引用不变问题，通过返回新的immutable对象来实现</li>
+<li>深层不变问题，通过内部的hash标记来实现（具体有待探索）</li>
+</ul>
+<p>既然store要改变，那reducer就要改造</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import Immutable <span class="keyword">from</span> 'immutable'</div><div class="line">const initialState = Immutable.Map(&#123;count:<span class="number">0</span>&#125;);</div><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span> = initialState,action)=&gt;&#123;</div><div class="line">    switch(action.type)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return &#123;</div><div class="line">                ...<span class="keyword">state</span>,</div><div class="line">                count:<span class="keyword">state</span>.count+action.data</div><div class="line">            &#125;</div><div class="line">        case 'SUB':</div><div class="line">            return &#123;</div><div class="line">                ...<span class="keyword">state</span>,</div><div class="line">                // count:<span class="keyword">state</span>.count+action.data</div><div class="line">                count:<span class="keyword">state</span>.count</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Immutable用于创建Immutable对象</li>
+<li>reducer的initialState变成了Immutable</li>
+<li>此时从store中取值的渲染出不来了</li>
+</ul>
+<h2 id="第二步，修改mapStateToPropsResult"><a href="#第二步，修改mapStateToPropsResult" class="headerlink" title="第二步，修改mapStateToPropsResult"></a>第二步，修改mapStateToPropsResult</h2><p>观察一下取值渲染的props：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.props.count)</div><div class="line">        <span class="keyword">let</span> &#123;count&#125; = <span class="keyword">this</span>.props; </div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;&#123;count&#125;&lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">        )</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div><div class="line"><span class="regexp">let mapStateToPropsResult = (state)=&gt;(&#123;</span></div><div class="line"><span class="regexp">    count: state.count</span></div><div class="line"><span class="regexp">&#125;)</span></div><div class="line"><span class="regexp">export default connect(mapStateToPropsResult)(App);</span></div></pre></td></tr></table></figure>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fop3r6fvmjj30ra04egma.jpg" alt=""></p>
+<ul>
+<li>此时count已经不再是数字，而是函数了</li>
+<li>如果想要取值需要，使用Immutable的api</li>
+</ul>
+<p>修改mapStateToPropsResult：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    render()&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.props.count)</div><div class="line">        <span class="keyword">let</span> &#123;count&#125; = <span class="keyword">this</span>.props; </div><div class="line">        <span class="keyword">return</span>(</div><div class="line">            &lt;div&gt;&#123;count&#125;&lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">        )</span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div><div class="line"><span class="regexp">let mapStateToPropsResult = (state)=&gt;(&#123;</span></div><div class="line"><span class="regexp">    count: state.get('count')</span></div><div class="line"><span class="regexp">&#125;)</span></div><div class="line"><span class="regexp">export default connect(mapStateToPropsResult)(App);</span></div></pre></td></tr></table></figure></p>
+<p>此时已经能够正常渲染了，但计数器的加减功能报错了</p>
+<h2 id="第三步，修改action"><a href="#第三步，修改action" class="headerlink" title="第三步，修改action"></a>第三步，修改action</h2><figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">import Immutable <span class="keyword">from</span> 'immutable'</div><div class="line">const initialState = Immutable.Map(&#123;count:<span class="number">0</span>&#125;);</div><div class="line">export <span class="keyword">default</span>(<span class="keyword">state</span> = initialState,action)=&gt;&#123;</div><div class="line">    switch(action.type)&#123;</div><div class="line">        case 'ADD':</div><div class="line">            return <span class="keyword">state</span>.<span class="built_in">set</span>('count',<span class="keyword">state</span>.get('count')+action.data)</div><div class="line">        case 'SUB':</div><div class="line">            return <span class="keyword">state</span>.<span class="built_in">set</span>('count',<span class="keyword">state</span>.get('count')+action.data)</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            return <span class="keyword">state</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>使用immutable后，action变的十分简洁</li>
+<li>state的set方法等，直接返回一个新的state，十分舒爽</li>
+</ul>
+<p>至此，一个immutable的实践就跑通了，还存在的问题：</p>
+<ul>
+<li>如何兼容历史包袱</li>
+<li>和redux-saga之类的组建怎么结合起来</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+        
+      
+    </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>欣赏此文？求鼓励，求支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://otudpdtxd.bkt.clouddn.com/wechat.jpeg" alt="丰羡 WeChat Pay"/>
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://otudpdtxd.bkt.clouddn.com/alipay.jpeg" alt="丰羡 Alipay"/>
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/20/redux-saga初探/" rel="next" title="redux-saga初探">
+                <i class="fa fa-chevron-left"></i> redux-saga初探
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://otudpdtxd.bkt.clouddn.com/avator3@2x.jpg"
+               alt="丰羡" />
+          <p class="site-author-name" itemprop="name">丰羡</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FengXianGuo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一，什么是immutable"><span class="nav-number">1.</span> <span class="nav-text">一，什么是immutable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#深克隆性能问题"><span class="nav-number">1.1.</span> <span class="nav-text">深克隆性能问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，immutable初探"><span class="nav-number">2.</span> <span class="nav-text">二，immutable初探</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是immutable类型？"><span class="nav-number">2.1.</span> <span class="nav-text">什么是immutable类型？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1，持久化数据结构（数据不可变）"><span class="nav-number">2.2.</span> <span class="nav-text">1，持久化数据结构（数据不可变）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，结构共享"><span class="nav-number">2.3.</span> <span class="nav-text">2，结构共享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3，惰性操作"><span class="nav-number">2.4.</span> <span class="nav-text">3，惰性操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三，pureComponent优化"><span class="nav-number">3.</span> <span class="nav-text">三，pureComponent优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，react渲染存在的问题"><span class="nav-number">3.1.</span> <span class="nav-text">1，react渲染存在的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-使用shouldComponentUpdate解决问题"><span class="nav-number">3.2.</span> <span class="nav-text">2.使用shouldComponentUpdate解决问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3，使用PureComponent"><span class="nav-number">3.3.</span> <span class="nav-text">3，使用PureComponent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用redux的高阶组件本身就类似PureComponent"><span class="nav-number">3.4.</span> <span class="nav-text">使用redux的高阶组件本身就类似PureComponent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-PureComponent缺陷（深层不变问题）"><span class="nav-number">3.5.</span> <span class="nav-text">4,PureComponent缺陷（深层不变问题）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5，PureComponent缺陷（引用不变问题）"><span class="nav-number">3.6.</span> <span class="nav-text">5，PureComponent缺陷（引用不变问题）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四，immutabel与redux的结合"><span class="nav-number">4.</span> <span class="nav-text">四，immutabel与redux的结合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步，将store转成immutable"><span class="nav-number">4.1.</span> <span class="nav-text">第一步，将store转成immutable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步，修改mapStateToPropsResult"><span class="nav-number">4.2.</span> <span class="nav-text">第二步，修改mapStateToPropsResult</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步，修改action"><span class="nav-number">4.3.</span> <span class="nav-text">第三步，修改action</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">丰羡</span>
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"><span id="busuanzi_container_site_pv">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次, 本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次
+</span>
+</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共39.0k字</span>
+</div>
+<span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140303"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
